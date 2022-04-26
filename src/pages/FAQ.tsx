@@ -15,13 +15,12 @@ const useStyles = makeStyles(theme=>({
   }
 }))
 
-const HomePage: React.FC = () =>{
+const FAQ: React.FC = () =>{
   const classes = useStyles()
 
   return (
     <div className={classes.container}>
-      <Welcome />
-      <UpcomingEvents />
+
       <EventsCalendar />
       <News />
     </div>
@@ -29,4 +28,4 @@ const HomePage: React.FC = () =>{
 }
 
 
-export default HomePage;
+export default FAQ;

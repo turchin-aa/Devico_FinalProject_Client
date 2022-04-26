@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {makeStyles} from '@mui/styles'
 import {Container, Drawer, Typography, 
   List, ListItem, ListItemText,ListItemIcon,
@@ -11,12 +11,12 @@ import {Campaign, Article, CalendarMonth, Workspaces, Info, Contacts, LiveHelp, 
 
 const useStyles = makeStyles(theme=>({
     container:{
+      width:'22%',
       position:'sticky',
       top:0,
-      marginLeft:'0px',
-      height:'100vh',
-      backgroundColor:'#9470CE',
-      color: '#fff'
+      // marginLeft:'0px',
+      // height:'100vh',
+      
     },
     footerMenu:{
       marginTop:'70%'
@@ -24,6 +24,9 @@ const useStyles = makeStyles(theme=>({
     item:{
       height:'50px',
       cursor: 'pointer',
+      backgroundColor:'#9470CE',
+      color: '#fff',
+      fontSize:'0.5em',
       marginBottom: theme.spacing(2),
 
       "@media screen and {max-width:960px}": {
@@ -49,35 +52,31 @@ const useStyles = makeStyles(theme=>({
 
 
 
-const SideBar: React.FC = () =>{
+const SideBar: React.FC = (props) =>{
+  console.log(props)
   const classes = useStyles()
   const navigate = useNavigate()
-
-  // function BarClickHandler (path:string):any{
-    
-  // }
-
 
   const footerMenuItems = [
     {
       text:'About us',
       icon:<Info />,
-      path:'/#about-us'
+      path:'/about-us'
     },
     {
       text:'Contact us',
       icon:<Contacts />,
-      path:'/#contact-us'
+      path:'/contact-us'
     },
     {
       text:'FAQ',
       icon:<LiveHelp />,
-      path:'/#faq'
+      path:'/faq'
     },
     {
       text:'Privasy & Terms of use',
       icon:<ScatterPlot />,
-      path:'/#ptou'
+      path:'/ptou'
     }
   ]
 
@@ -90,22 +89,22 @@ const SideBar: React.FC = () =>{
     {
       text:'Events calendar',
       icon:<CalendarMonth />,
-      path:'#events-calendar'
+      path:'/#events-calendar'
     },
     {
       text:'News',
       icon:<Article />,
-      path:'#news'
+      path:'/#news'
     },
     {
       text:'Partners',
       icon:<Workspaces />,
-      path:'#partners'
+      path:'/#partners'
     }
   ]
   
   return (
-    <Container className={classes.container}> 
+    <Drawer variant="permanent" className={classes.container}> 
       <div>
         <Typography>
           LOGO
@@ -143,7 +142,7 @@ const SideBar: React.FC = () =>{
         ))}
       </List>
 
-    </Container>
+    </Drawer>
   )
 }
 
