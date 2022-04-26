@@ -1,0 +1,29 @@
+{
+  "blocks":[
+    {
+      "title": "Upcoming evets",
+      "details": "new event",
+      "category": "block",
+      "id":1
+    },
+    {
+      "title": "Events calendar",
+      "details": "new event",
+      "category": "block",
+      "id":2
+    },
+    {
+      "title": "News",
+      "details": "new event",
+      "category": "block",
+      "id":3
+    },
+    {
+      "title": "Partners",
+      "details": "new event",
+      "category": "block",
+      "id":4
+    }
+  ]
+  
+}
