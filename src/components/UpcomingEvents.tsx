@@ -4,7 +4,7 @@ import {Container, Button} from '@mui/material'
 
 const UpcomingEvents: React.FC = () =>{
   return(
-    <div id='upcoming-events'>
+    <div id={'upcoming-events'}>
       <h3>Upcoming events</h3>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictumst vestibulum rhoncus est pellentesque. Risus pretium quam vulputate dignissim suspendisse in est ante. Mattis enim ut tellus elementum sagittis vitae et leo duis. Ultrices gravida dictum fusce ut placerat. Diam quam nulla porttitor massa id neque. Aliquet nibh praesent tristique magna sit. Urna neque viverra justo nec ultrices dui. Pharetra vel turpis nunc eget lorem dolor. Maecenas sed enim ut sem. Viverra nam libero justo laoreet sit amet cursus sit. Aenean pharetra magna ac placerat. Euismod nisi porta lorem mollis aliquam ut porttitor. Varius duis at consectetur lorem. Eu volutpat odio facilisis mauris sit amet massa vitae.
 
