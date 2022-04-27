@@ -7,26 +7,19 @@ import {Container, Drawer, Typography,
 import {Campaign, Article, CalendarMonth, Workspaces, Info, Contacts, LiveHelp, ScatterPlot} from '@mui/icons-material'
 
 
-// const drawerWidth = 180
-
 const useStyles = makeStyles(theme=>({
     container:{
       width:'22%',
       position:'sticky',
-      top:0,
-      // marginLeft:'0px',
-      // height:'100vh',
-      
+      top:0,    
     },
     footerMenu:{
-      marginTop:'70%'
+      position:'relative',
+      bottom:0
     },
     item:{
       height:'50px',
       cursor: 'pointer',
-      backgroundColor:'#9470CE',
-      color: '#fff',
-      fontSize:'0.5em',
       marginBottom: theme.spacing(2),
 
       "@media screen and {max-width:960px}": {
@@ -39,6 +32,13 @@ const useStyles = makeStyles(theme=>({
         // transform
       }
       
+    },
+    drawerPaper:{
+      "&&": {
+        backgroundColor:'#9470CE',
+        color: '#fff',
+        fontSize:'0.5em'
+      }
     },
 
     text:{
@@ -104,7 +104,8 @@ const SideBar: React.FC = (props) =>{
   ]
   
   return (
-    <Drawer variant="permanent" className={classes.container}> 
+    <Drawer variant="permanent" className={classes.container}
+    classes={{ paper: classes.drawerPaper}}> 
       <div>
         <Typography>
           LOGO
