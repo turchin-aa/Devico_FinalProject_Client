@@ -1,11 +1,18 @@
 import React, { useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+// import {useNavigate} from 'react-router-dom'
 import {CssBaseline,Toolbar, Typography, AppBar  } from '@mui/material'
-import clsx from 'clsx'
+// import clsx from 'clsx'
 
-import UserBar from '../UserBar'
+import UserBar from '../UserBarLogedOut'
+import UserBarLoggedIn from '../userBarLoggedIn'
 import useStyles from '../styles/useStyle'
 
+// function ifLoddedIn(){
+//   if(loggedIn){
+//     return <UserBar/>
+//   }
+//   return <UserBarLogged/>
+// }
 
 
 const NavBar: React.FC = () =>{
@@ -19,7 +26,8 @@ const NavBar: React.FC = () =>{
       >
         <Toolbar>
           <Typography variant="h6" component="div">
-            <UserBar/>
+            {/* <UserBar/> */}
+            <UserBarLoggedIn/>
           </Typography>
         </Toolbar>
       </AppBar>

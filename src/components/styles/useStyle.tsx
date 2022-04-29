@@ -1,5 +1,5 @@
 import {makeStyles} from '@mui/styles'
-import { Theme, zIndex} from '@mui/material'
+import { Theme} from '@mui/material'
 
 const useStyles = makeStyles((theme:Theme)=>({
   active:{
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme:Theme)=>({
     "&&": {
       backgroundColor:'#9470CE',
       color: '#fff',
-      fontSize:'10px'
+      fontSize:10
     }
   },
 //delete???? - was used to style footer part of menu, but now it's a single list
@@ -34,16 +34,16 @@ const useStyles = makeStyles((theme:Theme)=>({
     position:'relative',
     display:'flex',
     flexDirection:'column',
-    marginTop:'60px'
+    marginTop:60
   },
 //sidebar - inactive button
   inactive:{
     boxShadow:'inset 0 0 0 0 #f9e506',
-    paddingLeft:"0px"
+    paddingLeft:0
   } ,
 //sidebar - list item
   item:{
-    height:'50px',
+    height:50,
     cursor: 'pointer',
     marginBottom: theme.spacing(2),
     transition: theme.transitions.create("background-color", {
@@ -63,36 +63,45 @@ const useStyles = makeStyles((theme:Theme)=>({
   logoBlock:{
     position:'relative',
     left:'20%',
-    height:'50px',
-    width:'150px',
+    height:50,
+    width:150,
     marginTop:'8%',
     marginBottom:'15%'
   },
   navbar:{
     '&&':{
-      backgroundColor:'transparent',
-      height:'60px',
-      zIndex:-1
+      // backgroundColor:'transparent',
+      height:60,
+      width:200,
     }
   },
   text:{
-    fontSize:'10px',
+    fontSize:10,
     "@media screen and {max-width:960px}":{
          display: 'none'
        }
   },
   userBar:{
-    width:'124px',
-    height:'60px',
+    
     backgroundColor:'#000',
 
     display:'flex',
     justifyContent:'center',
-    alignItem:'space-between',
     position:'fixed',
     top:0,
     right:0
-  }
+  },
+  userBarOut:{
+    width:124,
+    height:60
+  },
+  buttons:{
+    backgroundColor:'yellow'
+  },
+  userBarIn:{
+    width:200,
+    height:60
+  },
 
 }))
 

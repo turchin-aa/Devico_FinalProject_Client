@@ -1,9 +1,9 @@
 import React, {useRef} from 'react';
 import {BrowserRouter as Router,  Routes, Route } from "react-router-dom"
-import {createTheme,ThemeProvider } from "@mui/material"
+import {Theme,createTheme,ThemeProvider } from "@mui/material"
 import HomePage from "./pages/HomePage"
 import FAQ from "./pages/FAQ"
-import useStyles from './components/styles/useStyle'
+import {makeStyles} from '@mui/styles'
 import SideBar from './components/Navigation/SideBar'
 import NavBar from './components/Navigation/NavBar'
 
@@ -18,9 +18,17 @@ const theme = createTheme({
 }
 )
 
+const useStyles = makeStyles((theme:Theme)=>({
+//gradle for navbar and pages  
+  appContainer:{
+    display:'flex'
+  },
+}))
+
 const App: React.FC = () =>{
   const classes = useStyles()
 
+  const homeRef = useRef(null)
   const upcomingRef = useRef(null)
   const calendarRef = useRef(null)
   const newsRef = useRef(null)
@@ -30,12 +38,12 @@ const App: React.FC = () =>{
     <ThemeProvider theme={theme}>
       <Router>
         <div className={classes.appContainer}>
-          <SideBar/>
+          <SideBar homeRef={homeRef} upcomingRef={upcomingRef}
+            calendarRef={calendarRef} newsRef={newsRef} partnersRef={partnersRef}/>
           <NavBar/>
           <Routes>
-            <Route path={["/","/#upcoming-events",'/#events-calendar','/#news', '/#partners']}>
-              <HomePage upcomingRef={upcomingRef} calendarRef={calendarRef} newsRef={newsRef} partnersRef={partnersRef}/>
-            </Route>
+            <Route path='/' element={<HomePage homeRef={homeRef} upcomingRef={upcomingRef}
+            calendarRef={calendarRef} newsRef={newsRef} partnersRef={partnersRef}/>}/>
             <Route path="/faq" element={<FAQ/>}/>
             <Route path="*" element={
             <div>

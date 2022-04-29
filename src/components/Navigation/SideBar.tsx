@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import {useNavigate,useLocation} from 'react-router-dom'
 import useStyles from '../styles/useStyle'
 import { Drawer, Typography, 
   List, ListItem, ListItemText,ListItemIcon,
@@ -8,9 +8,42 @@ import clsx from 'clsx'
 import {Campaign, Article, CalendarMonth, Workspaces, Info, Contacts, LiveHelp, ScatterPlot} from '@mui/icons-material'
 
 
-const SideBar: React.FC = (props) =>{
+const scrollSmoothHandler = (ref:any) => {
+  console.log("Triggered.");
+  ref.current.scrollIntoView({ behavior: "smooth" });
+};
+
+
+const scrollToRef = (ref:any) => window.scrollTo(0, ref.current.offsetTop)
+
+const SideBar = (props:{homeRef:any, upcomingRef:any,
+  calendarRef:any, newsRef:any, partnersRef:any}) =>{
   const classes = useStyles()
   const navigate = useNavigate()
+
+  const executeScroll = (path:any) => {
+    switch(path){
+      case '/#upcoming-events':
+        navigate(path)
+        scrollToRef(props.upcomingRef)
+        break
+      case '/#events-calendar':
+        navigate(path)
+        scrollToRef(props.calendarRef)
+        break
+      case '/#news':
+        navigate(path)
+        scrollToRef(props.newsRef)
+        break
+      case '/#partners':
+        navigate(path)
+        scrollToRef(props.partnersRef)
+        break
+      default:
+        navigate(path)
+        break  
+    }
+  }
 
   const [list_item, setState] = useState(
     {
@@ -97,11 +130,11 @@ const SideBar: React.FC = (props) =>{
             <ListItem 
             key={index} 
             className={clsx(toggleActiveClass(index), classes.item)}
-
             onClick={()=>{
               toggleButton(index)
-              navigate(item.path)}}
-            >  
+              executeScroll(item.path)
+              // location.pathname=item.path}
+            }} >  
                 <ListItemIcon>
                  {item.icon}
                 </ListItemIcon>

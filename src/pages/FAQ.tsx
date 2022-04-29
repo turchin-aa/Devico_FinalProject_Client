@@ -21,8 +21,7 @@ const FAQ: React.FC = () =>{
   return (
     <div className={classes.container}>
 
-      <EventsCalendar />
-      <News />
+    faq
     </div>
   )
 }

@@ -1,6 +1,5 @@
-import React from 'react';
-import {Grid} from '@mui/material'
-import {makeStyles} from '@mui/styles'
+import React from 'react'
+import {HashRouter} from 'react-router-dom'
 
 import Welcome from '../components/Welcome'
 import UpcomingEvents from '../components/UpcomingEvents'
@@ -9,15 +8,19 @@ import News from '../components/NewsComponent'
 import useStyles from '../components/styles/useStyle'
 
 
-const HomePage: React.FC = ({upcomingRef, calendarRef, newsRef, partnersRef}) =>{
+const HomePage = (props:{homeRef:any, upcomingRef:any,
+  calendarRef:any, newsRef:any, partnersRef:any}) =>{
+  
   const classes = useStyles()
 
   return (
     <div className={classes.homePageContainer}>
-      <Welcome />
-      <UpcomingEvents upcomingRef={upcomingRef}/>
-      <EventsCalendar />
-      <News />
+      {/* <HashRouter> */}
+        <Welcome />
+        <UpcomingEvents upcomingRef={props.upcomingRef}/>
+        <EventsCalendar calendarRef={props.calendarRef}/>
+        <News newsRef={props.newsRef}/>
+      {/* </HashRouter> */}
     </div>
   )
 }
