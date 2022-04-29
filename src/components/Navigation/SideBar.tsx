@@ -1,26 +1,19 @@
-import React, { useState, useEffect } from 'react'
-import {useNavigate,useLocation} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import useStyles from '../styles/useStyle'
-import { Drawer, Typography, 
-  List, ListItem, ListItemText,ListItemIcon,
-  CardMedia,Link} from '@mui/material'
-import clsx from 'clsx'
-import {Campaign, Article, CalendarMonth, Workspaces, Info, Contacts, LiveHelp, ScatterPlot} from '@mui/icons-material'
+import SideBarItem from './SideBarItem'
+import {Drawer, CardMedia, Link} from '@mui/material'
 
 
-const scrollSmoothHandler = (ref:any) => {
-  console.log("Triggered.");
-  ref.current.scrollIntoView({ behavior: "smooth" });
-};
-
-
-const scrollToRef = (ref:any) => window.scrollTo({
+const scrollToRef = (ref:any) => {
+  console.log(ref)
+  window.scrollTo({
   top: ref.current.offsetTop+70,
   behavior: "smooth"
-})
+})}
 
 const SideBar = (props:{homeRef:any, upcomingRef:any,
   calendarRef:any, newsRef:any, partnersRef:any}) =>{
+
   const classes = useStyles()
   const navigate = useNavigate()
 
@@ -48,75 +41,6 @@ const SideBar = (props:{homeRef:any, upcomingRef:any,
     }
   }
 
-  const [list_item, setState] = useState(
-    {
-      activeButton: {},
-      objects:[
-        {
-          id:1,
-          text:'Upcoming events',
-          icon:<Campaign />,
-          path:'/#upcoming-events'
-        },
-        {
-          id:2,
-          text:'Events calendar',
-          icon:<CalendarMonth />,
-          path:'/#events-calendar'
-        },
-        {
-          id:3,
-          text:'News',
-          icon:<Article />,
-          path:'/#news'
-        },
-        {
-          id:4,
-          text:'Partners',
-          icon:<Workspaces />,
-          path:'/#partners'
-        },
-        {
-          id:5,
-          text:'About us',
-          icon:<Info />,
-          path:'/about-us'
-        },
-        { id:6,
-          text:'Contact us',
-          icon:<Contacts />,
-          path:'/contact-us'
-        },
-        { 
-          id:7,
-          text:'FAQ',
-          icon:<LiveHelp />,
-          path:'/faq'
-        },
-        {
-          id:8,
-          text:'Privasy & Terms of use',
-          icon:<ScatterPlot />,
-          path:'/ptou'
-        }
-      ]
-    }
-  )
-
-  
-  function toggleButton(index:any){
-    setState({ ...list_item, activeButton:list_item.objects[index]})
-  }
-
-  function toggleActiveClass(index:any){
-    if(list_item.objects[index] === list_item.activeButton ){
-      return classes.active
-    }else{
-      return classes.inactive
-    }
-
-  }
-
   return (
     <Drawer variant="permanent" className={classes.container}
     classes={{ paper: classes.drawerPaper}}> 
@@ -127,25 +51,7 @@ const SideBar = (props:{homeRef:any, upcomingRef:any,
       </div>
 
 {/* adding upper half of menu*/}
-      <div>
-        <List>
-          {list_item.objects.map((item,index) =>(
-            <ListItem 
-            key={index} 
-            className={clsx(toggleActiveClass(index), classes.item)}
-            onClick={()=>{
-              toggleButton(index)
-              executeScroll(item.path)
-              // location.pathname=item.path}
-            }} >  
-                <ListItemIcon>
-                 {item.icon}
-                </ListItemIcon>
-                <ListItemText className={classes.text} primary={item.text}/>
-            </ListItem>
-          ))}
-        </List>
-      </div>
+    <SideBarItem executeScroll={executeScroll}/>
     </Drawer>
   )
 }
