@@ -14,7 +14,10 @@ const scrollSmoothHandler = (ref:any) => {
 };
 
 
-const scrollToRef = (ref:any) => window.scrollTo(0, ref.current.offsetTop)
+const scrollToRef = (ref:any) => window.scrollTo({
+  top: ref.current.offsetTop+70,
+  behavior: "smooth"
+})
 
 const SideBar = (props:{homeRef:any, upcomingRef:any,
   calendarRef:any, newsRef:any, partnersRef:any}) =>{
