@@ -1,36 +1,37 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
-import { useHttp } from '../../myhook/http.hook';
+import * as React from 'react'
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+import Link from '@mui/material/Link'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { useState } from 'react'
+import { useHttp } from '../../myhook/http.hook'
 
-const theme = createTheme();
+const theme = createTheme()
 
 export default function SignIn() {
-    const {loading, request} = useHttp()
-    const [form, setForm] = useState({
-        email : '', password : ''
-      })
+  const { loading, request } = useHttp()
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  })
 
   const handleSubmit = (event: any) => {
-    setForm({...form, [event.target.name] : event.target.value})
-  };
+    setForm({ ...form, [event.target.name]: event.target.value })
+  }
 
   const loginHandler = async () => {
     try {
-      const data = await request('/api/auth/login', 'POST', {...form})
+      const data = await request('/api/auth/login', 'POST', { ...form })
       console.log(data)
     } catch (e) {}
-  } 
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -44,7 +45,7 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
-          <Typography component="h1" variant="h5" sx={{fontWeight : 'bold'}}>
+          <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold' }}>
             Sign in
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
@@ -100,5 +101,5 @@ export default function SignIn() {
         </Box>
       </Container>
     </ThemeProvider>
-  );
+  )
 }
