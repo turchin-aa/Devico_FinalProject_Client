@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect} from 'react'
+import { useState, useCallback} from 'react'
 import useStyles from '../../styles/useStyle'
 import {List, ListItem, ListItemText,ListItemIcon, SvgIcon} from '@mui/material'
 import clsx from 'clsx'
@@ -82,8 +82,6 @@ const SideBarItem = (props:{executeScroll:any}) =>{
               props.executeScroll(item.path)
             }} >  
                 <ListItemIcon>
-                {/* <SvgIcon component={item.icon} /> */}
-                  {/* <svg data-testid=></svg> */}
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText className={classes.text} primary={item.text}/>

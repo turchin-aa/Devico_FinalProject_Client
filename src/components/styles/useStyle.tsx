@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme:Theme)=>({
   },
   buttonPurple:{
     color:"#fff",
-    backgroundColor:'#9470CE',
+    backgroundColor:theme.palette.primary.main,
     marginRight:'200px'
   },
   buttonWhite:{
@@ -43,10 +43,15 @@ const useStyles = makeStyles((theme:Theme)=>({
 //ovverides drawer style 
   drawerPaper:{
     "&&": {
-      backgroundColor:'#9470CE',
+      backgroundColor:theme.palette.primary.main,
       color: '#fff',
       fontSize:10
     }
+  },
+  flexCenter:{
+    display:'flex',
+    justifyContent:'center',
+    alignItems: 'center',
   },
 //delete???? - was used to style footer part of menu, but now it's a single list
   footerMenu:{
@@ -76,13 +81,11 @@ const useStyles = makeStyles((theme:Theme)=>({
     
     "@media screen and {max-width:960px}": {
          marginBottom:theme.spacing(0),
-      
       } ,
     
     "&:hover":{
-      backgroundColor:'#A083D5',
+      backgroundColor:theme.palette.primary.light,
     }
-    
   },
   logoBlock:{
     position:'relative',
@@ -94,35 +97,50 @@ const useStyles = makeStyles((theme:Theme)=>({
   },
   navbar:{
     '&&':{
-      // backgroundColor:'transparent',
+      backgroundColor:'transparent',
       height:60,
       zIndex:1
     }
   },
   text:{
-    fontSize:10,
+    fontSize:9,
     "@media screen and {max-width:960px}":{
          display: 'none'
        }
   },
   userBar:{
-    
     backgroundColor:'#000',
-    display:'flex',
-    justifyContent:'center',
     position:'fixed',
     top:0,
-    right:0
+    right:0,
+
+    height:60,
+    fontSize:12,
   },
-  userBarOut:{
-    width:124,
-    height:60
+  userBarButton:{
+    cursor:'pointer'
   },
-  
-  userBarIn:{
-    width:284,
-    height:60
+  userBarComponentW:{
+    '&&':{
+      color:'#fff'
+    }
   },
+  userBarDivider:{
+    '&&':{
+      backgroundColor:'#fff'
+    }
+  },
+  userBarInner:{
+    width:60,
+    height:'100%'
+  },
+  userBarText:{
+    marginLeft:12,
+    '& > div':{
+      marginTop:-5
+    }
+  }
+ 
 
 }))
 
