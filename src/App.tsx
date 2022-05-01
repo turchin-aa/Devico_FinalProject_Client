@@ -4,8 +4,8 @@ import {Theme,createTheme,ThemeProvider } from "@mui/material"
 import HomePage from "./pages/HomePage"
 import FAQ from "./pages/FAQ"
 import {makeStyles} from '@mui/styles'
-import SideBar from './components/Navigation/SideBar'
-import NavBar from './components/Navigation/NavBar'
+import SideBar from './components/Navigation/SideBar/SideBar'
+import NavBar from './components/Navigation/NavBar/NavBar'
 
 const theme = createTheme({
   spacing: [0, 2, 3, 5, 8],
@@ -15,8 +15,7 @@ const theme = createTheme({
       light: '#A083D5'
     }
   }
-}
-)
+})
 
 const useStyles = makeStyles((theme:Theme)=>({
 //gradle for navbar and pages  

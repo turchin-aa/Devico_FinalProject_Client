@@ -11,11 +11,34 @@ const useStyles = makeStyles((theme:Theme)=>({
   appContainer:{
     display:'flex'
   },
+  mainText:{
+    fontSize:"2.5em",
+    fontWeight:'700'
+  },
+  additional:{
+    marginTop:'-20px',
+    fontSize:"1.3rem"
+  },
+  buttons:{
+    height:50,
+    width:200,
+    elevetion:'0',
+    fontSize:"1.3rem",
+  },
+  buttonPurple:{
+    color:"#fff",
+    backgroundColor:'#9470CE',
+    marginRight:'200px'
+  },
+  buttonWhite:{
+    backgroundColor:'#fff'
+  },
 //sidebar drawer
   container:{
     width:'22%',
     position:'sticky',
-    top:0,    
+    top:0,
+    zIndex:2    
   },
 //ovverides drawer style 
   drawerPaper:{
@@ -34,7 +57,8 @@ const useStyles = makeStyles((theme:Theme)=>({
     position:'relative',
     display:'flex',
     flexDirection:'column',
-    marginTop:60
+    marginTop:60,
+    zIndex:0
   },
 //sidebar - inactive button
   inactive:{
@@ -72,7 +96,7 @@ const useStyles = makeStyles((theme:Theme)=>({
     '&&':{
       // backgroundColor:'transparent',
       height:60,
-      width:200,
+      zIndex:1
     }
   },
   text:{
@@ -84,7 +108,6 @@ const useStyles = makeStyles((theme:Theme)=>({
   userBar:{
     
     backgroundColor:'#000',
-
     display:'flex',
     justifyContent:'center',
     position:'fixed',
@@ -95,11 +118,9 @@ const useStyles = makeStyles((theme:Theme)=>({
     width:124,
     height:60
   },
-  buttons:{
-    backgroundColor:'yellow'
-  },
+  
   userBarIn:{
-    width:200,
+    width:284,
     height:60
   },
 
