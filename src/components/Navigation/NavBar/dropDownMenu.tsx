@@ -20,13 +20,30 @@ const DropDownMenu = (props:{dropDownRef:any, anchorEl:any,handleCloseMenu:any, 
     {name:'Sign Out',
     path:''
     }]
+
+
   
   const classes = useStyles()
   const [menu, setMenu] = useState(props.logged?menuIn:menuOut)
 
-  const fillIfLogged = useCallback(()=>{
+  // const controlLogin = useCallback()
+
+  const handleClick = (name:string)=>{
+    switch(name){
+      case 'Sign Out':
+      case 'Sign In':
+        props.handleCloseMenu
+        props.setLogged(!props.logged)
+        fillIfLogged
+        break
+      default:
+        break
+    }
+  }
+
+  const fillIfLogged = ()=>{
     return props.logged?setMenu(menuIn):setMenu(menuOut)
-  },[menu])
+  }
 
 
 
@@ -38,9 +55,12 @@ const DropDownMenu = (props:{dropDownRef:any, anchorEl:any,handleCloseMenu:any, 
         className={classes.userBarDropdown}
         >
         {menu.map((item,index)=>(
-          <MenuItem 
+          <MenuItem
+            component='button' 
             key={index}
-            className={classes.userBarDropdownButtons}>
+            className={classes.userBarDropdownButtons}
+            onClick={()=>handleClick(item.name)}
+            >
               {item.name}
           </MenuItem>)
           )}        

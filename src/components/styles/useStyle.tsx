@@ -1,5 +1,6 @@
 import {makeStyles} from '@mui/styles'
 import { Theme} from '@mui/material'
+import { lineHeight } from '@mui/system'
 
 const minorFont:number = 12
 const margin_tw:number = 12
@@ -15,41 +16,43 @@ const useStyles = makeStyles((theme:Theme)=>({
     display:'flex'
   },
   mainText:{
-    fontSize:"2.5em",
-    fontWeight:'700'
+    fontSize:50,
+    fontWeight:'700',
+    '& > span':{
+      
+    }
   },
   additional:{
-    marginTop:'-20px',
-    fontSize:"1.3rem"
+    marginTop:-30,
+    fontSize:"1.3rem",
+    color:'#5C5C5C'
   },
   buttons:{
-    height:50,
-    width:200,
-    elevetion:'0',
-    fontSize:"1.3rem",
+    position:'relative',
+    left:-30,
+    display:'flex',
+    justifyContent:'space-evenly',
+    fontSize:12,
+    '& > *':{
+      height:50,
+      width:200,
+    }
   },
-  buttonPurple:{
-    color:"#fff",
-    backgroundColor:theme.palette.primary.main,
-    marginRight:'200px'
-  },
-  buttonWhite:{
-    backgroundColor:'#fff'
-  },
+
 //sidebar drawer
   container:{
-    width:'22%',
+    width:'12%',
     position:'sticky',
     top:0,
-    // overflow: 'auto',
     zIndex:2    
   },
 //ovverides drawer style 
   drawerPaper:{
     "&&": {
+      width:110,
       backgroundColor:theme.palette.primary.main,
       color: '#fff',
-      fontSize:10
+      fontSize:11
     }
   },
   flexCenter:{
@@ -76,9 +79,10 @@ const useStyles = makeStyles((theme:Theme)=>({
   } ,
 //sidebar - list item
   item:{
-    height:50,
+    flexDirection:'column',
+    height:60,
     cursor: 'pointer',
-    marginBottom: theme.spacing(2),
+    
     transition: theme.transitions.create("background-color", {
       duration: '0.2s',
     }),
@@ -93,11 +97,11 @@ const useStyles = makeStyles((theme:Theme)=>({
   },
   logoBlock:{
     position:'relative',
-    left:'20%',
-    height:50,
-    width:150,
+    left:5,
+    height:15,
+    width:100,
     marginTop:'8%',
-    marginBottom:'15%'
+    marginBottom:'30%'
   },
   navbar:{
     '&&':{
@@ -148,6 +152,7 @@ const useStyles = makeStyles((theme:Theme)=>({
   },
   text:{
     fontSize:9,
+    textAlign:'center',
     "@media screen and {max-width:960px}":{
          display: 'none'
        }
@@ -213,6 +218,19 @@ const useStyles = makeStyles((theme:Theme)=>({
     '& > div':{
       marginTop:-5
     }
+  },
+  welcomeBlock:{
+    width:'100%',
+    lineHeight:1,
+    '& > div':{
+      color:'#000',
+      marginTop:margin_tw
+    }
+  },
+  welcomeEventContainer:{
+    backgroundColor:'#000000',
+    width:487,
+    height:308
   }
  
 

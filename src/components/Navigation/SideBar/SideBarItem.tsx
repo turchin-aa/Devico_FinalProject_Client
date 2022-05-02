@@ -1,6 +1,6 @@
 import { useState, useCallback} from 'react'
 import useStyles from '../../styles/useStyle'
-import {List, ListItem, ListItemText,ListItemIcon, SvgIcon} from '@mui/material'
+import {List, ListItem,ListItemIcon} from '@mui/material'
 import clsx from 'clsx'
 import {Campaign, Article, CalendarMonth, Workspaces, Info, Contacts, LiveHelp, ScatterPlot} from '@mui/icons-material'
 
@@ -76,15 +76,13 @@ const SideBarItem = (props:{executeScroll:any}) =>{
           {list_item.objects.map((item,index) =>(
             <ListItem 
             key={index} 
-            className={clsx(toggleActiveClass(index), classes.item)}
+            className={clsx(toggleActiveClass(index), classes.item, classes.flexCenter)}
             onClick={()=>{
               toggleButton(index)
               props.executeScroll(item.path)
             }} >  
-                <ListItemIcon>
                   {item.icon}
-                </ListItemIcon>
-                <ListItemText className={classes.text} primary={item.text}/>
+                <p className={classes.text}>{item.text}</p>
             </ListItem>
           ))}
         </List>
