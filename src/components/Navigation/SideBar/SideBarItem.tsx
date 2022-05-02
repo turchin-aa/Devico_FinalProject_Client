@@ -1,6 +1,6 @@
 import { useState, useCallback} from 'react'
 import useStyles from '../../styles/useStyle'
-import {List, ListItem, ListItemText,ListItemIcon, SvgIcon} from '@mui/material'
+import {List, ListItem, ListItemText,ListItemIcon} from '@mui/material'
 import clsx from 'clsx'
 import {Campaign, Article, CalendarMonth, Workspaces, Info, Contacts, LiveHelp, ScatterPlot} from '@mui/icons-material'
 

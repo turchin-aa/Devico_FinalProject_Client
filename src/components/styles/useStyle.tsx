@@ -1,5 +1,6 @@
 import {makeStyles} from '@mui/styles'
 import { Theme} from '@mui/material'
+import { lineHeight } from '@mui/system'
 
 const minorFont:number = 12
 const margin_tw:number = 12
@@ -15,12 +16,16 @@ const useStyles = makeStyles((theme:Theme)=>({
     display:'flex'
   },
   mainText:{
-    fontSize:"2.5em",
-    fontWeight:'700'
+    fontSize:50,
+    fontWeight:'700',
+    '& > span':{
+      
+    }
   },
   additional:{
     marginTop:'-20px',
-    fontSize:"1.3rem"
+    fontSize:"1.3rem",
+    color:'#5C5C5C'
   },
   buttons:{
     height:50,
@@ -213,6 +218,11 @@ const useStyles = makeStyles((theme:Theme)=>({
     '& > div':{
       marginTop:-5
     }
+  },
+  welcomeBlock:{
+    // backgroundColor:'red',
+    width:'100%',
+    lineHeight:1
   }
  
 
