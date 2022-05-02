@@ -36,8 +36,7 @@ const UserBarLoggedOut = ()=>{
 
 const UserBar: React.FC = () =>{
   const classes = useStyles()
-  const [logged, setLogged] = useState(false)
-  // const [logged, setLogged] = useState(true)
+  const [logged, setLogged] = useState(true)
   
   const ifLoggedIn = (logged:boolean)=>{
       return logged? <UserBarLoggedIn />:<UserBarLoggedOut/>
@@ -48,7 +47,7 @@ const UserBar: React.FC = () =>{
     <div className={clsx(classes.userBar,classes.flexCenter)}>
       
       {ifLoggedIn(logged)}
-      <ArrowButton/>
+      <ArrowButton logged={logged} setLogged={setLogged}/>
     </div>
   )
 

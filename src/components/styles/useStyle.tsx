@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme:Theme)=>({
     width:'22%',
     position:'sticky',
     top:0,
+    // overflow: 'auto',
     zIndex:2    
   },
 //ovverides drawer style 
@@ -63,6 +64,7 @@ const useStyles = makeStyles((theme:Theme)=>({
     display:'flex',
     flexDirection:'column',
     marginTop:60,
+    // overflow: 'hidden',
     zIndex:0
   },
 //sidebar - inactive button
@@ -128,6 +130,21 @@ const useStyles = makeStyles((theme:Theme)=>({
   userBarDivider:{
     '&&':{
       backgroundColor:'#fff'
+    }
+  },
+  userBarDropdown:{
+    width:224,
+    marginTop:6,
+    marginLeft:12,
+  },
+  userBarDropdownButtons:{
+    width:224,
+    height:48,
+    color:'#8F8F8F',
+    '&:hover':{
+      cursor:'pointer',
+      backgroundColor:'#dbd3de',
+      color:'#000'
     }
   },
   userBarInner:{
