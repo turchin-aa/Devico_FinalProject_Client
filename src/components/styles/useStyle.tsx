@@ -1,6 +1,9 @@
 import {makeStyles} from '@mui/styles'
 import { Theme} from '@mui/material'
 
+const minorFont:number = 12
+const margin_tw:number = 12
+
 const useStyles = makeStyles((theme:Theme)=>({
   active:{
     backgroundColor:'#77629e',
@@ -57,14 +60,13 @@ const useStyles = makeStyles((theme:Theme)=>({
 //delete???? - was used to style footer part of menu, but now it's a single list
   footerMenu:{
     position:'relative',
-    bottom:'-12%'
+    bottom:`-${margin_tw}%`
   },
   homePageContainer:{
     position:'relative',
     display:'flex',
     flexDirection:'column',
     marginTop:60,
-    // overflow: 'hidden',
     zIndex:0
   },
 //sidebar - inactive button
@@ -104,6 +106,46 @@ const useStyles = makeStyles((theme:Theme)=>({
       zIndex:1
     }
   },
+  notifContent:{
+    flexDirection: 'column',
+    textAlign:'center',
+    height:'94%', 
+    fontSize:14
+  },
+  notifContentH:{
+    fontSize:24,
+    marginBottom:-10
+  },
+  notifContentIcon:{
+    backgroundColor:'#E5E5E5',
+    width:80,
+    height:80,
+    borderRadius:4  
+  },
+  notifHeader:{
+    display:'flex',
+    alignItems: 'center',
+    },
+  notifHText:{ 
+    position:'relative',
+    width:'100%',
+    height:'100%',
+    margin:`0px 10px 10px  10px`,
+    '& > span':{
+      display:'block',
+      textAlign:'end',
+      width:'100%',
+      height:'100%',
+      fontSize:14,
+      color:'#3581F7',
+      '&:hover':{
+        textDecoration:'underline',
+        cursor:'pointer'
+
+      }
+    }
+    // fontWeight:800
+  },
   text:{
     fontSize:9,
     "@media screen and {max-width:960px}":{
@@ -117,7 +159,7 @@ const useStyles = makeStyles((theme:Theme)=>({
     right:0,
 
     height:60,
-    fontSize:12,
+    fontSize:minorFont,
   },
   userBarButton:{
     cursor:'pointer'
@@ -135,7 +177,22 @@ const useStyles = makeStyles((theme:Theme)=>({
   userBarDropdown:{
     width:224,
     marginTop:6,
-    marginLeft:12,
+    marginLeft:margin_tw,
+  },
+  userBarNotifDropdown:{
+    width:500,
+    height:400,
+    // overflowY:'scroll'
+
+  },
+  userBarNotif:{
+    marginTop:margin_tw,
+    marginLeft:-150,
+  },
+  userBarNotifArrow:{
+    position:'absolute',
+    top:40,
+    right:237
   },
   userBarDropdownButtons:{
     width:224,
@@ -152,7 +209,7 @@ const useStyles = makeStyles((theme:Theme)=>({
     height:'100%'
   },
   userBarText:{
-    marginLeft:12,
+    marginLeft:margin_tw,
     '& > div':{
       marginTop:-5
     }

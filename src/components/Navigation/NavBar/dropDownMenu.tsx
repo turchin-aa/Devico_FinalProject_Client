@@ -3,8 +3,23 @@ import { useState, useCallback } from 'react'
 import useStyles from '../../styles/useStyle'
 
 const DropDownMenu = (props:{dropDownRef:any, anchorEl:any,handleCloseMenu:any, logged:boolean, setLogged:any})=>{
-  const menuOut = [{name:'Sign In'},{name:'Sign Up'}]
-  const menuIn = [{name:'Profile'},{name:'My events'},{name:'Sign Out'}]
+  const menuOut = [{
+    name:'Sign In',
+    path:''
+    },
+    {name:'Sign Up',
+    path:''
+    }]
+  const menuIn = [{
+    name:'Profile',
+    path:''
+    },
+    {name:'My events',
+    path:''
+    },
+    {name:'Sign Out',
+    path:''
+    }]
   
   const classes = useStyles()
   const [menu, setMenu] = useState(props.logged?menuIn:menuOut)
