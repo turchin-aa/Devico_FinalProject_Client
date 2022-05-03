@@ -1,4 +1,4 @@
-import {Toolbar, Typography, AppBar  } from '@mui/material'
+import {Toolbar, Typography, AppBar, Slide, useScrollTrigger } from '@mui/material'
 import UserBar from './userBar'
 import useStyles from '../../styles/useStyle'
 
@@ -21,7 +21,7 @@ const NavBar: React.FC = () =>{
   return(
     <HideOnScroll>
       <AppBar 
-      elevation={0}
+        elevation={0}
         className={classes.navbar}
       >
         <Toolbar>

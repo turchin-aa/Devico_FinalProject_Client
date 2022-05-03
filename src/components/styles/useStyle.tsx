@@ -1,6 +1,5 @@
 import {makeStyles} from '@mui/styles'
 import { Theme} from '@mui/material'
-import { lineHeight } from '@mui/system'
 
 const minorFont:number = 12
 const margin_tw:number = 12
@@ -55,6 +54,115 @@ const useStyles = makeStyles((theme:Theme)=>({
       fontSize:11
     }
   },
+  event:{    
+    minWidth:'75%',
+    height:500,
+    scrollSnapAlign:'start',
+    transform: 'scale(1)',
+    filter:'grayscale(100%)',
+    transition: theme.transitions.create("all", {
+      duration: '0.2s',
+    }),
+    '&:hover':{
+      filter:'grayscale(0%)',
+      transform: 'scale(1.02)'
+    },
+    '& > div':{
+      backgroundColor:'#fff',
+      height:496,
+      width:800,
+      '& > #img':{
+        border:'solid 3px #fff',
+        '& > img':{
+          height:'100%', 
+          width:'100%',
+          filter: "blur(2px)",
+        }
+      },
+      '& > div#event-container':{
+        position:'relative',
+        left:'1%',
+        marginTop:-485,
+        backgroundColor:'rgba(250, 250, 250, 0.5)',
+        borderRadius:'5px',
+        
+        width:'98%',
+        height:'95%',
+        fontSize:18,
+        '& > div#event-wrapper':{
+          width:'98%',
+          height:'95%',
+          fontSize:18,
+          '& > div, & > p, & > a':{
+            marginLeft:30,
+            // marginLeft:47,
+          },
+          '& > p#event-name':{
+            fontSize:36,
+            marginTop:-10,
+            // filter:'grayscale(0%)',
+          },
+          '& > p#event-date':{
+            fontSize:24,
+            fontWeight:600,
+            marginTop:-27,
+            '& > span#event-place':{
+              fontWeight:150,
+              fontSize:18,
+            },
+          },
+          '& > div#event-info':{
+            marginTop:150,
+            '& > p':{
+              marginTop:-20
+            }
+          },
+          '& > div#event-div':{
+            width:'90%'
+          },
+          '& > div#event-footer':{
+            display:'flex',
+            alignItems:'center',
+            justifyContent:'space-around',
+            marginTop:10,
+            '& > a':{
+              fontSize:14,
+              color:'#000',
+              marginLeft:-45,
+              textDecoration:'none',
+              '&:hover':{
+                textDecoration:'underline',
+              }
+            },
+            '& > #event-button':{
+              marginLeft:340,
+              width:162,
+              height:48,
+            }
+          },
+          
+          '& > p#event-title':{
+            marginTop:20,
+            textAlign:'center',
+            width:148,
+            backgroundColor:theme.palette.primary.light,
+            color:'#000',
+          }
+        }
+      }
+    }
+  },
+  eventContainer:{
+    width:1100,
+    height:550,
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    overflow:'auto',
+    scrollSnapType:'none',
+    scrollBehavior: 'smooth'
+  },
   flexCenter:{
     display:'flex',
     justifyContent:'center',
@@ -71,6 +179,15 @@ const useStyles = makeStyles((theme:Theme)=>({
     flexDirection:'column',
     marginTop:60,
     zIndex:0
+  },
+  homeBlocks:{
+    position:'relative',
+    right:15,
+    marginTop:100,
+    '& > #upcoming-title, & >  #events-for-last-years':{
+      display:'flex',
+      alignItems: 'center',
+    }
   },
 //sidebar - inactive button
   inactive:{
@@ -138,18 +255,18 @@ const useStyles = makeStyles((theme:Theme)=>({
     margin:`0px 10px 10px  10px`,
     '& > span':{
       display:'block',
+      marginTop:10,
       textAlign:'end',
       width:'100%',
       height:'100%',
       fontSize:14,
-      color:'#3581F7',
+      color:theme.palette.primary.main,
       '&:hover':{
         textDecoration:'underline',
         cursor:'pointer'
 
       }
     }
-    // fontWeight:800
   },
   text:{
     fontSize:9,
@@ -229,9 +346,40 @@ const useStyles = makeStyles((theme:Theme)=>({
     }
   },
   welcomeEventContainer:{
-    backgroundColor:'#000000',
-    width:487,
-    height:308
+    position:'absolute',
+    right:0,
+    top:'10%',
+    backgroundColor:'#000',
+    width:450,
+    height:285,
+    color:'#fff',
+    fontSize:20,
+    '& > div, & > p, & > a':{
+      marginLeft:47,
+    },
+    '& > p#event-name':{
+      fontSize:35,
+      marginTop:-20
+    },
+    '& > p#event-date':{
+      fontSize:24,
+      fontWeight:600,
+      marginTop:-15
+    },
+    '& > p#event-place, & > div a':{
+      fontSize:18,
+      marginTop:-30
+    },
+    '& > a':{
+      color:'#fff'
+    },
+    '& > div p':{
+      textAlign:'center',
+      marginTop:38,
+      width:148,
+      backgroundColor:'#fff',
+      color:'#000',
+    }
   }
  
 

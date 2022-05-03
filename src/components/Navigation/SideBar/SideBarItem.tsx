@@ -1,6 +1,7 @@
 import { useState, useCallback} from 'react'
 import useStyles from '../../styles/useStyle'
-import {List, ListItem,ListItemIcon} from '@mui/material'
+import {List, ListItem,Box} from '@mui/material'
+import DynamicIcon from '../../DynamicIcon';
 import clsx from 'clsx'
 import {Campaign, Article, CalendarMonth, Workspaces, Info, Contacts, LiveHelp, ScatterPlot} from '@mui/icons-material'
 
@@ -15,48 +16,48 @@ const SideBarItem = (props:{executeScroll:any}) =>{
           {
             id:1,
             text:'Upcoming events',
-            icon:<Campaign/>,
+            icon:'Campaign',
             path:'/#upcoming-events'
           },
           {
             id:2,
             text:'Events calendar',
-            icon:<CalendarMonth />,
+            icon:'CalendarMonth',
             path:'/#events-calendar'
           },
           {
             id:3,
             text:'News',
-            icon:<Article />,
+            icon:'Article',
             path:'/#news'
           },
           {
             id:4,
             text:'Partners',
-            icon:<Workspaces />,
+            icon:'Workspaces',
             path:'/#partners'
           },
           {
             id:5,
             text:'About us',
-            icon:<Info />,
+            icon:'Info',
             path:'/about-us'
           },
           { id:6,
             text:'Contact us',
-            icon:<Contacts />,
+            icon:'Contacts',
             path:'/contact-us'
           },
           { 
             id:7,
             text:'FAQ',
-            icon:<LiveHelp />,
+            icon:'LiveHelp',
             path:'/faq'
           },
           {
             id:8,
             text:'Privasy & Terms of use',
-            icon:<ScatterPlot />,
+            icon:'ScatterPlot',
             path:'/ptou'
           }
         ]
@@ -81,7 +82,7 @@ const SideBarItem = (props:{executeScroll:any}) =>{
               toggleButton(index)
               props.executeScroll(item.path)
             }} >  
-                  {item.icon}
+                <DynamicIcon iconName={item.icon} className=""/>  
                 <p className={classes.text}>{item.text}</p>
             </ListItem>
           ))}

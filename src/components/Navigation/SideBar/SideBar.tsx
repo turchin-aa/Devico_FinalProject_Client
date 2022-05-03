@@ -7,7 +7,7 @@ import {Drawer, CardMedia, Link} from '@mui/material'
 const scrollToRef = (ref:any) => {
   console.log(ref)
   window.scrollTo({
-  top: ref.current.offsetTop+70,
+  top: ref.current.offsetTop,
   behavior: "smooth"
 })}
 

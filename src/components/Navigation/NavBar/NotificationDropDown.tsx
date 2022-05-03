@@ -21,7 +21,6 @@ const NotificationDropDown = (props:{notifDropDownRef:any, anchorEl:any,handleCl
           </div>
       )
     }
-
   }
 
   return(
