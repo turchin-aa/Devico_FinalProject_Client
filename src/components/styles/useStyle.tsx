@@ -105,7 +105,8 @@ const useStyles = makeStyles((theme:Theme)=>({
   },
   navbar:{
     '&&':{
-      backgroundColor:'transparent',
+      backgroundColor:'rgba(255,255,255,0.8)',
+      boxShadow:'1px 1px 1px 1px rgba(0, 0, 0, 0.1)',
       height:60,
       zIndex:1
     }

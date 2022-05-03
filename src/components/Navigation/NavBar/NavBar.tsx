@@ -1,14 +1,25 @@
-import {CssBaseline,Toolbar, Typography, AppBar  } from '@mui/material'
+import {Toolbar, Typography, AppBar  } from '@mui/material'
 import UserBar from './userBar'
 import useStyles from '../../styles/useStyle'
 
+interface Props{
+  children: React.ReactElement
+}
+
+const HideOnScroll = ({children}:Props) =>{
+  const trigger = useScrollTrigger()
+  return(
+    <Slide appear={false} direction='down' in={!trigger}>
+      {children}
+    </Slide>
+  )
+}
 
 const NavBar: React.FC = () =>{
   const classes = useStyles()
   
   return(
-    <>
-    <CssBaseline />
+    <HideOnScroll>
       <AppBar 
       elevation={0}
         className={classes.navbar}
@@ -19,7 +30,7 @@ const NavBar: React.FC = () =>{
           </Typography>
         </Toolbar>
       </AppBar>
-    </>
+    </HideOnScroll>
   )
 }
 
