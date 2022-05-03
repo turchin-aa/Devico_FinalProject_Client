@@ -178,7 +178,8 @@ const useStyles = makeStyles((theme:Theme)=>({
     display:'flex',
     flexDirection:'column',
     marginTop:60,
-    zIndex:0
+    zIndex:0,
+    scrollBehavior:'smooth'
   },
   homeBlocks:{
     position:'relative',
@@ -187,6 +188,7 @@ const useStyles = makeStyles((theme:Theme)=>({
     '& > #upcoming-title, & >  #events-for-last-years':{
       display:'flex',
       alignItems: 'center',
+      // marginTop:20
     }
   },
 //sidebar - inactive button
@@ -197,7 +199,7 @@ const useStyles = makeStyles((theme:Theme)=>({
 //sidebar - list item
   item:{
     flexDirection:'column',
-    height:60,
+    height:62,
     cursor: 'pointer',
     
     transition: theme.transitions.create("background-color", {
@@ -270,6 +272,7 @@ const useStyles = makeStyles((theme:Theme)=>({
   },
   text:{
     fontSize:9,
+    marginTop:2,
     textAlign:'center',
     "@media screen and {max-width:960px}":{
          display: 'none'
@@ -348,9 +351,9 @@ const useStyles = makeStyles((theme:Theme)=>({
   welcomeEventContainer:{
     position:'absolute',
     right:0,
-    top:'10%',
+    top:'8%',
     backgroundColor:'#000',
-    width:450,
+    width:500,
     height:285,
     color:'#fff',
     fontSize:20,
