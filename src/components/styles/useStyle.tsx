@@ -183,7 +183,7 @@ const useStyles = makeStyles((theme:Theme)=>({
     position:'relative',
     right:15,
     marginTop:100,
-    '& > #upcoming-title, & >  events-for-last-years':{
+    '& > #upcoming-title, & >  #events-for-last-years':{
       display:'flex',
       alignItems: 'center',
     }
