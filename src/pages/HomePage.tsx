@@ -1,9 +1,10 @@
-import React from 'react'
-
-import Welcome from '../components/Welcome'
-import UpcomingEvents from '../components/UpcomingEvents'
-import EventsCalendar from '../components/EventCalendarComponent'
-import News from '../components/NewsComponent'
+import Welcome from '../components/HomePage/Welcome'
+import UpcomingEvents from '../components/HomePage/UpcomingEvents/UpcomingEvents'
+import EventsForLastYears from '../components/HomePage/EventsForLastYears/EventsForLastYears'
+import EventsCalendar from '../components/HomePage/EventCalendar/EventCalendarComponent'
+import Partners from '../components/HomePage/Partners/Partners'
+import AllEvents from '../components/HomePage/AllEvents/AllEvents'
+import News from '../components/HomePage/News/NewsComponent'
 import useStyles from '../components/styles/useStyle'
 
 
@@ -17,7 +18,10 @@ const HomePage = (props:{homeRef:any, upcomingRef:any,
         <Welcome />
         <UpcomingEvents upcomingRef={props.upcomingRef}/>
         <EventsCalendar calendarRef={props.calendarRef}/>
+        <AllEvents/>
         <News newsRef={props.newsRef}/>
+        <Partners partnersRef={props.partnersRef}/>
+        <EventsForLastYears/>
     </div>
   )
 }
