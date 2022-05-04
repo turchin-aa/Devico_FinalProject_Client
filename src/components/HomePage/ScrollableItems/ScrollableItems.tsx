@@ -64,7 +64,7 @@ const ScrollableItems = ()=>{
       {/* <Scrollbars style={{width:'100%'}}></Scrollbars> */}
       {next_event.map((item,index)=>{
         return(
-        <div key={index} className={clsx(classes.event, classes.flexCenter)}>
+        <div key={index} className={clsx(classes.event, classes.filterGreyScale, classes.flexCenter)}>
           <div >
             <CardMedia sx={{height:'100%', width:'100%'}} id='img'>
               <img src={item.img} alt="event img" />
