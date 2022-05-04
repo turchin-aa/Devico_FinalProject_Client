@@ -1,4 +1,4 @@
-import * as React from 'react'
+import {useState} from 'react'
 import {Table,TableBody, TableCell,TableContainer,
   TableHead,TableRow, TablePagination, Paper, Box} from '@mui/material'
 import useStyles from '../../styles/useStyle'
@@ -59,8 +59,8 @@ import useStyles from '../../styles/useStyle'
   ]
   
 const AllEventsTable = ()=> {
-    const [page, setPage] = React.useState(0)
-    const [rowsPerPage, setRowsPerPage] = React.useState(6)
+    const [page, setPage] = useState(0)
+    const [rowsPerPage, setRowsPerPage] = useState(6)
     const classes = useStyles()
   
     const handleChangePage = (event: unknown, newPage: number) => {
