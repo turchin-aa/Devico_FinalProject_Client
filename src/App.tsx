@@ -1,33 +1,26 @@
-<<<<<<< HEAD
-import React from "react"
-import "./App.css"
-
-function App() {
-  return <div></div>
-=======
-import { useRef, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Theme, createTheme, ThemeProvider } from '@mui/material'
-import HomePage from './pages/HomePage'
-import PageNotFound from './pages/404'
-import FAQ from './pages/FAQ'
-import { makeStyles } from '@mui/styles'
-import SideBar from './components/Navigation/SideBar/SideBar'
-import NavBar from './components/Navigation/NavBar/NavBar'
+import { useRef, useState } from "react"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { Theme, createTheme, ThemeProvider } from "@mui/material"
+import HomePage from "./pages/HomePage"
+import PageNotFound from "./pages/404"
+import FAQ from "./pages/FAQ"
+import { makeStyles } from "@mui/styles"
+import SideBar from "./components/Navigation/SideBar/SideBar"
+import NavBar from "./components/Navigation/NavBar/NavBar"
 
 const theme = createTheme({
   spacing: [0, 2, 3, 5, 8],
   palette: {
     primary: {
-      main: '#9470CE',
-      light: '#B19CD8',
+      main: "#9470CE",
+      light: "#B19CD8",
     },
   },
 })
 
 const useStyles = makeStyles((theme: Theme) => ({
   appContainer: {
-    display: 'flex',
+    display: "flex",
   },
 }))
 
@@ -75,7 +68,6 @@ const App: React.FC = () => {
       </Router>
     </ThemeProvider>
   )
->>>>>>> feature-home-page
 }
 
 export default App
