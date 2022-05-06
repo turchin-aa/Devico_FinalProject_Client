@@ -7,6 +7,8 @@ import FAQ from "./pages/FAQ"
 import { makeStyles } from "@mui/styles"
 import SideBar from "./components/Navigation/SideBar/SideBar"
 import NavBar from "./components/Navigation/NavBar/NavBar"
+import SignUp from './components/sign-up/SignUp'
+import SignIn from './components/sign-in/SignIn'
 
 const theme = createTheme({
   spacing: [0, 2, 3, 5, 8],
@@ -34,6 +36,7 @@ const App: React.FC = () => {
   const partnersRef = useRef(null)
 
   const [logged, setLogged] = useState(true)
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -67,6 +70,10 @@ const App: React.FC = () => {
         </div>
       </Router>
     </ThemeProvider>
+    // <>
+    //   <SignIn />
+    //   <SignUp />
+    // </>
   )
 }
 
