@@ -35,7 +35,7 @@ const App: React.FC = () => {
   const newsRef = useRef(null)
   const partnersRef = useRef(null)
 
-  const [logged, setLogged] = useState(false)
+  const [logged, setLogged] = useState(true)
 
   return (
     <ThemeProvider theme={theme}>
