@@ -173,7 +173,7 @@ export default function SignUp() {
               <Grid item>
                 <LinkTypography>
                   Already a member? &nbsp;
-                  <SignLink href="#">Sign in</SignLink>
+                  <SignLink href="/signin">Sign in</SignLink>
                 </LinkTypography>
               </Grid>
             </Grid>

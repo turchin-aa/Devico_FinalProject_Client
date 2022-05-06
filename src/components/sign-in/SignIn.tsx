@@ -159,7 +159,7 @@ export default function SignIn() {
               <Grid item>
                 <LinkTypography>
                   No account? &nbsp;
-                  <SignLink href="#">Sign up</SignLink>
+                  <SignLink href="/signup">Sign up</SignLink>
                 </LinkTypography>
               </Grid>
             </Grid>

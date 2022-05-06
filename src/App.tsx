@@ -1,12 +1,12 @@
-import { useRef, useState } from "react"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { Theme, createTheme, ThemeProvider } from "@mui/material"
-import HomePage from "./pages/HomePage"
-import PageNotFound from "./pages/404"
-import FAQ from "./pages/FAQ"
-import { makeStyles } from "@mui/styles"
-import SideBar from "./components/Navigation/SideBar/SideBar"
-import NavBar from "./components/Navigation/NavBar/NavBar"
+import { useRef, useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Theme, createTheme, ThemeProvider } from '@mui/material'
+import HomePage from './pages/HomePage'
+import PageNotFound from './pages/404'
+import FAQ from './pages/FAQ'
+import { makeStyles } from '@mui/styles'
+import SideBar from './components/Navigation/SideBar/SideBar'
+import NavBar from './components/Navigation/NavBar/NavBar'
 import SignUp from './components/sign-up/SignUp'
 import SignIn from './components/sign-in/SignIn'
 
@@ -14,15 +14,15 @@ const theme = createTheme({
   spacing: [0, 2, 3, 5, 8],
   palette: {
     primary: {
-      main: "#9470CE",
-      light: "#B19CD8",
+      main: '#9470CE',
+      light: '#B19CD8',
     },
   },
 })
 
 const useStyles = makeStyles((theme: Theme) => ({
   appContainer: {
-    display: "flex",
+    display: 'flex',
   },
 }))
 
@@ -35,8 +35,7 @@ const App: React.FC = () => {
   const newsRef = useRef(null)
   const partnersRef = useRef(null)
 
-  const [logged, setLogged] = useState(true)
-
+  const [logged, setLogged] = useState(false)
 
   return (
     <ThemeProvider theme={theme}>
@@ -64,6 +63,8 @@ const App: React.FC = () => {
                 />
               }
             />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>

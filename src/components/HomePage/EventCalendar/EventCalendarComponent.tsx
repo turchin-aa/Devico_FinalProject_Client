@@ -1,6 +1,5 @@
 import { forwardRef } from 'react'
 import { Calendar } from '../../Calendar/Calendar'
-import { FullAppCalendar } from './FullCalendar'
 import useStyles from '../../styles/useStyle'
 
 const EventsCalendar = forwardRef((props: { calendarRef: any }) => {
@@ -13,7 +12,6 @@ const EventsCalendar = forwardRef((props: { calendarRef: any }) => {
 
       <div>
         <Calendar />
-        <FullAppCalendar />
       </div>
     </div>
   )

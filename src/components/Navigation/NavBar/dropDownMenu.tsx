@@ -1,5 +1,6 @@
 import { Menu, MenuItem } from '@mui/material'
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import useStyles from '../../styles/useStyle'
 
 const DropDownMenu = (props: {
@@ -12,9 +13,9 @@ const DropDownMenu = (props: {
   const menuOut = [
     {
       name: 'Sign In',
-      path: '',
+      path: '/signin',
     },
-    { name: 'Sign Up', path: '' },
+    { name: 'Sign Up', path: '/signup' },
   ]
   const menuIn = [
     {
@@ -27,18 +28,20 @@ const DropDownMenu = (props: {
 
   const classes = useStyles()
   const [menu, setMenu] = useState(props.logged ? menuIn : menuOut)
-
-  const handleClick = (name: string) => {
+  const navigate = useNavigate()
+  const handleClick = (name: string, path: string) => {
     switch (name) {
       case 'Sign Out':
-      case 'Sign In':
-        // props.handleCloseMenu()
         props.setLogged(!props.logged)
         if (props.logged) {
           setMenu(menuOut)
         } else {
           setMenu(menuIn)
         }
+        break
+      case 'Sign In':
+      case 'Sign Up':
+        navigate(path)
         break
       default:
         break
@@ -58,7 +61,7 @@ const DropDownMenu = (props: {
           component="button"
           key={index}
           className={classes.userBarDropdownButtons}
-          onClick={() => handleClick(item.name)}
+          onClick={() => handleClick(item.name, item.path)}
         >
           {item.name}
         </MenuItem>
