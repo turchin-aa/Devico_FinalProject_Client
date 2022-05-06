@@ -3,10 +3,13 @@ import { useCallback } from 'react'
 
 export const useHttp = () => {
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
 
   const request = useCallback(
     async (url: string, method: string = 'GET', body?: object | string, headers?: HeadersInit) => {
+      if (method === 'GET' && body) {
+        return
+      }
+
       headers = new Headers()
       setLoading(true)
       try {
@@ -23,13 +26,10 @@ export const useHttp = () => {
         setLoading(false)
       } catch (e: any) {
         setLoading(false)
-        setError(e.message)
       }
     },
     [],
   )
 
-  const clearError = () => setError(null)
-
-  return { loading, request, error, clearError }
+  return { loading, request }
 }
