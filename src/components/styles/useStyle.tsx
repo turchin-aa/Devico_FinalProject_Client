@@ -80,30 +80,28 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'space-evenly',
     fontSize: 12,
   },
-
   //sidebar drawer
   container: {
     '@media (min-width: 400px)': {
-      width: '11%',
+      width: 55,
       zIndex: 1,
     },
     '@media (min-width: 500px)': {
-      width: '9%',
+      width: 60,
     },
     '@media (min-width: 600px)': {
-      width: '13.5%',
+      width: 93,
       zIndex: 2,
     },
 
-    '@media (min-width: 710px)': {
-      width: '12.5%',
-    },
-
     '@media (min-width: 800px)': {
-      width: '10.5%',
+      width: '12%',
+    },
+    '@media (min-width: 930px)': {
+      width: '10%',
     },
     '@media (min-width:1024px)': {
-      width: '8.5%',
+      width: 110,
     },
     '@media (min-width: 1240px)': {
       width: '10%',
@@ -114,6 +112,10 @@ const useStyles = makeStyles((theme: Theme) => ({
       top: 0,
     },
     position: 'sticky',
+  },
+  calendarWrap: {
+    position: 'relative',
+    width: '100%',
   },
   calendarHeader: {
     display: 'flex',
@@ -157,196 +159,158 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   event: {
     '@media (min-width: 400px)': {
-      height: 200,
+      height: 350,
     },
     '@media (min-width: 600px)': {
-      height: 400,
+      height: 350,
     },
     '@media (min-width: 1024px)': {
       height: 400,
     },
     scrollSnapAlign: 'start',
     '& > div': {
-      '@media (min-width: 400px)': {
-        height: 300,
-        width: '100%',
-      },
-      '@media (min-width: 481px)': {
-        height: 300,
-        width: '100%',
-      },
-
-      height: 390,
-      width: '100%',
+      position: 'relative',
+      height: '100%',
       '& > #img': {
+        width: '100%',
+        height: '100%',
         border: `solid 3px ${white}`,
         '& > img': {
+          minHeight: 200,
           width: '100%',
           height: '100%',
           objectFit: 'cover',
           filter: 'blur(2px)',
         },
       },
-      '& > div#event-container': {
+    },
+  },
+  eventContent: {
+    position: 'absolute',
+    textAlign: 'start',
+    borderRadius: '5px',
+    top: 10,
+    bottom: 5,
+    right: 10,
+    left: 10,
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    color: black,
+    padding: `${10}px ${20}px 0px ${20}px`,
+    fontSize: 18,
+    '@media (min-width: 400px)': {
+      fontSize: 12,
+    },
+    '@media (min-width: 600px)': {
+      fontSize: 16,
+    },
+    '@media (min-width: 930px)': {
+      fontSize: 18,
+    },
+
+    '& > p#event-name': {
+      fontWeight: 700,
+      marginTop: -10,
+      '@media (min-width: 400px)': {
+        fontSize: 28,
+      },
+      '@media (min-width: 930px)': {
+        fontSize: 36,
+      },
+    },
+
+    '& > p#event-date': {
+      '@media (min-width: 400px)': {
+        fontSize: 16,
+      },
+      '@media (min-width: 600px)': {
+        fontSize: 20,
+      },
+      '@media (min-width: 1240px)': {
+        fontSize: 26,
+        marginTop: -40,
+      },
+      fontWeight: 600,
+      marginTop: -30,
+      '& > span#event-place': {
         '@media (min-width: 400px)': {
-          marginTop: '-55%',
-          marginLeft: 4,
-          height: '63%',
+          fontSize: 12,
         },
-        // '@media (min-width: 480px)': {
-        //   marginTop: -230,
-        //   marginLeft: 3,
-        // },
-        // '@media (min-width: 500px)': {
-        //   marginTop: -245,
-        //   marginLeft: 5,
-        //   height: '80%',
-        // },
-        // '@media (min-width: 570px)': {
-        //   marginTop: -340,
-        //   marginLeft: 5,
-        //   height: '80%',
-        // },
         '@media (min-width: 600px)': {
-          marginTop: '-45%',
-          marginLeft: 5,
-          height: '100%',
-        },
-        borderRadius: '5px',
-        width: '99%',
-        height: '95%',
-        fontSize: 18,
-
-        '& > div#event-wrapper': {
-          backgroundColor: 'rgba(255,255,255,0.5)',
-
-          '@media (min-width: 400px)': {
-            fontSize: 12,
-            width: '100%',
-            height: '95%',
-          },
-          '@media (min-width: 1240px)': {
-            fontSize: 16,
-            height: 380,
-          },
-
-          position: 'relative',
-          width: '98%',
-          height: '95%',
           fontSize: 18,
-          '& > div, & > p, & > a': {
-            '@media (min-width: 400px)': {
-              marginLeft: 20,
-            },
-            marginLeft: 30,
-          },
-          '& > p#event-name': {
-            '@media (min-width: 400px)': {
-              fontSize: 20,
-            },
-            '@media (min-width: 1240px)': {
-              fontSize: 36,
-              marginTop: -5,
-            },
-
-            marginTop: -10,
-          },
-          '& > p#event-date': {
-            '@media (min-width: 400px)': {
-              fontSize: 16,
-            },
-            '@media (min-width: 1240px)': {
-              fontSize: 24,
-            },
-
-            fontWeight: 600,
-            marginTop: -27,
-            '& > span#event-place': {
-              '@media (min-width: 400px)': {
-                fontSize: 12,
-              },
-              '@media (min-width: 1240px)': {
-                fontSize: 18,
-              },
-              fontWeight: 150,
-            },
-          },
-          '& > div#event-info': {
-            '@media (min-width: 400px)': {
-              marginTop: 40,
-            },
-            '@media (min-width: 1240px)': {
-              marginTop: 100,
-            },
-
-            '& > p': {
-              '@media (min-width: 400px)': {
-                marginTop: -15,
-              },
-              '@media (min-width: 1240px)': {
-                // marginTop: -20,
-              },
-            },
-          },
-          '& > div#event-div': {
-            width: '90%',
-          },
-          '& > div#event-footer': {
-            '@media (min-width: 400px)': {
-              marginTop: 0,
-            },
-            '@media (min-width: 1240px)': {
-              marginTop: 20,
-            },
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            marginTop: 10,
-            '& > a': {
-              '@media (min-width: 400px)': {
-                fontSize: 10,
-                marginLeft: -10,
-              },
-              '@media (min-width: 1240px)': {
-                fontSize: 14,
-                marginLeft: -70,
-              },
-
-              color: black,
-
-              textDecoration: 'none',
-              '&:hover': {
-                textDecoration: 'underline',
-              },
-            },
-            '& > #event-button': {
-              '@media (min-width: 400px)': {
-                fontSize: 10,
-                width: 100,
-                height: 30,
-              },
-              '@media (min-width: 1240px)': {
-                fontSize: 14,
-                width: 162,
-                height: 48,
-                marginLeft: 400,
-              },
-            },
-          },
-
-          '& > p#event-title': {
-            '@media (min-width: 400px)': {
-              width: 100,
-              marginTop: 10,
-            },
-            marginTop: 20,
-            textAlign: 'center',
-            width: 148,
-            backgroundColor: theme.palette.primary.light,
-            color: black,
-          },
+        },
+        '@media (min-width: 1240px)': {
+          fontSize: 20,
+        },
+        fontWeight: 150,
+      },
+    },
+    '& > div#event-info': {
+      '@media (min-width: 400px)': {
+        fontSize: 11,
+        marginTop: 130,
+      },
+      '@media (min-width: 419px)': {
+        fontSize: 12,
+        marginTop: 130,
+      },
+      '@media (min-width: 600px)': {
+        fontSize: 16,
+        marginTop: 70,
+      },
+      '@media (min-width: 930px)': {
+        fontSize: 18,
+        marginTop: 50,
+      },
+      '@media (min-width: 1024px)': {
+        marginTop: 70,
+      },
+      '& > p': {
+        marginTop: -15,
+      },
+    },
+    '& > div#event-footer': {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      '@media (min-width: 400px)': {
+        marginTop: 10,
+      },
+      '@media (min-width: 600px)': {
+        marginTop: 15,
+      },
+      '@media (min-width: 930px)': {
+        marginTop: 7,
+      },
+      '@media (min-width: 1024px)': {
+        marginTop: 20,
+      },
+      '& > #event-button': {
+        fontSize: 14,
+        width: 162,
+        height: 48,
+      },
+      '& > a': {
+        textDecoration: 'none',
+        color: black,
+        fontSize: 14,
+        '&:hover': {
+          textDecoration: 'underline',
         },
       },
+    },
+
+    '& > p#event-title': {
+      '@media (min-width: 400px)': {
+        width: 100,
+      },
+      '@media (min-width: 600px)': {
+        width: 120,
+      },
+      '@media (min-width: 930px)': {
+        width: 148,
+      },
+      textAlign: 'center',
+      backgroundColor: theme.palette.primary.light,
     },
   },
   eventContainer: {
@@ -380,7 +344,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       height: 300,
     },
     '@media (min-width: 930px)': {
-      //
       width: 800,
       height: 300,
     },
@@ -416,22 +379,28 @@ const useStyles = makeStyles((theme: Theme) => ({
       transform: 'scale(1.02)',
     },
   },
-  //delete???? - was used to style footer part of menu, but now it's a single list
-  footerMenu: {
-    position: 'relative',
-    bottom: `-${margin_tw}%`,
-  },
   homePageContainer: {
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
+    marginRight: 110,
     marginTop: 60,
     zIndex: 0,
+    width: '100%',
+    height: '100%',
     scrollBehavior: 'smooth',
   },
   homeBlocks: {
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    textAlign: 'center',
     marginTop: 20,
     marginBottom: 20,
+    '& > div#partners, & > div#news-title': {
+      textAlign: 'start',
+    },
   },
   blockTitle: {
     display: 'flex',
@@ -708,21 +677,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   userBarDropdown: {
-    '@media (min-width: 400px)': {
-      width: 100,
-    },
-    '@media (min-width: 570px)': {
-      width: 224,
-    },
-
-    // width: 224,
+    width: 224,
     marginTop: 6,
     marginLeft: margin_tw,
   },
   userBarNotifDropdown: {
     '@media (min-width: 400px)': {
       width: 300,
-      height: 360,
+      height: '100%',
     },
     '@media (min-width: 570px)': {
       width: 500,
@@ -741,7 +703,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       marginRight: '50%',
     },
     marginTop: margin_tw,
-    // marginLeft: -150,
   },
   userBarNotifArrow: {
     position: 'absolute',
@@ -810,7 +771,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       height: 350,
     },
     '@media (min-width: 930px)': {
-      //
       marginLeft: 50,
       width: 533,
       height: 400,

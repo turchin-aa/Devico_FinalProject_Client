@@ -10,11 +10,12 @@ const CalendarGrid = (props: { startDay; today }) => {
   const daysArray = [...Array(totalDays)].map(() => day.add(1, 'day').clone())
   const weekArray = [...Array(7)].map(() => day.day(1, 'day').clone())
 
-  const isSelectedMoth = (day) => moment().isSame(day, 'month')
+  const isSelectedMoth = day => {
+    return moment(props.today).isSame(day, 'month')
+  }
 
-  console.log(props.today)
   return (
-    <div>
+    <div className={classes.calendarWrap}>
       <GridWrapper>
         {[...Array(7)].map((_, index) => {
           return (
@@ -29,19 +30,18 @@ const CalendarGrid = (props: { startDay; today }) => {
         })}
       </GridWrapper>
       <GridWrapper>
-        {daysArray.map((dayItem) => {
+        {daysArray.map(dayItem => {
           return (
             <CalendarCell
               key={dayItem.unix()}
               isWeekEnd={dayItem.day() === 6 || dayItem.day() === 0}
-              isSelectedMoth={isSelectedMoth}
+              isSelectedMoth={isSelectedMoth(dayItem)}
             >
               <div className={classes.rowInCell}>
                 <Day
                   className={classes.flexCenter}
-                  current={props.today === dayItem.format('DDMMYYYY')}
+                  current={moment().format('DDMMYYYY') === dayItem.format('DDMMYYYY')}
                 >
-                  {' '}
                   {dayItem.format('D')}
                 </Day>
               </div>

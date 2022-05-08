@@ -15,6 +15,8 @@ interface Column {
   id: 'start' | 'discipline' | 'status' | 'event' | 'location'
   label: string
   minWidth?: number
+  maxWidth?: number
+  width?: string | number
   align?: 'center' | 'right'
   format?: (value: number) => string
 }
@@ -24,31 +26,33 @@ const columns: Column[] = [
     id: 'start',
     label: 'Start',
     minWidth: 5,
+    maxWidth: 20,
     align: 'center',
   },
   {
     id: 'discipline',
     label: 'Discipline',
     minWidth: 10,
-    // maxWidth: 150,
+    maxWidth: 50,
   },
   {
     id: 'status',
     label: 'Status',
     minWidth: 10,
-    // maxWidth: 100,
   },
   {
     id: 'event',
     label: 'Event',
     minWidth: 5,
-    // maxWidth: 170,
+    width: '40%',
+    maxWidth: 30,
   },
   {
     id: 'location',
     label: 'Location',
     minWidth: 5,
-    // maxWidth: 170,
+    // width: 'calc(5px+0.8vw)',
+    maxWidth: 30,
   },
 ]
 
@@ -65,7 +69,7 @@ const createData = (
   discipline: string,
   status: string,
   event: string,
-  location: string
+  location: string,
 ): Data => {
   return { start, discipline, status, event, location }
 }
@@ -76,56 +80,56 @@ const rows = [
     'Digital motorsport',
     'National Seria',
     'Drive Contact Race, a virtual stage of the national seria',
-    'Kharkiv. Maidan constitution'
+    'Kharkiv. Maidan constitution',
   ),
   createData(
     '07.12',
     'Digital motorsport',
     'National Seria',
     'Drive Contact Race, a virtual stage of the national seria',
-    'Kharkiv. Maidan constitution'
+    'Kharkiv. Maidan constitution',
   ),
   createData(
     '07.12',
     'Digital motorsport',
     'National Seria',
     'Drive Contact Race, a virtual stage of the national seria',
-    'Kharkiv. Maidan constitution'
+    'Kharkiv. Maidan constitution',
   ),
   createData(
     '07.12',
     'Digital motorsport',
     'National Seria',
     'Drive Contact Race, a virtual stage of the national seria',
-    'Kharkiv. Maidan constitution'
+    'Kharkiv. Maidan constitution',
   ),
   createData(
     '07.12',
     'Digital motorsport',
     'National Seria',
     'Drive Contact Race, a virtual stage of the national seria',
-    'Kharkiv. Maidan constitution'
+    'Kharkiv. Maidan constitution',
   ),
   createData(
     '07.12',
     'Digital motorsport',
     'National Seria',
     'Drive Contact Race, a virtual stage of the national seria',
-    'Kharkiv. Maidan constitution'
+    'Kharkiv. Maidan constitution',
   ),
   createData(
     '07.12',
     'Digital motorsport',
     'National Seria',
     'Drive Contact Race, a virtual stage of the national seria',
-    'Kharkiv. Maidan constitution'
+    'Kharkiv. Maidan constitution',
   ),
   createData(
     '07.12',
     'Digital motorsport',
     'National Seria',
     'Drive Contact Race, a virtual stage of the national seria',
-    'Kharkiv. Maidan constitution'
+    'Kharkiv. Maidan constitution',
   ),
 ]
 
@@ -138,7 +142,7 @@ const AllEventsTable = () => {
     (event: unknown, newPage: number) => {
       setPage(newPage - 1)
     },
-    [page]
+    [page],
   )
 
   const pageCount = () => {
@@ -167,6 +171,8 @@ const AllEventsTable = () => {
                     backgroundColor: '#9470CE',
                     color: '#fff',
                     minWidth: column.minWidth,
+                    maxWidth: column.maxWidth,
+                    width: column.width,
                     fontSize: 'calc(4px + 0.8vw)',
                   }}
                 >
@@ -176,30 +182,26 @@ const AllEventsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={0} key={row.event}>
-                    {columns.map((column) => {
-                      const value = row[column.id]
-                      return (
-                        <TableCell
-                          style={{
-                            fontSize: 'calc(4px + 0.8vw)',
-                          }}
-                          key={column.id}
-                          align={column.align}
-                        >
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      )
-                    })}
-                  </TableRow>
-                )
-              })}
+            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
+              return (
+                <TableRow hover role="checkbox" tabIndex={0} key={row.event}>
+                  {columns.map(column => {
+                    const value = row[column.id]
+                    return (
+                      <TableCell
+                        style={{
+                          fontSize: 'calc(4px + 0.8vw)',
+                        }}
+                        key={column.id}
+                        align={column.align}
+                      >
+                        {column.format && typeof value === 'number' ? column.format(value) : value}
+                      </TableCell>
+                    )
+                  })}
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>

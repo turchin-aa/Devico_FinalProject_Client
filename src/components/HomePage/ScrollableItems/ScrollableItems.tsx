@@ -123,20 +123,12 @@ const ScrollableItems = () => {
           return (
             <div
               key={index}
-              id="partner-logo"
-              className={clsx(
-                classes.filterGreyScale,
-                classes.event,
-                classes.flexCenter
-              )}
+              className={clsx(classes.filterGreyScale, classes.event, classes.flexCenter)}
             >
               <div>
                 <div id="img">
                   <img src={item.img} alt="event img" />
-                </div>
-                <div id="event-container" className={classes.flexCenter}>
-                  {/* <div className={classes.background}></div> */}
-                  <div id="event-wrapper">
+                  <div className={classes.eventContent}>
                     <p id="event-title">{item.title.toUpperCase()}</p>
                     <p id="event-name">{item.name}</p>
                     <p id="event-date">
@@ -147,9 +139,7 @@ const ScrollableItems = () => {
                       <p id="event-status">Status: {item.status}</p>
                       <p id="event-series">Series: {item.series}</p>
                     </div>
-                    <div id="event-div">
-                      <Divider variant="middle" />
-                    </div>
+                    <Divider variant="middle" />
                     <div id="event-footer">
                       <a href="#">View details</a>
                       <Button id="event-button" variant="contained" href="">

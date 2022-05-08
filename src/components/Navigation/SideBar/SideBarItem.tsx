@@ -4,7 +4,7 @@ import { List, ListItem } from '@mui/material'
 import DynamicIcon from '../../DynamicIcon'
 import clsx from 'clsx'
 
-const SideBarItem = (props: { executeScroll: any }) => {
+const SideBarItem = ({ executeScroll }: { executeScroll: (path: string) => void }) => {
   const classes = useStyles()
 
   const [list_item, setState] = useState({
@@ -62,16 +62,14 @@ const SideBarItem = (props: { executeScroll: any }) => {
     (index: number) => {
       setState({ ...list_item, activeButton: list_item.objects[index] })
     },
-    [list_item]
+    [list_item],
   )
 
   const toggleActiveClass = useCallback(
     (index: number) => {
-      return list_item.objects[index] === list_item.activeButton
-        ? classes.active
-        : classes.inactive
+      return list_item.objects[index] === list_item.activeButton ? classes.active : classes.inactive
     },
-    [list_item]
+    [list_item],
   )
 
   return (
@@ -80,14 +78,10 @@ const SideBarItem = (props: { executeScroll: any }) => {
         {list_item.objects.map((item, index) => (
           <ListItem
             key={index}
-            className={clsx(
-              toggleActiveClass(index),
-              classes.item,
-              classes.flexCenter
-            )}
+            className={clsx(toggleActiveClass(index), classes.item, classes.flexCenter)}
             onClick={() => {
               toggleButton(index)
-              props.executeScroll(item.path)
+              executeScroll(item.path)
             }}
           >
             <div className={classes.iconAlign}>

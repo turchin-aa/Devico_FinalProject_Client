@@ -15,6 +15,7 @@ const settings = {
     {
       breakpoint: 1024,
       settings: {
+        centerPadding: '100px',
         slidesToShow: 3,
         slidesToScroll: 3,
       },
@@ -22,6 +23,7 @@ const settings = {
     {
       breakpoint: 600,
       settings: {
+        centerPadding: '70px',
         slidesToShow: 2,
         slidesToScroll: 2,
       },
@@ -29,6 +31,7 @@ const settings = {
     {
       breakpoint: 480,
       settings: {
+        centerPadding: '100px',
         slidesToShow: 1,
         slidesToScroll: 1,
         slidesPerRow: 1,
@@ -104,19 +107,13 @@ const PartnersList = () => {
   const classes = useStyles()
   return (
     <div>
-      <Slider
-        style={{ maxWidth: '86vw', width: '100%', overflow: 'hidden' }}
-        {...settings}
-      >
+      <Slider style={{ maxWidth: '86vw', width: '100%', overflow: 'hidden' }} {...settings}>
         {partners_list.map((item, index) => {
           return (
             <div
               key={index}
               id="partner-logo"
-              className={clsx(
-                classes.filterGreyScale,
-                classes.partnersContainer
-              )}
+              className={clsx(classes.filterGreyScale, classes.partnersContainer)}
             >
               <img src={item.logo} alt={item.name} />
             </div>
