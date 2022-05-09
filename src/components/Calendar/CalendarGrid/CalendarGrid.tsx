@@ -1,17 +1,21 @@
 import useStyles from '../../styles/useStyle'
 import { CalendarCell, Day, GridWrapper } from '../../styles/styledComponent'
-import moment from 'moment'
+import moment, { Moment } from 'moment'
 
-const CalendarGrid = (props: { startDay; today }) => {
-  const day = props.startDay.clone()
+interface CalendarGridTypes {
+  startDay: Moment
+  today: Moment
+}
+
+const CalendarGrid = ({ startDay, today }: CalendarGridTypes) => {
+  const day = startDay.clone()
 
   const classes = useStyles()
   const totalDays: number = 42
   const daysArray = [...Array(totalDays)].map(() => day.add(1, 'day').clone())
-  const weekArray = [...Array(7)].map(() => day.day(1, 'day').clone())
 
   const isSelectedMoth = day => {
-    return moment(props.today).isSame(day, 'month')
+    return moment(today).isSame(day, 'month')
   }
 
   return (

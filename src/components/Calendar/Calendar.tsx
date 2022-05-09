@@ -9,6 +9,8 @@ const Calendar = () => {
 
   const [today, setToday] = useState(moment())
 
+  console.log(typeof moment())
+
   const [startDay, setStartDay] = useState(
     today.clone().startOf('month').startOf('week').subtract(1, 'day'),
   )
@@ -22,6 +24,7 @@ const Calendar = () => {
   const prevHandler = useCallback(() => {
     setToday(prev => prev.clone().subtract(1, 'month'))
   }, [])
+
   const nextHandler = useCallback(() => {
     setToday(next => next.clone().add(1, 'month'))
   }, [])
