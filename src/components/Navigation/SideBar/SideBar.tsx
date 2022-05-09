@@ -1,22 +1,20 @@
+import { RefObject } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useStyles from '../../styles/useStyle'
 import SideBarItem from './SideBarItem'
 import { Drawer, CardMedia, Link } from '@mui/material'
+import { RefProps } from '../../../interfaces'
 
-const scrollToRef = (ref: any) => {
-  window.scrollTo({
-    top: ref.current.offsetTop,
-    behavior: 'smooth',
-  })
+const scrollToRef = (ref: RefObject<HTMLDivElement>) => {
+  if (ref.current != null) {
+    window.scrollTo({
+      top: ref.current.offsetTop,
+      behavior: 'smooth',
+    })
+  }
 }
 
-const SideBar = (props: {
-  homeRef: any
-  upcomingRef: any
-  calendarRef: any
-  newsRef: any
-  partnersRef: any
-}) => {
+const SideBar = ({ upcomingRef, calendarRef, newsRef, partnersRef }: RefProps) => {
   const classes = useStyles()
   const navigate = useNavigate()
 
@@ -24,19 +22,19 @@ const SideBar = (props: {
     switch (path) {
       case '/#upcoming-events':
         navigate(path)
-        scrollToRef(props.upcomingRef)
+        scrollToRef(upcomingRef)
         break
       case '/#events-calendar':
         navigate(path)
-        scrollToRef(props.calendarRef)
+        scrollToRef(calendarRef)
         break
       case '/#news':
         navigate(path)
-        scrollToRef(props.newsRef)
+        scrollToRef(newsRef)
         break
       case '/#partners':
         navigate(path)
-        scrollToRef(props.partnersRef)
+        scrollToRef(partnersRef)
         break
       default:
         navigate(path)

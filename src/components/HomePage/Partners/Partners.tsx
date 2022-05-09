@@ -1,16 +1,19 @@
-import {forwardRef} from 'react'
+import { forwardRef, RefObject } from 'react'
 import useStyles from '../../styles/useStyle'
 import PartnersList from './PartnersList'
+interface RefType {
+  partnersRef: RefObject<HTMLDivElement>
+}
 
-const Partners = forwardRef((props:{partnersRef:any}) =>{
+const Partners = forwardRef(({ partnersRef }: RefType) => {
   const classes = useStyles()
-  return(
-    <div ref={props.partnersRef} className={classes.homeBlocks}>
-      <div id='partners'>
+  return (
+    <div ref={partnersRef} className={classes.homeBlocks}>
+      <div id="partners">
         <h2>Partners</h2>
       </div>
       <div>
-        <PartnersList/>
+        <PartnersList />
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, RefObject } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Theme, createTheme, ThemeProvider } from '@mui/material'
 import HomePage from './pages/HomePage'
@@ -29,11 +29,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 const App: React.FC = () => {
   const classes = useStyles()
 
-  const homeRef = useRef(null)
-  const upcomingRef = useRef(null)
-  const calendarRef = useRef(null)
-  const newsRef = useRef(null)
-  const partnersRef = useRef(null)
+  const homeRef = useRef<HTMLElement>(null)
+  const upcomingRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
+  const calendarRef: RefObject<HTMLDivElement> = useRef(null)
+  const newsRef: RefObject<HTMLDivElement> = useRef(null)
+  const partnersRef: RefObject<HTMLDivElement> = useRef(null)
 
   const [logged, setLogged] = useState(true)
 
@@ -42,7 +42,6 @@ const App: React.FC = () => {
       <Router>
         <div className={classes.appContainer}>
           <SideBar
-            homeRef={homeRef}
             upcomingRef={upcomingRef}
             calendarRef={calendarRef}
             newsRef={newsRef}
