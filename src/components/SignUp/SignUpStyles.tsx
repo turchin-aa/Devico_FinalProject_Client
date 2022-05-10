@@ -23,7 +23,7 @@ export const FacebookButton = styled(Button)({
 })
 
 export const CBox = styled(Box)({
-  marginTop: 30,
+  marginTop: 10,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

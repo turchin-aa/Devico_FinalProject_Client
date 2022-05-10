@@ -1,10 +1,4 @@
-import {
-  Toolbar,
-  Typography,
-  AppBar,
-  Slide,
-  useScrollTrigger,
-} from '@mui/material'
+import { Toolbar, Typography, AppBar, Slide, useScrollTrigger } from '@mui/material'
 import UserBar from './userBar'
 import useStyles from '../../styles/useStyle'
 

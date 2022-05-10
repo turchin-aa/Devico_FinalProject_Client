@@ -7,8 +7,8 @@ import FAQ from './pages/FAQ'
 import { makeStyles } from '@mui/styles'
 import SideBar from './components/Navigation/SideBar/SideBar'
 import NavBar from './components/Navigation/NavBar/NavBar'
-import SignUp from './components/sign-up/SignUp'
-import SignIn from './components/sign-in/SignIn'
+import SignUp from './components/SignUp/SignUp'
+import SignIn from './components/SignIn/SignIn'
 
 const theme = createTheme({
   spacing: [0, 2, 3, 5, 8],
@@ -35,7 +35,7 @@ const App: React.FC = () => {
   const newsRef = useRef(null)
   const partnersRef = useRef(null)
 
-  const [logged, setLogged] = useState(true)
+  const [logged, setLogged] = useState(false)
 
   return (
     <ThemeProvider theme={theme}>
@@ -63,18 +63,15 @@ const App: React.FC = () => {
                 />
               }
             />
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
+
             <Route path="/faq" element={<FAQ />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>
       </Router>
+      <SignUp />
+      <SignIn />
     </ThemeProvider>
-    // <>
-    //   <SignIn />
-    //   <SignUp />
-    // </>
   )
 }
 
