@@ -1,5 +1,5 @@
 import useStyles from '../../styles/useStyle'
-import { CalendarCell, Day, GridWrapper } from '../../styles/styledComponent'
+import { CalendarCell, Day, GridWrapper } from '../CalendarStyled'
 import moment, { Moment } from 'moment'
 
 interface CalendarGridTypes {

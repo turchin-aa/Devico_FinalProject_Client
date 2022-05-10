@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { MouseEventHandler, useCallback, useRef } from 'react'
 import { Divider, Button } from '@mui/material'
 import useStyles from '../../styles/useStyle'
 import clsx from 'clsx'
@@ -45,17 +45,7 @@ const settings = {
 
 const ScrollableItems = () => {
   const classes = useStyles()
-  const sRef = useRef()
-
-  const onWheelSlider = (e, ref) => {
-    if (!ref.current) return
-
-    if (e.deltaX > 0) {
-      ref.current.slickNext()
-    } else if (e.deltaX < 0) {
-      ref.current.slickPrev()
-    }
-  }
+  const sRef = useRef<typeof Slider>(null)
 
   const next_event = [
     {
@@ -117,7 +107,6 @@ const ScrollableItems = () => {
         dots={true}
         style={{ maxWidth: '86vw', width: '100%', overflow: 'hidden' }}
         {...settings}
-        onWheel={onWheelSlider}
       >
         {next_event.map((item, index) => {
           return (

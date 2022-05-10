@@ -516,9 +516,13 @@ const useStyles = makeStyles((theme: Theme) => ({
       backgroundColor: white,
       fontSize: 18,
       '& > #content': {
+        textAlign: 'start',
         '& > #title': {
           fontSize: 24,
           fontWeight: 700,
+        },
+        '& > p a': {
+          color: black,
         },
       },
       '& > #media': {

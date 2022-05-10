@@ -1,17 +1,22 @@
-import { Menu, MenuItem, Divider, MenuList } from '@mui/material'
-import { useState, useCallback } from 'react'
-import { ArrowDropUp, NotificationsNoneOutlined } from '@mui/icons-material'
+import { Menu, Divider, MenuList } from '@mui/material'
+import { useState, RefObject } from 'react'
+import { NotificationsNoneOutlined } from '@mui/icons-material'
 import clsx from 'clsx'
-import useStyles from '../../styles/useStyle'
+import useStyles from '../../../styles/useStyle'
 
-const NotificationDropDown = (props: {
-  notifDropDownRef: any
-  anchorEl: any
-  handleCloseMenu: any
-}) => {
+interface notifDropDownTypes {
+  notifDropDownRef: RefObject<HTMLDivElement>
+  anchorEl: Element | null
+  handleCloseMenu: () => void
+}
+
+const NotificationDropDown = ({
+  notifDropDownRef,
+  anchorEl,
+  handleCloseMenu,
+}: notifDropDownTypes) => {
   const classes = useStyles()
   const [content, setContent] = useState(null)
-  const [menu, setMenu] = useState()
 
   const ifContentNull = () => {
     if (content === null) {
@@ -33,13 +38,12 @@ const NotificationDropDown = (props: {
   return (
     <div>
       <Menu
-        ref={props.notifDropDownRef}
-        onClose={props.handleCloseMenu}
-        anchorEl={props.anchorEl}
-        open={Boolean(props.anchorEl)}
+        ref={notifDropDownRef}
+        onClose={handleCloseMenu}
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
         className={classes.userBarNotif}
       >
-        {/* <ArrowDropUp className={clsx(classes.userBarComponentW, classes.userBarNotifArrow)} fontSize='large'/>       */}
         <MenuList className={classes.userBarNotifDropdown}>
           <div className={classes.notifHeader}>
             <h3 className={classes.notifHText}>Notifications</h3>
@@ -50,7 +54,6 @@ const NotificationDropDown = (props: {
           <Divider variant="middle" />
           {ifContentNull()}
         </MenuList>
-        {/* <MenuItem></MenuItem>       */}
       </Menu>
     </div>
   )

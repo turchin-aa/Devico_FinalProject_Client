@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, MouseEvent } from 'react'
 import useStyles from '../../styles/useStyle'
 import { List, ListItem } from '@mui/material'
 import DynamicIcon from '../../DynamicIcon'
@@ -11,44 +11,40 @@ const SideBarItem = ({ executeScroll }: { executeScroll: (path: string) => void 
     activeButton: {},
     objects: [
       {
-        id: 1,
+        id: 0,
         text: 'Upcoming events',
         icon: 'Campaign',
-        path: '/#upcoming-events',
+      },
+      {
+        id: 1,
+        text: 'Events calendar',
+        icon: 'CalendarMonth',
       },
       {
         id: 2,
-        text: 'Events calendar',
-        icon: 'CalendarMonth',
-        path: '/#events-calendar',
+        text: 'News',
+        icon: 'Article',
       },
       {
         id: 3,
-        text: 'News',
-        icon: 'Article',
-        path: '/#news',
+        text: 'Partners',
+        icon: 'Workspaces',
       },
       {
         id: 4,
-        text: 'Partners',
-        icon: 'Workspaces',
-        path: '/#partners',
-      },
-      {
-        id: 5,
         text: 'About us',
         icon: 'Info',
         path: '/about-us',
       },
-      { id: 6, text: 'Contact us', icon: 'Contacts', path: '/contact-us' },
+      { id: 5, text: 'Contact us', icon: 'Contacts', path: '/contact-us' },
       {
-        id: 7,
+        id: 6,
         text: 'FAQ',
         icon: 'LiveHelp',
         path: '/faq',
       },
       {
-        id: 8,
+        id: 7,
         text: 'Privasy & Terms of use',
         icon: 'ScatterPlot',
         path: '/ptou',
@@ -56,11 +52,12 @@ const SideBarItem = ({ executeScroll }: { executeScroll: (path: string) => void 
     ],
   })
 
-  useEffect(() => {}, [list_item])
-
   const toggleButton = useCallback(
-    (index: number) => {
-      setState({ ...list_item, activeButton: list_item.objects[index] })
+    (e: MouseEvent<HTMLLIElement>) => {
+      const target = e.currentTarget as HTMLLIElement
+      const ariaLabel = target.ariaLabel as string
+      setState({ ...list_item, activeButton: list_item.objects[parseInt(ariaLabel)] })
+      executeScroll(target.id)
     },
     [list_item],
   )
@@ -75,14 +72,13 @@ const SideBarItem = ({ executeScroll }: { executeScroll: (path: string) => void 
   return (
     <div>
       <List className={classes.responsiveList}>
-        {list_item.objects.map((item, index) => (
+        {list_item.objects.map(item => (
           <ListItem
-            key={index}
-            className={clsx(toggleActiveClass(index), classes.item, classes.flexCenter)}
-            onClick={() => {
-              toggleButton(index)
-              executeScroll(item.path)
-            }}
+            id={item.text}
+            key={item.id}
+            className={clsx(toggleActiveClass(item.id), classes.item, classes.flexCenter)}
+            aria-label={item.id.toString()}
+            onClick={toggleButton}
           >
             <div className={classes.iconAlign}>
               <DynamicIcon iconName={item.icon} className="" />

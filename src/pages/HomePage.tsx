@@ -8,7 +8,6 @@ import News from '../components/HomePage/News/News'
 import useStyles from '../components/styles/useStyle'
 
 const HomePage = (props: {
-  homeRef: any
   upcomingRef: any
   calendarRef: any
   newsRef: any

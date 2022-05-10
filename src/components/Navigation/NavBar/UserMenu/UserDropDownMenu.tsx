@@ -1,12 +1,12 @@
 import { Menu, MenuItem } from '@mui/material'
-import { useState } from 'react'
+import { useState, RefObject, MouseEvent, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import useStyles from '../../styles/useStyle'
+import useStyles from '../../../styles/useStyle'
 
 const DropDownMenu = (props: {
-  dropDownRef: any
-  anchorEl: any
-  handleCloseMenu: any
+  dropDownRef: RefObject<HTMLDivElement>
+  anchorEl: Element | null
+  handleCloseMenu: () => void
   logged: boolean
   setLogged: any
 }) => {
@@ -29,8 +29,10 @@ const DropDownMenu = (props: {
   const classes = useStyles()
   const [menu, setMenu] = useState(props.logged ? menuIn : menuOut)
   const navigate = useNavigate()
-  const handleClick = (name: string, path: string) => {
-    switch (name) {
+
+  const handleClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+    const target = e.currentTarget as HTMLButtonElement
+    switch (target.name) {
       case 'Sign Out':
         props.setLogged(!props.logged)
         if (props.logged) {
@@ -40,13 +42,16 @@ const DropDownMenu = (props: {
         }
         break
       case 'Sign In':
+        navigate('/signin')
+        break
+
       case 'Sign Up':
-        navigate(path)
+        navigate('/signup')
         break
       default:
         break
     }
-  }
+  }, [])
 
   return (
     <Menu
@@ -56,12 +61,13 @@ const DropDownMenu = (props: {
       open={Boolean(props.anchorEl)}
       className={classes.userBarDropdown}
     >
-      {menu.map((item, index) => (
+      {menu.map(item => (
         <MenuItem
           component="button"
-          key={index}
+          key={item.name}
           className={classes.userBarDropdownButtons}
-          onClick={() => handleClick(item.name, item.path)}
+          onClick={handleClick}
+          name={item.name}
         >
           {item.name}
         </MenuItem>

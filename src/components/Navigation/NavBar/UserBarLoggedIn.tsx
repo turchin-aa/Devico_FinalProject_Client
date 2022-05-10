@@ -1,7 +1,7 @@
 import useStyles from '../../styles/useStyle'
 import clsx from 'clsx'
 import { Avatar, Divider } from '@mui/material'
-import NotificationButton from './NotificationButton'
+import NotificationButton from './Notifications/NotificationButton'
 
 const UserBarLoggedIn = () => {
   const classes = useStyles()

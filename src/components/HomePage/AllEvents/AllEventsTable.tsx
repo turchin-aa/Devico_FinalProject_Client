@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, ChangeEvent } from 'react'
 import {
   Table,
   TableBody,
@@ -51,7 +51,6 @@ const columns: Column[] = [
     id: 'location',
     label: 'Location',
     minWidth: 5,
-    // width: 'calc(5px+0.8vw)',
     maxWidth: 30,
   },
 ]
@@ -139,7 +138,7 @@ const AllEventsTable = () => {
   const classes = useStyles()
 
   const handleChangePage = useCallback(
-    (event: unknown, newPage: number) => {
+    (event: ChangeEvent<unknown>, newPage: number) => {
       setPage(newPage - 1)
     },
     [page],

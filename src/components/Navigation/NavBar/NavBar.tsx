@@ -1,10 +1,4 @@
-import {
-  Toolbar,
-  Typography,
-  AppBar,
-  Slide,
-  useScrollTrigger,
-} from '@mui/material'
+import { Toolbar, Typography, AppBar, Slide, useScrollTrigger } from '@mui/material'
 import UserBar from './userBar'
 import useStyles from '../../styles/useStyle'
 
@@ -21,7 +15,7 @@ const HideOnScroll = ({ children }: Props) => {
   )
 }
 
-const NavBar = (props: { logged: boolean; setLogged: any }) => {
+const NavBar = ({ logged, setLogged }: { logged: boolean; setLogged: Function }) => {
   const classes = useStyles()
 
   return (
@@ -29,7 +23,7 @@ const NavBar = (props: { logged: boolean; setLogged: any }) => {
       <AppBar elevation={0} className={classes.navbar}>
         <Toolbar>
           <Typography variant="h6" component="div">
-            <UserBar logged={props.logged} setLogged={props.setLogged} />
+            <UserBar logged={logged} setLogged={setLogged} />
           </Typography>
         </Toolbar>
       </AppBar>

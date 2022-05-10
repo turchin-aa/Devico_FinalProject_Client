@@ -3,7 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import useStyles from '../../styles/useStyle'
 import SideBarItem from './SideBarItem'
 import { Drawer, CardMedia, Link } from '@mui/material'
-import { RefProps } from '../../../interfaces'
+
+interface RefProps {
+  upcomingRef: RefObject<HTMLDivElement>
+  calendarRef: RefObject<HTMLDivElement>
+  newsRef: RefObject<HTMLDivElement>
+  partnersRef: RefObject<HTMLDivElement>
+}
 
 const scrollToRef = (ref: RefObject<HTMLDivElement>) => {
   if (ref.current != null) {
@@ -20,20 +26,20 @@ const SideBar = ({ upcomingRef, calendarRef, newsRef, partnersRef }: RefProps) =
 
   const executeScroll = (path: string) => {
     switch (path) {
-      case '/#upcoming-events':
-        navigate(path)
+      case 'Upcoming events':
+        navigate('/#upcoming-events')
         scrollToRef(upcomingRef)
         break
-      case '/#events-calendar':
-        navigate(path)
+      case 'Events calendar':
+        navigate('/#events-calendar')
         scrollToRef(calendarRef)
         break
-      case '/#news':
-        navigate(path)
+      case 'News':
+        navigate('/#news')
         scrollToRef(newsRef)
         break
-      case '/#partners':
-        navigate(path)
+      case 'Partners':
+        navigate('/#partners')
         scrollToRef(partnersRef)
         break
       default:

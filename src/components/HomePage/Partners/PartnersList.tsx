@@ -1,5 +1,4 @@
 import useStyles from '../../styles/useStyle'
-import { CardMedia } from '@mui/material'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -108,10 +107,10 @@ const PartnersList = () => {
   return (
     <div>
       <Slider style={{ maxWidth: '86vw', width: '100%', overflow: 'hidden' }} {...settings}>
-        {partners_list.map((item, index) => {
+        {partners_list.map(item => {
           return (
             <div
-              key={index}
+              key={item.id}
               id="partner-logo"
               className={clsx(classes.filterGreyScale, classes.partnersContainer)}
             >

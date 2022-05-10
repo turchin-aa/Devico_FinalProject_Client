@@ -29,8 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const App: React.FC = () => {
   const classes = useStyles()
 
-  const homeRef = useRef<HTMLElement>(null)
-  const upcomingRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
+  const upcomingRef: RefObject<HTMLDivElement> = useRef(null)
   const calendarRef: RefObject<HTMLDivElement> = useRef(null)
   const newsRef: RefObject<HTMLDivElement> = useRef(null)
   const partnersRef: RefObject<HTMLDivElement> = useRef(null)
@@ -53,7 +52,6 @@ const App: React.FC = () => {
               path="/"
               element={
                 <HomePage
-                  homeRef={homeRef}
                   upcomingRef={upcomingRef}
                   calendarRef={calendarRef}
                   newsRef={newsRef}
