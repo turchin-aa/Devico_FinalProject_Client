@@ -1,20 +1,23 @@
 import * as yup from 'yup'
 import { memo, useCallback } from 'react'
-import CssBaseline from '@mui/material/CssBaseline'
-import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useFormik } from 'formik'
-import { useHttp } from '../../myhook/http.hook'
-import { Dialog } from '@mui/material'
-import { RootState } from '../../store'
-import { uiActions } from '../../store/ui-slice'
+import { useHttp } from '../../../myhook/http.hook'
+import { RootState } from '../../../store'
+import { uiActions } from '../../../store/ui-slice'
 import { useDispatch, useSelector } from 'react-redux'
+import {
+  createTheme,
+  ThemeProvider,
+  CssBaseline,
+  Dialog,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Grid,
+  Box,
+  Typography,
+  Container,
+} from '@mui/material'
 import {
   FacebookButton,
   CBox,
@@ -25,7 +28,8 @@ import {
   SignLink,
   Facebook,
   Google,
-} from './SignInStyles'
+  ErrorMessage,
+} from '../AuthStyles'
 
 const theme = createTheme()
 
@@ -41,12 +45,13 @@ const SignIn = () => {
       rememberMe: false,
     },
     validationSchema: yup.object().shape({
-      email: yup.string().email().required('Invalid login or password'),
+      email: yup.string().email('Invalid format').required('Invalid login or password'),
       password: yup.string().min(8).max(32).required('Invalid login or password'),
     }),
-    onSubmit: async values => {
+    onSubmit: async (values, { resetForm }) => {
       try {
-        await request('/api/auth/login', 'POST', { ...values })
+        await request('http://localhost:8000/api/auth/login', 'POST', { ...values })
+        resetForm()
       } catch (e) {}
     },
   })
@@ -58,6 +63,18 @@ const SignIn = () => {
       dispatch(uiActions.toggleLog())
     }
   }, [dispatch, logCartIsShown])
+
+  const showRecoverPasHandler = () => {
+    if (logCartIsShown) {
+      dispatch(uiActions.toggleLog())
+    }
+    dispatch(uiActions.toggleForgetPassword())
+  }
+
+  const changeSignHandler = () => {
+    dispatch(uiActions.toggleLog())
+    dispatch(uiActions.toggleReg())
+  }
 
   return (
     <Dialog open={logCartIsShown} onClose={toggleHandler}>
@@ -109,7 +126,7 @@ const SignIn = () => {
                     onBlur={formik.handleBlur}
                   />
                   {formik.errors.email && formik.touched.email ? (
-                    <div>{formik.errors.email}</div>
+                    <ErrorMessage>{formik.errors.email}</ErrorMessage>
                   ) : null}
                 </Grid>
 
@@ -125,7 +142,7 @@ const SignIn = () => {
                     onBlur={formik.handleBlur}
                   />
                   {formik.errors.password && formik.touched.password ? (
-                    <div>{formik.errors.password}</div>
+                    <ErrorMessage>{formik.errors.password}</ErrorMessage>
                   ) : null}
                 </Grid>
 
@@ -155,7 +172,7 @@ const SignIn = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} sx={{ textAlign: 'right', mt: 0.5 }}>
-                  <SignLink href="#">Forgot password?</SignLink>
+                  <SignLink onClick={showRecoverPasHandler}>Forgot password?</SignLink>
                 </Grid>
               </Grid>
               <RegisterButton disabled={loading} type="submit" fullWidth variant="contained">
@@ -165,7 +182,7 @@ const SignIn = () => {
                 <Grid item>
                   <LinkTypography>
                     No account? &nbsp;
-                    <SignLink href="/signup">Sign up</SignLink>
+                    <SignLink onClick={changeSignHandler}>Sign up</SignLink>
                   </LinkTypography>
                 </Grid>
               </Grid>

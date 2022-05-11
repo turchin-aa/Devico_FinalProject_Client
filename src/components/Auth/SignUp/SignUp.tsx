@@ -1,20 +1,24 @@
 import * as yup from 'yup'
-import CssBaseline from '@mui/material/CssBaseline'
-import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import Link from '@mui/material/Link'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import { Dialog } from '@mui/material'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { useHttp } from '../../myhook/http.hook'
+import { useHttp } from '../../../myhook/http.hook'
 import { useFormik } from 'formik'
-import { RootState } from '../../store'
+import { RootState } from '../../../store'
+import { useDispatch, useSelector } from 'react-redux'
 import { memo, useCallback } from 'react'
-import { uiActions } from '../../store/ui-slice'
+import { uiActions } from '../../../store/ui-slice'
+import {
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  Dialog,
+  createTheme,
+  ThemeProvider,
+} from '@mui/material'
 import {
   FacebookButton,
   CBox,
@@ -25,8 +29,8 @@ import {
   SignLink,
   Facebook,
   Google,
-} from './SignUpStyles'
-import { useDispatch, useSelector } from 'react-redux'
+  ErrorMessage,
+} from '../AuthStyles'
 
 const theme = createTheme()
 
@@ -43,15 +47,16 @@ const SignUp = () => {
       terms: false,
     },
     validationSchema: yup.object().shape({
-      email: yup.string().email().required('Write correct email'),
+      email: yup.string().email('Write correct email').required('The email is required'),
       password: yup.string().min(8).max(32).required('Write correct password'),
       telephone: yup.string().min(10),
       confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
       terms: yup.boolean().required().oneOf([true], 'Check'),
     }),
-    onSubmit: async values => {
+    onSubmit: async (values, { resetForm }) => {
       try {
-        await request('/api/auth/register', 'POST', { ...values })
+        await request('http://localhost:8000/api/auth/register', 'POST', { ...values })
+        resetForm()
       } catch (e) {}
     },
   })
@@ -63,6 +68,11 @@ const SignUp = () => {
       dispatch(uiActions.toggleReg())
     }
   }, [dispatch, regCartIsShown])
+
+  const changeSignHandler = () => {
+    dispatch(uiActions.toggleReg())
+    dispatch(uiActions.toggleLog())
+  }
 
   return (
     <Dialog open={regCartIsShown} onClose={toggleHandler}>
@@ -114,7 +124,7 @@ const SignUp = () => {
                     onBlur={formik.handleBlur}
                   />
                   {formik.errors.email && formik.touched.email ? (
-                    <div>{formik.errors.email}</div>
+                    <ErrorMessage>{formik.errors.email}</ErrorMessage>
                   ) : null}
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -130,7 +140,7 @@ const SignUp = () => {
                     onBlur={formik.handleBlur}
                   />
                   {formik.errors.telephone && formik.touched.telephone ? (
-                    <div>{formik.errors.telephone}</div>
+                    <ErrorMessage>{formik.errors.telephone}</ErrorMessage>
                   ) : null}
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -145,7 +155,7 @@ const SignUp = () => {
                     onBlur={formik.handleBlur}
                   />
                   {formik.errors.password && formik.touched.password ? (
-                    <div>{formik.errors.password}</div>
+                    <ErrorMessage>{formik.errors.password}</ErrorMessage>
                   ) : null}
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -160,7 +170,7 @@ const SignUp = () => {
                     onBlur={formik.handleBlur}
                   />
                   {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
-                    <div>{formik.errors.confirmPassword}</div>
+                    <ErrorMessage>{formik.errors.confirmPassword}</ErrorMessage>
                   ) : null}
                 </Grid>
                 <Grid item xs={12}>
@@ -194,7 +204,7 @@ const SignUp = () => {
                     }
                   />
                   {formik.errors.terms && formik.touched.terms ? (
-                    <div>{formik.errors.terms}</div>
+                    <ErrorMessage>{formik.errors.terms}</ErrorMessage>
                   ) : null}
                 </Grid>
               </Grid>
@@ -205,7 +215,7 @@ const SignUp = () => {
                 <Grid item>
                   <LinkTypography>
                     Already a member? &nbsp;
-                    <SignLink href="/signin">Sign in</SignLink>
+                    <SignLink onClick={changeSignHandler}>Sign in</SignLink>
                   </LinkTypography>
                 </Grid>
               </Grid>

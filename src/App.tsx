@@ -7,8 +7,9 @@ import FAQ from './pages/FAQ'
 import { makeStyles } from '@mui/styles'
 import SideBar from './components/Navigation/SideBar/SideBar'
 import NavBar from './components/Navigation/NavBar/NavBar'
-import SignUp from './components/SignUp/SignUp'
-import SignIn from './components/SignIn/SignIn'
+import SignUp from './components/Auth/SignUp/SignUp'
+import SignIn from './components/Auth/SignIn/SignIn'
+import PassRecover from './components/PasswordRecover/PassRecover'
 
 const theme = createTheme({
   spacing: [0, 2, 3, 5, 8],
@@ -71,6 +72,7 @@ const App: React.FC = () => {
       </Router>
       <SignUp />
       <SignIn />
+      <PassRecover />
     </ThemeProvider>
   )
 }
