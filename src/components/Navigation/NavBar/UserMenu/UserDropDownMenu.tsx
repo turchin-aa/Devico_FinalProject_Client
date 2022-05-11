@@ -2,14 +2,18 @@ import { Menu, MenuItem } from '@mui/material'
 import { useState, RefObject, MouseEvent, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useStyles from '../../../styles/useStyle'
+import { memo } from 'react'
+import { RootState } from '../../../../store'
+import { uiActions } from '../../../../store/ui-slice'
+import { useDispatch, useSelector } from 'react-redux'
 
-const DropDownMenu = (props: {
+interface DropDown {
   dropDownRef: RefObject<HTMLDivElement>
   anchorEl: Element | null
   handleCloseMenu: () => void
-  logged: boolean
-  setLogged: any
-}) => {
+}
+
+const DropDownMenu: React.FC<DropDown> = ({ dropDownRef, anchorEl, handleCloseMenu }) => {
   const menuOut = [
     {
       name: 'Sign In',
@@ -26,16 +30,19 @@ const DropDownMenu = (props: {
     { name: 'Sign Out', path: '' },
   ]
 
+  const isUserAuth = useSelector<RootState, boolean>(state => state.ui.isUserAuth)
+  const dispatch = useDispatch()
+
   const classes = useStyles()
-  const [menu, setMenu] = useState(props.logged ? menuIn : menuOut)
+  const [menu, setMenu] = useState(isUserAuth ? menuIn : menuOut)
   const navigate = useNavigate()
 
   const handleClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget as HTMLButtonElement
     switch (target.name) {
       case 'Sign Out':
-        props.setLogged(!props.logged)
-        if (props.logged) {
+        dispatch(uiActions.toggleAuth())
+        if (isUserAuth) {
           setMenu(menuOut)
         } else {
           setMenu(menuIn)
@@ -55,10 +62,10 @@ const DropDownMenu = (props: {
 
   return (
     <Menu
-      ref={props.dropDownRef}
-      onClose={props.handleCloseMenu}
-      anchorEl={props.anchorEl}
-      open={Boolean(props.anchorEl)}
+      ref={dropDownRef}
+      onClose={handleCloseMenu}
+      anchorEl={anchorEl}
+      open={Boolean(anchorEl)}
       className={classes.userBarDropdown}
     >
       {menu.map(item => (
@@ -76,4 +83,4 @@ const DropDownMenu = (props: {
   )
 }
 
-export default DropDownMenu
+export default memo(DropDownMenu)

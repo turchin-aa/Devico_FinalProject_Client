@@ -5,7 +5,7 @@ import useStyles from '../../../styles/useStyle'
 import DropDownMenu from './UserDropDownMenu'
 import clsx from 'clsx'
 
-const ArrowButton = (props: { logged: boolean; setLogged: any }) => {
+const ArrowButton: React.FC = () => {
   const dropDownRef: RefObject<HTMLDivElement> = useRef(null)
 
   const classes = useStyles()
@@ -33,8 +33,6 @@ const ArrowButton = (props: { logged: boolean; setLogged: any }) => {
         dropDownRef={dropDownRef}
         anchorEl={anchorEl}
         handleCloseMenu={handleCloseMenu}
-        logged={props.logged}
-        setLogged={props.setLogged}
       />
     </div>
   )

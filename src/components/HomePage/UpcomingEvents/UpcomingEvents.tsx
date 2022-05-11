@@ -3,11 +3,7 @@ import { Divider } from '@mui/material'
 import useStyles from '../../styles/useStyle'
 import ScrollableItems from '../ScrollableItems/ScrollableItems'
 
-interface RefType {
-  upcomingRef: RefObject<HTMLDivElement>
-}
-
-const UpcomingEvents = forwardRef(({ upcomingRef }: RefType) => {
+const UpcomingEvents = forwardRef(({ upcomingRef }: { upcomingRef: RefObject<HTMLDivElement> }) => {
   const classes = useStyles()
   return (
     <div ref={upcomingRef} className={classes.homeBlocks}>

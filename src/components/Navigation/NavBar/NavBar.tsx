@@ -15,7 +15,7 @@ const HideOnScroll = ({ children }: Props) => {
   )
 }
 
-const NavBar = ({ logged, setLogged }: { logged: boolean; setLogged: Function }) => {
+const NavBar = () => {
   const classes = useStyles()
 
   return (
@@ -23,7 +23,7 @@ const NavBar = ({ logged, setLogged }: { logged: boolean; setLogged: Function })
       <AppBar elevation={0} className={classes.navbar}>
         <Toolbar>
           <Typography variant="h6" component="div">
-            <UserBar logged={logged} setLogged={setLogged} />
+            <UserBar />
           </Typography>
         </Toolbar>
       </AppBar>

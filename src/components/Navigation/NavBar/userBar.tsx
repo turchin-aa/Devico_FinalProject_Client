@@ -3,16 +3,20 @@ import ArrowButton from './UserMenu/arrowButton'
 import UserBarLoggedIn from './UserBarLoggedIn'
 import UserBarLoggedOut from './UserBarLoggedOut'
 import clsx from 'clsx'
+import { memo } from 'react'
+import { RootState } from '../../../store/index'
+import { useSelector } from 'react-redux'
 
-const UserBar = (props: { logged: boolean; setLogged: any }) => {
+const UserBar: React.FC = () => {
   const classes = useStyles()
+  const isUserAuth = useSelector<RootState, boolean>(state => state.ui.isUserAuth)
 
   return (
     <div className={clsx(classes.userBar, classes.flexCenter)}>
-      {props.logged ? <UserBarLoggedIn /> : <UserBarLoggedOut />}
-      <ArrowButton logged={props.logged} setLogged={props.setLogged} />
+      {isUserAuth ? <UserBarLoggedIn /> : <UserBarLoggedOut />}
+      <ArrowButton />
     </div>
   )
 }
 
-export default UserBar
+export default memo(UserBar)

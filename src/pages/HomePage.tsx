@@ -6,27 +6,32 @@ import Partners from '../components/HomePage/Partners/Partners'
 import AllEvents from '../components/HomePage/AllEvents/AllEvents'
 import News from '../components/HomePage/News/News'
 import useStyles from '../components/styles/useStyle'
+import { memo, RefObject } from 'react'
+import { RootState } from '../store/index'
+import { useSelector } from 'react-redux'
 
-const HomePage = (props: {
-  upcomingRef: any
-  calendarRef: any
-  newsRef: any
-  partnersRef: any
-  logged: boolean
-}) => {
+interface BlockRef {
+  upcomingRef: RefObject<HTMLDivElement>
+  calendarRef: RefObject<HTMLDivElement>
+  newsRef: RefObject<HTMLDivElement>
+  partnersRef: RefObject<HTMLDivElement>
+}
+
+const HomePage: React.FC<BlockRef> = ({ upcomingRef, calendarRef, newsRef, partnersRef }) => {
   const classes = useStyles()
+  const isUserAuth = useSelector<RootState, boolean>(state => state.ui.isUserAuth)
 
   return (
     <div className={classes.homePageContainer}>
-      {props.logged ? null : <Welcome />}
-      <UpcomingEvents upcomingRef={props.upcomingRef} />
-      <EventsCalendar calendarRef={props.calendarRef} />
+      {isUserAuth ? null : <Welcome />}
+      <UpcomingEvents upcomingRef={upcomingRef} />
+      <EventsCalendar calendarRef={calendarRef} />
       <AllEvents />
-      <News newsRef={props.newsRef} />
-      <Partners partnersRef={props.partnersRef} />
+      <News newsRef={newsRef} />
+      <Partners partnersRef={partnersRef} />
       <EventsForLastYears />
     </div>
   )
 }
 
-export default HomePage
+export default memo(HomePage)
