@@ -1,7 +1,7 @@
-import useStyles from '../styles/useStyle'
+import useWelcomeStyles from './useWelcomeStyles'
 
 const WelcomeEvent = () => {
-  const classes = useStyles()
+  const classes = useWelcomeStyles()
   const next_event = {
     title: 'next event',
     name: 'AUTO.RIA Race',

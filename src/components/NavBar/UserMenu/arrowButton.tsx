@@ -1,14 +1,12 @@
-import { useState, useRef, MouseEvent, useCallback, RefObject } from 'react'
+import { useState, MouseEvent, useCallback } from 'react'
 import { Button } from '@mui/material'
 import { KeyboardArrowDownOutlined } from '@mui/icons-material'
-import useStyles from '../../../styles/useStyle'
+import useNavbarStyles from '../useNavbarStyles'
 import DropDownMenu from './UserDropDownMenu'
 import clsx from 'clsx'
 
 const ArrowButton: React.FC = () => {
-  const dropDownRef: RefObject<HTMLDivElement> = useRef(null)
-
-  const classes = useStyles()
+  const classes = useNavbarStyles()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const handleOpenMenu = useCallback((event: MouseEvent<HTMLButtonElement>) => {
@@ -29,11 +27,7 @@ const ArrowButton: React.FC = () => {
       >
         <KeyboardArrowDownOutlined className={classes.userBarComponentW} fontSize="large" />
       </Button>
-      <DropDownMenu
-        dropDownRef={dropDownRef}
-        anchorEl={anchorEl}
-        handleCloseMenu={handleCloseMenu}
-      />
+      <DropDownMenu anchorEl={anchorEl} handleCloseMenu={handleCloseMenu} />
     </div>
   )
 }

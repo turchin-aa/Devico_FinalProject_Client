@@ -1,11 +1,18 @@
 import { useState, useCallback, MouseEvent } from 'react'
-import useStyles from '../../styles/useStyle'
+import useSideBarStyles from './SideBarStyles'
 import { List, ListItem } from '@mui/material'
-import DynamicIcon from '../../DynamicIcon'
+import { HashLink as Link } from 'react-router-hash-link'
+import DynamicIcon from '../DynamicIcon'
 import clsx from 'clsx'
 
-const SideBarItem = ({ executeScroll }: { executeScroll: (path: string) => void }) => {
-  const classes = useStyles()
+const scrollWithOffset = el => {
+  const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset
+  const yOffset = -60
+  window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' })
+}
+
+const SideBarItem: React.FC = () => {
+  const classes = useSideBarStyles()
 
   const [list_item, setState] = useState({
     activeButton: {},
@@ -14,21 +21,25 @@ const SideBarItem = ({ executeScroll }: { executeScroll: (path: string) => void 
         id: 0,
         text: 'Upcoming events',
         icon: 'Campaign',
+        path: '/#upcoming-events',
       },
       {
         id: 1,
         text: 'Events calendar',
         icon: 'CalendarMonth',
+        path: '/#events-calendar',
       },
       {
         id: 2,
         text: 'News',
         icon: 'Article',
+        path: '/#news',
       },
       {
         id: 3,
         text: 'Partners',
         icon: 'Workspaces',
+        path: '/#partners',
       },
       {
         id: 4,
@@ -57,7 +68,6 @@ const SideBarItem = ({ executeScroll }: { executeScroll: (path: string) => void 
       const target = e.currentTarget as HTMLLIElement
       const ariaLabel = target.ariaLabel as string
       setState({ ...list_item, activeButton: list_item.objects[parseInt(ariaLabel)] })
-      executeScroll(target.id)
     },
     [list_item],
   )
@@ -73,18 +83,25 @@ const SideBarItem = ({ executeScroll }: { executeScroll: (path: string) => void 
     <div>
       <List className={classes.responsiveList}>
         {list_item.objects.map(item => (
-          <ListItem
-            id={item.text}
+          <Link
             key={item.id}
-            className={clsx(toggleActiveClass(item.id), classes.item, classes.flexCenter)}
+            to={item.path}
+            smooth
+            scroll={scrollWithOffset}
             aria-label={item.id.toString()}
+            className={classes.link}
             onClick={toggleButton}
           >
-            <div className={classes.iconAlign}>
-              <DynamicIcon iconName={item.icon} className="" />
-            </div>
-            <span className={classes.text}>{item.text}</span>
-          </ListItem>
+            <ListItem
+              className={clsx(toggleActiveClass(item.id), classes.item, classes.flexCenter)}
+              id={item.text}
+            >
+              <div className={classes.iconAlign}>
+                <DynamicIcon iconName={item.icon} className="" />
+              </div>
+              <span className={classes.text}>{item.text}</span>
+            </ListItem>
+          </Link>
         ))}
       </List>
     </div>

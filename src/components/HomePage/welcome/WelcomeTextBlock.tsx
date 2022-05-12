@@ -1,9 +1,9 @@
 import { Button } from '@mui/material'
-import useStyles from '../styles/useStyle'
+import useWelcomeStyles from './useWelcomeStyles'
 import { useNavigate } from 'react-router-dom'
 
 const WelcomeText = () => {
-  const classes = useStyles()
+  const classes = useWelcomeStyles()
   const navigate = useNavigate()
   const handleClick = (name: string) => {
     switch (name) {

@@ -1,19 +1,18 @@
 import { Menu, MenuItem } from '@mui/material'
-import { useState, RefObject, MouseEvent, useCallback } from 'react'
+import { useState, MouseEvent, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import useStyles from '../../../styles/useStyle'
+import useNavbarStyles from '../useNavbarStyles'
 import { memo } from 'react'
-import { RootState } from '../../../../store'
-import { uiActions } from '../../../../store/ui-slice'
+import { RootState } from '../../../store/index'
+import { uiActions } from '../../../store/ui-slice'
 import { useDispatch, useSelector } from 'react-redux'
 
 interface DropDown {
-  dropDownRef: RefObject<HTMLDivElement>
   anchorEl: Element | null
   handleCloseMenu: () => void
 }
 
-const DropDownMenu: React.FC<DropDown> = ({ dropDownRef, anchorEl, handleCloseMenu }) => {
+const DropDownMenu: React.FC<DropDown> = ({ anchorEl, handleCloseMenu }) => {
   const menuOut = [
     {
       name: 'Sign In',
@@ -23,17 +22,17 @@ const DropDownMenu: React.FC<DropDown> = ({ dropDownRef, anchorEl, handleCloseMe
   ]
   const menuIn = [
     {
-      name: 'Profile',
+      name: 'My Profile',
       path: '',
     },
-    { name: 'My events', path: '' },
+    { name: 'My Events', path: '' },
     { name: 'Sign Out', path: '' },
   ]
 
   const isUserAuth = useSelector<RootState, boolean>(state => state.ui.isUserAuth)
   const dispatch = useDispatch()
 
-  const classes = useStyles()
+  const classes = useNavbarStyles()
   const [menu, setMenu] = useState(isUserAuth ? menuIn : menuOut)
   const navigate = useNavigate()
 
@@ -62,7 +61,6 @@ const DropDownMenu: React.FC<DropDown> = ({ dropDownRef, anchorEl, handleCloseMe
 
   return (
     <Menu
-      ref={dropDownRef}
       onClose={handleCloseMenu}
       anchorEl={anchorEl}
       open={Boolean(anchorEl)}

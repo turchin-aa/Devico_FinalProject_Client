@@ -1,15 +1,11 @@
-import { forwardRef, RefObject } from 'react'
 import useStyles from '../../styles/useStyle'
 import PartnersList from './PartnersList'
-interface RefType {
-  partnersRef: RefObject<HTMLDivElement>
-}
 
-const Partners = forwardRef(({ partnersRef }: RefType) => {
+const Partners: React.FC = () => {
   const classes = useStyles()
   return (
-    <div ref={partnersRef} className={classes.homeBlocks}>
-      <div id="partners">
+    <div id="partners" className={classes.homeBlocks}>
+      <div id="partners-title">
         <h2>Partners</h2>
       </div>
       <div>
@@ -17,6 +13,6 @@ const Partners = forwardRef(({ partnersRef }: RefType) => {
       </div>
     </div>
   )
-})
+}
 
 export default Partners

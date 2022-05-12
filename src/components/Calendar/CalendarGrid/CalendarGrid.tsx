@@ -1,60 +1,66 @@
 import useStyles from '../../styles/useStyle'
-import { CalendarCell, Day, GridWrapper } from '../CalendarStyled'
+import { CalendarCell, Day, GridWrapper, CalendarWrapper } from '../CalendarStyled'
 import moment, { Moment } from 'moment'
+import EventsBlocks from './EventsBlocks'
+import EventsList from './EventsList'
+import { useMemo, useCallback, memo } from 'react'
+import CalendarHeader from './CalendarHeader'
 
-interface CalendarGridTypes {
-  startDay: Moment
+interface Props {
+  startMonthDay: Moment
   today: Moment
 }
 
-const CalendarGrid = ({ startDay, today }: CalendarGridTypes) => {
-  const day = startDay.clone()
+const setDaysArray = (day: Moment) => {
+  return [...Array(42)].map(() => day.add(1, 'day').clone())
+}
+
+const CalendarGrid = ({ startMonthDay, today }: Props) => {
+  //delete after events implemented
+  const eventsCount = 3
 
   const classes = useStyles()
-  const totalDays: number = 42
-  const daysArray = [...Array(totalDays)].map(() => day.add(1, 'day').clone())
+  const day = startMonthDay.clone()
+  const daysArray = setDaysArray(day)
 
-  const isSelectedMoth = day => {
-    return moment(today).isSame(day, 'month')
-  }
+  // helps to mark current day in the calendar
+  const current = useMemo(() => moment().format('DDMMYYYY'), [])
+
+  const getIsSelectedMoth = useCallback(
+    day => {
+      return moment(today).isSame(day, 'month')
+    },
+    [day],
+  )
 
   return (
-    <div className={classes.calendarWrap}>
-      <GridWrapper>
-        {[...Array(7)].map((_, index) => {
-          return (
-            <CalendarCell key={index} isWeekEnd={index === 5 || index === 6}>
-              <div className={classes.rowInCell}>
-                {moment()
-                  .day(index + 1)
-                  .format('ddd')}
-              </div>
-            </CalendarCell>
-          )
-        })}
-      </GridWrapper>
+    <CalendarWrapper>
+      <CalendarHeader />
       <GridWrapper>
         {daysArray.map(dayItem => {
           return (
             <CalendarCell
               key={dayItem.unix()}
               isWeekEnd={dayItem.day() === 6 || dayItem.day() === 0}
-              isSelectedMoth={isSelectedMoth(dayItem)}
+              isSelectedMoth={getIsSelectedMoth(dayItem)}
             >
               <div className={classes.rowInCell}>
                 <Day
                   className={classes.flexCenter}
-                  current={moment().format('DDMMYYYY') === dayItem.format('DDMMYYYY')}
+                  current={current === dayItem.format('DDMMYYYY')}
                 >
                   {dayItem.format('D')}
                 </Day>
               </div>
+              {/* <div className={classes.calendarEventWrapper}>
+                {eventsCount <= 2 ? <EventsBlocks /> : <EventsList />}
+              </div> */}
             </CalendarCell>
           )
         })}
       </GridWrapper>
-    </div>
+    </CalendarWrapper>
   )
 }
 
-export { CalendarGrid }
+export default memo(CalendarGrid)

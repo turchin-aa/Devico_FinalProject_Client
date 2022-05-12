@@ -1,4 +1,5 @@
 import useStyles from '../../styles/useStyle'
+import usePartnersStyles from './usePartnersStyle'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -104,6 +105,7 @@ const PartnersList = () => {
   ]
 
   const classes = useStyles()
+  const classesPartners = usePartnersStyles()
   return (
     <div>
       <Slider style={{ maxWidth: '86vw', width: '100%', overflow: 'hidden' }} {...settings}>
@@ -112,7 +114,7 @@ const PartnersList = () => {
             <div
               key={item.id}
               id="partner-logo"
-              className={clsx(classes.filterGreyScale, classes.partnersContainer)}
+              className={clsx(classes.filterGreyScale, classesPartners.partnersContainer)}
             >
               <img src={item.logo} alt={item.name} />
             </div>

@@ -1,25 +1,9 @@
 import { useCallback, useState, ChangeEvent } from 'react'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Pagination,
-} from '@mui/material'
+import { Table, TableContainer, Paper, Pagination } from '@mui/material'
 import useStyles from '../../styles/useStyle'
-
-interface Column {
-  id: 'start' | 'discipline' | 'status' | 'event' | 'location'
-  label: string
-  minWidth?: number
-  maxWidth?: number
-  width?: string | number
-  align?: 'center' | 'right'
-  format?: (value: number) => string
-}
+import EventsHeaders from './TableEventsHeaders'
+import TableContent from './TableContent'
+import { Column, Data } from './TableTypes'
 
 const columns: Column[] = [
   {
@@ -55,21 +39,7 @@ const columns: Column[] = [
   },
 ]
 
-interface Data {
-  start: string
-  discipline: string
-  status: string
-  event: string
-  location: string
-}
-
-const createData = (
-  start: string,
-  discipline: string,
-  status: string,
-  event: string,
-  location: string,
-): Data => {
+const createData = (start, discipline, status, event, location): Data => {
   return { start, discipline, status, event, location }
 }
 
@@ -132,7 +102,7 @@ const rows = [
   ),
 ]
 
-const AllEventsTable = () => {
+const AllEventsTable: React.FC = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(6)
   const classes = useStyles()
@@ -144,12 +114,12 @@ const AllEventsTable = () => {
     [page],
   )
 
-  const pageCount = () => {
+  const pageCount = useCallback(() => {
     if (rows.length % rowsPerPage != 0) {
       return Math.floor(1 + rows.length / 6)
     }
     return Math.floor(rows.length / 6)
-  }
+  }, [])
 
   return (
     <Paper sx={{ width: '100%' }}>
@@ -160,48 +130,8 @@ const AllEventsTable = () => {
         }}
       >
         <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column, index) => (
-                <TableCell
-                  key={index}
-                  align={column.align}
-                  style={{
-                    backgroundColor: '#9470CE',
-                    color: '#fff',
-                    minWidth: column.minWidth,
-                    maxWidth: column.maxWidth,
-                    width: column.width,
-                    fontSize: 'calc(4px + 0.8vw)',
-                  }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={0} key={row.event}>
-                  {columns.map(column => {
-                    const value = row[column.id]
-                    return (
-                      <TableCell
-                        style={{
-                          fontSize: 'calc(4px + 0.8vw)',
-                        }}
-                        key={column.id}
-                        align={column.align}
-                      >
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                      </TableCell>
-                    )
-                  })}
-                </TableRow>
-              )
-            })}
-          </TableBody>
+          <EventsHeaders columns={columns} />
+          <TableContent columns={columns} rows={rows} page={page} rowsPerPage={rowsPerPage} />
         </Table>
       </TableContainer>
       <Pagination

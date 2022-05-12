@@ -1,7 +1,6 @@
 import { useEffect, useRef, useCallback, MouseEvent } from 'react'
 import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material'
-import DynamicIcon from '../../DynamicIcon'
-import useStyles from '../../styles/useStyle'
+import useNewsStyles from './useNewsStyle'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -39,7 +38,7 @@ const settings = {
 }
 
 const NewsComponent = () => {
-  const classes = useStyles()
+  const classes = useNewsStyles()
   const slideRef = useRef<typeof Slider>(null)
 
   const posts = [

@@ -1,16 +1,11 @@
-import { forwardRef, RefObject } from 'react'
 import { Calendar } from '../../Calendar/Calendar'
 import useStyles from '../../styles/useStyle'
 
-interface RefType {
-  calendarRef: RefObject<HTMLDivElement>
-}
-
-const EventsCalendar = forwardRef(({ calendarRef }: RefType) => {
+const EventsCalendar: React.FC = () => {
   const classes = useStyles()
   return (
-    <div ref={calendarRef} className={classes.homeBlocks}>
-      <div className={classes.eventHeader}>
+    <div id="events-calendar" className={classes.homeBlocks}>
+      <div id="eventHeader">
         <h2>Events calendar</h2>
       </div>
 
@@ -19,6 +14,6 @@ const EventsCalendar = forwardRef(({ calendarRef }: RefType) => {
       </div>
     </div>
   )
-})
+}
 
 export default EventsCalendar

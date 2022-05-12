@@ -1,9 +1,9 @@
-import useStyles from '../styles/useStyle'
+import useWelcomeStyles from './useWelcomeStyles'
 import WelcomeEvent from './WelcomeEventComponent'
 import WelcomeText from './WelcomeTextBlock'
 
 const Welcome: React.FC = () => {
-  const classes = useStyles()
+  const classes = useWelcomeStyles()
   return (
     <div className={classes.welcomeFlexCenter}>
       <WelcomeText />

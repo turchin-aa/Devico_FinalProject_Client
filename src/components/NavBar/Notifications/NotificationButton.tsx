@@ -1,15 +1,14 @@
 import { useState, useRef, MouseEvent, RefObject, useCallback } from 'react'
 import { Badge, Button } from '@mui/material'
 import { NotificationsOutlined } from '@mui/icons-material'
-import useStyles from '../../../styles/useStyle'
+import useNavbarStyles from '../useNavbarStyles'
 import NotificationDropDown from './NotificationDropDown'
 import clsx from 'clsx'
 
 const NotificationButton: React.FC = () => {
-  const classes = useStyles()
+  const classes = useNavbarStyles()
   const [invisible, setInvisible] = useState(false)
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
-  const notifDropDownRef: RefObject<HTMLDivElement> = useRef(null)
 
   const handleOpenMenu = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLButtonElement
@@ -31,11 +30,7 @@ const NotificationButton: React.FC = () => {
           <NotificationsOutlined className={classes.userBarComponentW} />
         </Badge>
       </Button>
-      <NotificationDropDown
-        notifDropDownRef={notifDropDownRef}
-        anchorEl={anchorEl}
-        handleCloseMenu={handleCloseMenu}
-      />
+      <NotificationDropDown anchorEl={anchorEl} handleCloseMenu={handleCloseMenu} />
     </div>
   )
 }

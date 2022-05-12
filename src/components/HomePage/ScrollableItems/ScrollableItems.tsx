@@ -1,6 +1,7 @@
 import { MouseEventHandler, useCallback, useRef } from 'react'
 import { Divider, Button } from '@mui/material'
 import useStyles from '../../styles/useStyle'
+import useScrollableStyles from './useScrollableStyles'
 import clsx from 'clsx'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
@@ -45,6 +46,7 @@ const settings = {
 
 const ScrollableItems = () => {
   const classes = useStyles()
+  const classesScrollable = useScrollableStyles()
   const sRef = useRef<typeof Slider>(null)
 
   const next_event = [
@@ -112,12 +114,12 @@ const ScrollableItems = () => {
           return (
             <div
               key={index}
-              className={clsx(classes.filterGreyScale, classes.event, classes.flexCenter)}
+              className={clsx(classes.filterGreyScale, classesScrollable.event, classes.flexCenter)}
             >
               <div>
                 <div id="img">
                   <img src={item.img} alt="event img" />
-                  <div className={classes.eventContent}>
+                  <div className={classesScrollable.eventContent}>
                     <p id="event-title">{item.title.toUpperCase()}</p>
                     <p id="event-name">{item.name}</p>
                     <p id="event-date">

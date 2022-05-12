@@ -1,6 +1,6 @@
 import { Toolbar, Typography, AppBar, Slide, useScrollTrigger } from '@mui/material'
 import UserBar from './userBar'
-import useStyles from '../../styles/useStyle'
+import useNavbarStyles from './useNavbarStyles'
 
 interface Props {
   children: React.ReactElement
@@ -16,7 +16,7 @@ const HideOnScroll = ({ children }: Props) => {
 }
 
 const NavBar = () => {
-  const classes = useStyles()
+  const classes = useNavbarStyles()
 
   return (
     <HideOnScroll>

@@ -5,7 +5,7 @@ const AllEvents: React.FC = () => {
   const classes = useStyles()
   return (
     <div className={classes.homeBlocks}>
-      <div className={classes.eventHeader}>
+      <div id="eventHeader">
         <h3>All Events</h3>
       </div>
 

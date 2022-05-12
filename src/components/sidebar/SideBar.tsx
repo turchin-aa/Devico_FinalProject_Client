@@ -1,53 +1,9 @@
-import { RefObject } from 'react'
-import { useNavigate } from 'react-router-dom'
-import useStyles from '../../styles/useStyle'
+import useSideBarStyles from './SideBarStyles'
 import SideBarItem from './SideBarItem'
 import { Drawer, CardMedia, Link } from '@mui/material'
 
-interface RefProps {
-  upcomingRef: RefObject<HTMLDivElement>
-  calendarRef: RefObject<HTMLDivElement>
-  newsRef: RefObject<HTMLDivElement>
-  partnersRef: RefObject<HTMLDivElement>
-}
-
-const scrollToRef = (ref: RefObject<HTMLDivElement>) => {
-  if (ref.current != null) {
-    window.scrollTo({
-      top: ref.current.offsetTop,
-      behavior: 'smooth',
-    })
-  }
-}
-
-const SideBar = ({ upcomingRef, calendarRef, newsRef, partnersRef }: RefProps) => {
-  const classes = useStyles()
-  const navigate = useNavigate()
-
-  const executeScroll = (path: string) => {
-    switch (path) {
-      case 'Upcoming events':
-        navigate('/#upcoming-events')
-        scrollToRef(upcomingRef)
-        break
-      case 'Events calendar':
-        navigate('/#events-calendar')
-        scrollToRef(calendarRef)
-        break
-      case 'News':
-        navigate('/#news')
-        scrollToRef(newsRef)
-        break
-      case 'Partners':
-        navigate('/#partners')
-        scrollToRef(partnersRef)
-        break
-      default:
-        navigate(path)
-        break
-    }
-  }
-
+const SideBar: React.FC = () => {
+  const classes = useSideBarStyles()
   return (
     <Drawer
       variant="permanent"
@@ -63,7 +19,7 @@ const SideBar = ({ upcomingRef, calendarRef, newsRef, partnersRef }: RefProps) =
         </Link>
       </div>
 
-      <SideBarItem executeScroll={executeScroll} />
+      <SideBarItem />
     </Drawer>
   )
 }

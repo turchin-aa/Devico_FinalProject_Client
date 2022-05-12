@@ -1,12 +1,15 @@
 import styled from '@emotion/styled'
 
-const GridWrapper = styled.div`
+export const GridWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   width: 100%;
 `
 
-const CalendarCell = styled.div`
+export const CalendarCell = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
   min-width: 20px;
   min-height: ${(props: { isWeekEnd?; isHeader?; isSelectedMoth? }) =>
     props.isHeader ? 24 : 80}px;
@@ -16,16 +19,55 @@ const CalendarCell = styled.div`
   color: ${(props: { isWeekEnd?; isHeader?; isSelectedMoth? }) =>
     props.isSelectedMoth ? '#000' : 'rgba(0,0,0,0.5)'};
 `
-const Day = styled.div`
-  height:31px;
-  width:31px;
-  display:flex;
-  justify-content:'center';
-  alignItems:'center';
-  alignItems:'center'margin:2px;
+export const Day = styled.div`
+  height: 31px;
+  width: 31px;
+  display: flex;
+  justify-content: 'center';
+  alignitems: 'center';
+  alignitems: 'center';
+  margin: 2px;
   background-color: ${(props: { current? }) => (props.current ? '#9771de' : '')};
   color: ${(props: { current? }) => (props.current ? '#fff' : '')};
   border-radius: ${(props: { current? }) => (props.current ? '50%' : '')};
 `
 
-export { CalendarCell, Day, GridWrapper }
+export const CalendarEvent = styled.div`
+  margin: 0 1px 1px 1px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 22px;
+  border-radius: 5px;
+  text-align: start;
+  background-color: #9771de;
+`
+
+export const CalendarWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`
+export const WeekDay = styled.div`
+  text-align: start;
+  width: 100%;
+  margin-left: 10px;
+  color: #000;
+`
+
+export const Header = styled.div`
+  border-left: 1px solid #b19cd8;
+  margin: 10px 0px 10px 0px;
+`
+export const EventsNumber = styled.div`
+  width: 20px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  background-color: #6e52a3;
+  margin: 0 2px 1px 1px;
+`

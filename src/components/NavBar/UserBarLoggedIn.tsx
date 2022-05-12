@@ -1,10 +1,10 @@
-import useStyles from '../../styles/useStyle'
+import useNavbarStyles from './useNavbarStyles'
 import clsx from 'clsx'
 import { Avatar, Divider } from '@mui/material'
 import NotificationButton from './Notifications/NotificationButton'
 
 const UserBarLoggedIn = () => {
-  const classes = useStyles()
+  const classes = useNavbarStyles()
   return (
     <div className={classes.flexCenter}>
       <NotificationButton />

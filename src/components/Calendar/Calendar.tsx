@@ -1,22 +1,20 @@
-import { Header } from './Header/Header'
 import { Monitor } from './Monitor/Monitor'
-import { CalendarGrid } from './CalendarGrid/CalendarGrid'
+import CalendarGrid from './CalendarGrid/CalendarGrid'
 import moment from 'moment'
 import { useState, useCallback, useEffect } from 'react'
 
-const Calendar = () => {
+const Calendar: React.FC = () => {
   moment.updateLocale('en', { week: { dow: 1 } })
 
   const [today, setToday] = useState(moment())
 
-  const [startDay, setStartDay] = useState(
+  const [startMonthDay, setStartMonthDay] = useState(
     today.clone().startOf('month').startOf('week').subtract(1, 'day'),
   )
-  // const startDateQuery = startDay.clone().format('X')
-  // const endDateQuery = endDay.clone().format('X')
 
   useEffect(() => {
-    setStartDay(today.clone().startOf('month').startOf('week').subtract(1, 'day'))
+    // sets new start day of month to render in the CalendarGrid, after today field was modified
+    setStartMonthDay(today.clone().startOf('month').startOf('week').subtract(1, 'day'))
   }, [today])
 
   const prevHandler = useCallback(() => {
@@ -35,9 +33,8 @@ const Calendar = () => {
 
   return (
     <div>
-      <Header />
       <Monitor prevHandler={prevHandler} nextHandler={nextHandler} today={today} />
-      <CalendarGrid startDay={startDay} today={today} />
+      <CalendarGrid startMonthDay={startMonthDay} today={today} />
     </div>
   )
 }

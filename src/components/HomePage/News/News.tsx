@@ -1,21 +1,17 @@
-import { forwardRef, RefObject } from 'react'
 import useStyles from '../../styles/useStyle'
 import NewsComponent from './NewsComponent'
-interface RefType {
-  newsRef: RefObject<HTMLDivElement>
-}
 
-const News = forwardRef(({ newsRef }: RefType) => {
+const News: React.FC = () => {
   const classes = useStyles()
 
   return (
-    <div ref={newsRef} className={classes.homeBlocks}>
-      <div id="news-title">
-        <h2 className={classes.notifHText}>News</h2>
+    <div id="news" className={classes.homeBlocks}>
+      <div className={classes.blockTitle}>
+        <div id="news-title">News</div>
       </div>
       <NewsComponent />
     </div>
   )
-})
+}
 
 export default News
