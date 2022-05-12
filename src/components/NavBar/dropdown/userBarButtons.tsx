@@ -1,21 +1,25 @@
 import { useState, MouseEvent, useCallback } from 'react'
 import { Button } from '@mui/material'
-import { KeyboardArrowDownOutlined } from '@mui/icons-material'
-import useNavbarStyles from '../useNavbarStyles'
-import DropDownMenu from './UserDropDownMenu'
 import clsx from 'clsx'
+import useNavbarStyles from '../useNavbarStyles'
+import DropDownMenu from './dropDown'
 
-const ArrowButton: React.FC = () => {
+type Props = {
+  children: React.ReactNode[]
+  menuClass?: string
+}
+
+const UserBarButtons: React.FC<Props> = props => {
   const classes = useNavbarStyles()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const handleOpenMenu = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLButtonElement
-    setAnchorEl(target)
+    return setAnchorEl(target)
   }, [])
 
   const handleCloseMenu = useCallback(() => {
-    setAnchorEl(null)
+    return setAnchorEl(null)
   }, [])
 
   return (
@@ -25,11 +29,17 @@ const ArrowButton: React.FC = () => {
         className={clsx(classes.userBarButton, classes.userBarInner, classes.flexCenter)}
         onClick={handleOpenMenu}
       >
-        <KeyboardArrowDownOutlined className={classes.userBarComponentW} fontSize="large" />
+        {props.children[0]}
       </Button>
-      <DropDownMenu anchorEl={anchorEl} handleCloseMenu={handleCloseMenu} />
+      <DropDownMenu
+        anchorEl={anchorEl}
+        handleCloseMenu={handleCloseMenu}
+        className={props.menuClass}
+      >
+        {props.children[1]}
+      </DropDownMenu>
     </div>
   )
 }
 
-export default ArrowButton
+export default UserBarButtons

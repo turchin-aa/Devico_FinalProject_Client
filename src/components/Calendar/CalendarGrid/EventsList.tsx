@@ -1,6 +1,6 @@
 import { CalendarEvent, EventsNumber } from '../CalendarStyled'
 
-const EventsList = () => {
+const EventsList: React.FC = () => {
   return (
     <div>
       <CalendarEvent> EVENTS</CalendarEvent>

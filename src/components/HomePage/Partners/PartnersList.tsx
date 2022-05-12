@@ -40,7 +40,7 @@ const settings = {
   ],
 }
 
-const PartnersList = () => {
+const PartnersList: React.FC = () => {
   const partners_list = [
     {
       id: 1,

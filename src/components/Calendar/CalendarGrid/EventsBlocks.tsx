@@ -1,6 +1,6 @@
 import { CalendarEvent } from '../CalendarStyled'
 
-const EventsBlocks = () => {
+const EventsBlocks: React.FC = () => {
   return (
     <div>
       <CalendarEvent> some event</CalendarEvent>

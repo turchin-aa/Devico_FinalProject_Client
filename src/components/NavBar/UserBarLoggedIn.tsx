@@ -1,6 +1,5 @@
 import useNavbarStyles from './useNavbarStyles'
-import clsx from 'clsx'
-import { Avatar, Divider } from '@mui/material'
+import { Divider } from '@mui/material'
 import NotificationButton from './Notifications/NotificationButton'
 
 const UserBarLoggedIn = () => {
@@ -17,9 +16,6 @@ const UserBarLoggedIn = () => {
       <div className={classes.userBarText}>
         Welcome!
         <div>Name Surname</div>
-      </div>
-      <div className={clsx(classes.userBarInner, classes.flexCenter)}>
-        <Avatar sx={{ width: 30, height: 30 }} src="/broken-image.jpg" />
       </div>
     </div>
   )

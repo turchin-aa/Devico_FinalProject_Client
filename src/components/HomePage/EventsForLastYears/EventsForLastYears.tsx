@@ -2,7 +2,7 @@ import { Divider } from '@mui/material'
 import useStyles from '../../styles/useStyle'
 import ScrollableItems from '../ScrollableItems/ScrollableItems'
 
-const EventsForLastYears = () => {
+const EventsForLastYears: React.FC = () => {
   const classes = useStyles()
   return (
     <div className={classes.homeBlocks}>

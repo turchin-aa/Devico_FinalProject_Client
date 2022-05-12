@@ -44,7 +44,7 @@ const settings = {
   ],
 }
 
-const ScrollableItems = () => {
+const ScrollableItems: React.FC = () => {
   const classes = useStyles()
   const classesScrollable = useScrollableStyles()
   const sRef = useRef<typeof Slider>(null)

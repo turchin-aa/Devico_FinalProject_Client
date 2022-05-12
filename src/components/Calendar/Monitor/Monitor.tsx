@@ -5,13 +5,13 @@ import { Button } from '@mui/material'
 import clsx from 'clsx'
 import { Moment } from 'moment'
 
-interface MonitorTypes {
+interface Props {
   prevHandler: () => void
   nextHandler: () => void
   today: Moment
 }
 
-const Monitor = ({ prevHandler, nextHandler, today }: MonitorTypes) => {
+const Monitor: React.FC<Props> = ({ prevHandler, nextHandler, today }) => {
   const classes = useStyles()
   return (
     <div className={classes.calendarHeader}>

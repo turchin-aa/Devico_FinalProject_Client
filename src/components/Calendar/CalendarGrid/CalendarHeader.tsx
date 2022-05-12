@@ -10,7 +10,7 @@ const setWeekArray = () => {
   )
 }
 
-const CalendarHeader = () => {
+const CalendarHeader: React.FC = () => {
   const week = useMemo(() => setWeekArray(), [])
   return (
     <GridWrapper>

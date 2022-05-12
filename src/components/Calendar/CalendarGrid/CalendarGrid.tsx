@@ -15,7 +15,7 @@ const setDaysArray = (day: Moment) => {
   return [...Array(42)].map(() => day.add(1, 'day').clone())
 }
 
-const CalendarGrid = ({ startMonthDay, today }: Props) => {
+const CalendarGrid: React.FC<Props> = ({ startMonthDay, today }) => {
   //delete after events implemented
   const eventsCount = 3
 

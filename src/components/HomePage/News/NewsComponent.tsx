@@ -37,7 +37,7 @@ const settings = {
   ],
 }
 
-const NewsComponent = () => {
+const NewsComponent: React.FC = () => {
   const classes = useNewsStyles()
   const slideRef = useRef<typeof Slider>(null)
 
