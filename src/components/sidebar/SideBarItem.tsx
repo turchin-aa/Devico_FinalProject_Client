@@ -64,7 +64,7 @@ const SideBarItem: React.FC = () => {
   })
 
   const toggleButton = useCallback(
-    (e: any) => {
+    (e: MouseEvent) => {
       const target = e.currentTarget as HTMLLIElement
       const ariaLabel = target.ariaLabel as string
       setState({ ...list_item, activeButton: list_item.objects[parseInt(ariaLabel)] })

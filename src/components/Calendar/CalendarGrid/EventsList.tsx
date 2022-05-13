@@ -17,7 +17,10 @@ const EventsList: React.FC = () => {
     <div>
       <div>
         <CalendarEvent className={classes.eventsButton} onClick={handleClick}>
-          <span className={clsx(arrowOpen())}>&#8600;</span> EVENTS
+          <span id="arrow" className={clsx(arrowOpen())}>
+            &#8600;
+          </span>
+          <span id="title"> EVENTS</span>
         </CalendarEvent>
         <EventsNumber>4</EventsNumber>
       </div>

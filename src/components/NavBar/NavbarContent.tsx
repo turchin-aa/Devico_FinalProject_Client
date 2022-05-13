@@ -24,7 +24,7 @@ const NavbarContent: React.FC = () => {
         buttonClass={clsx(classes.userBarButton, classes.userBarInner, classes.flexCenter)}
       >
         <KeyboardArrowDownOutlined className={classes.userBarComponentW} fontSize="large" />
-        <UserMenu />
+        {isUserAuth ? null : <UserMenu />}
       </UserBarButtons>
     </div>
   )

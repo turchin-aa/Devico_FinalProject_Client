@@ -49,9 +49,17 @@ export const useCalendarStyles = makeStyles((theme: Theme) => ({
     '&:hover': {
       cursor: 'pointer',
     },
-    '& > span': {
+    '& > span#arrow': {
       fontSize: 18,
       marginRight: 5,
+    },
+    '& > span#title': {
+      '@media (min-width: 400px)': {
+        display: 'none',
+      },
+      '@media (min-width: 800px)': {
+        display: 'initial',
+      },
     },
   },
   eventButtonArrow: {

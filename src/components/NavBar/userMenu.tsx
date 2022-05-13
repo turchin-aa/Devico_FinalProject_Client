@@ -23,16 +23,16 @@ const UserMenu = () => {
       <MenuItem
         component="button"
         className={classes.userBarDropdownButtons}
-        onClick={toggleRegHandler}
+        onClick={toggleLogHandler}
       >
-        Sign Up
+        Sign In
       </MenuItem>
       <MenuItem
         component="button"
         className={classes.userBarDropdownButtons}
-        onClick={toggleLogHandler}
+        onClick={toggleRegHandler}
       >
-        Sign In
+        Sign Up
       </MenuItem>
     </div>
   )
