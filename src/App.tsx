@@ -1,14 +1,17 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Theme, createTheme, ThemeProvider } from '@mui/material'
 import HomePage from './pages/HomePage'
 import PageNotFound from './pages/404'
 import FAQ from './pages/FAQ'
+import { sagaActions } from './store/saga-actions'
 import { makeStyles } from '@mui/styles'
 import SideBar from './components/Navigation/SideBar/SideBar'
 import NavBar from './components/Navigation/NavBar/NavBar'
-import SignUp from './components/sign-up/SignUp'
-import SignIn from './components/sign-in/SignIn'
+import SignUp from './components/Auth/SignUp/SignUp'
+import SignIn from './components/Auth/SignIn/SignIn'
+import PassRecover from './components/PasswordRecover/PassRecover'
+import { useAppDispatch } from './hooks/redux.hook'
 
 const theme = createTheme({
   spacing: [0, 2, 3, 5, 8],
@@ -27,6 +30,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 const App: React.FC = () => {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch({ type: sagaActions.USER_REFRESH_SAGA })
+    }
+  }, [dispatch])
+
   const classes = useStyles()
 
   const homeRef = useRef(null)
@@ -35,7 +46,7 @@ const App: React.FC = () => {
   const newsRef = useRef(null)
   const partnersRef = useRef(null)
 
-  const [logged, setLogged] = useState(true)
+  const [logged, setLogged] = useState(false)
 
   return (
     <ThemeProvider theme={theme}>
@@ -63,18 +74,16 @@ const App: React.FC = () => {
                 />
               }
             />
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
+
             <Route path="/faq" element={<FAQ />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>
       </Router>
+      <SignUp />
+      <SignIn />
+      <PassRecover />
     </ThemeProvider>
-    // <>
-    //   <SignIn />
-    //   <SignUp />
-    // </>
   )
 }
 

@@ -23,14 +23,36 @@ export const FacebookButton = styled(Button)({
 })
 
 export const CBox = styled(Box)({
-  marginTop: 30,
+  marginTop: 10,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
 })
 
+export const MyTypography = styled(Typography)({
+  fontFamily: 'Arial',
+  fontSize: 12,
+  mb: 1,
+})
+
+export const LinkTypography = styled(Typography)({
+  color: '#595353',
+  fontSize: 14,
+  fontFamily: 'Lato',
+  fontStyle: 'normal',
+  marginBottom: '10px',
+})
+
+export const SignLink = styled(Link)({
+  color: '#595353',
+  fontSize: 14,
+  fontFamily: 'Lato',
+  fontStyle: 'normal',
+  cursor: 'pointer',
+})
+
 export const GoogleButton = styled(Button)({
-  marginTop: 3,
+  marginTop: 1,
   marginBottom: 20,
   backgroundColor: '#E25F42',
   height: 50,
@@ -44,15 +66,9 @@ export const GoogleButton = styled(Button)({
   },
 })
 
-export const MyTypography = styled(Typography)({
-  fontFamily: 'Arial',
-  fontSize: 12,
-  mb: 1,
-})
-
 export const RegisterButton = styled(Button)({
   marginTop: 3,
-  marginBottom: 2,
+  marginBottom: 5,
   backgroundColor: '#6A6968',
   height: '48px',
   fontFamily: 'Roboto',
@@ -60,16 +76,7 @@ export const RegisterButton = styled(Button)({
   fontSize: 12,
 })
 
-export const LinkTypography = styled(Typography)({
-  color: '#595353',
-  fontSize: 14,
-  fontFamily: 'Lato',
-  fontStyle: 'normal',
-})
-
-export const SignLink = styled(Link)({
-  color: '#595353',
-  fontSize: 14,
-  fontFamily: 'Lato',
-  fontStyle: 'normal',
+export const ErrorMessage = styled(Typography)({
+  color: '#e53e3e',
+  marginTop: '8px',
 })

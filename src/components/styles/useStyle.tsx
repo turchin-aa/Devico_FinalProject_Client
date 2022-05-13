@@ -527,10 +527,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         zIndex: 2,
       },
       '@media (min-width: 600px)': {
-        backgroundColor: 'rgba(255,255,255,0.8)',
+        backgroundColor: 'transparent',
         zIndex: 1,
       },
-      boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)',
       height: 60,
     },
   },

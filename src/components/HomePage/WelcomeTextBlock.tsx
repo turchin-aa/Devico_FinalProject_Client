@@ -1,22 +1,25 @@
-import { Button } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import useStyles from '../styles/useStyle'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { uiActions } from '../../store/ui-slice'
+import { useCallback } from 'react'
 
 const WelcomeText = () => {
   const classes = useStyles()
-  const navigate = useNavigate()
-  const handleClick = (name: string) => {
-    switch (name) {
-      case 'Sign in':
-        navigate('/signin')
-        break
-      case 'Sign up':
-        navigate('/signup')
-        break
-      default:
-        break
-    }
-  }
+
+  const dispatch = useDispatch()
+
+  const toggleRegHandler = useCallback(() => {
+    dispatch(uiActions.toggleReg())
+  }, [dispatch])
+
+  const toggleLogHandler = useCallback(() => {
+    dispatch(uiActions.toggleLog())
+  }, [dispatch])
+
+  const showRecoverPasHandler = useCallback(() => {
+    dispatch(uiActions.toggleForgetPassword())
+  }, [dispatch])
 
   return (
     <div className={classes.welcomeBlock}>
@@ -25,15 +28,20 @@ const WelcomeText = () => {
       </p>
       <p className={classes.additional}>We hare exited to see you here. Let's rock</p>
       <div className={classes.buttons}>
-        <Button variant="contained" onClick={() => handleClick('Sign in')}>
+        <Button variant="contained" onClick={toggleLogHandler}>
           Sign in
         </Button>
-        <Button variant="outlined" onClick={() => handleClick('Sign up')}>
+        <Button variant="outlined" onClick={toggleRegHandler}>
           Sign up
         </Button>
       </div>
       <div>
-        <a href="#">Forgot the password?</a>
+        <Typography
+          sx={{ textDecoration: 'underline', cursor: 'pointer' }}
+          onClick={showRecoverPasHandler}
+        >
+          Forgot the password?
+        </Typography>
       </div>
     </div>
   )
