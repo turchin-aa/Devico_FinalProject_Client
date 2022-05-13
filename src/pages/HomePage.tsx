@@ -1,33 +1,30 @@
-import Welcome from '../components/HomePage/Welcome'
-import UpcomingEvents from '../components/HomePage/UpcomingEvents/UpcomingEvents'
-import EventsForLastYears from '../components/HomePage/EventsForLastYears/EventsForLastYears'
-import EventsCalendar from '../components/HomePage/EventCalendar/EventCalendarComponent'
-import Partners from '../components/HomePage/Partners/Partners'
-import AllEvents from '../components/HomePage/AllEvents/AllEvents'
-import News from '../components/HomePage/News/News'
-import useStyles from '../components/styles/useStyle'
+import Welcome from '../components/home-page/welcome/Welcome'
+import UpcomingEvents from '../components/home-page/upcoming-events/UpcomingEvents'
+import EventsForLastYears from '../components/home-page/event-for-last-years/EventsForLastYears'
+import EventsCalendar from '../components/home-page/event-calendar/EventCalendarComponent'
+import Partners from '../components/home-page/partners/Partners'
+import AllEvents from '../components/home-page/all-events/AllEvents'
+import News from '../components/home-page/news/News'
+import useStyles from '../theme/useStyle'
+import { memo } from 'react'
+import { RootState } from '../store/index'
+import { useSelector } from 'react-redux'
 
-const HomePage = (props: {
-  homeRef: any
-  upcomingRef: any
-  calendarRef: any
-  newsRef: any
-  partnersRef: any
-  logged: boolean
-}) => {
+const HomePage: React.FC = () => {
   const classes = useStyles()
+  const isUserAuth = useSelector<RootState, boolean>(state => state.user.isAuth)
 
   return (
     <div className={classes.homePageContainer}>
-      {props.logged ? null : <Welcome />}
-      <UpcomingEvents upcomingRef={props.upcomingRef} />
-      <EventsCalendar calendarRef={props.calendarRef} />
+      {isUserAuth ? null : <Welcome />}
+      <UpcomingEvents />
+      <EventsCalendar />
       <AllEvents />
-      <News newsRef={props.newsRef} />
-      <Partners partnersRef={props.partnersRef} />
+      <News />
+      <Partners />
       <EventsForLastYears />
     </div>
   )
 }
 
-export default HomePage
+export default memo(HomePage)

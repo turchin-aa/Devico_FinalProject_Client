@@ -1,56 +1,74 @@
-import useStyles from '../../styles/useStyle'
-import { CalendarCell, Day, GridWrapper } from '../../styles/styledComponent'
-import moment from 'moment'
+import { useCalendarStyles } from '../useCalenadrStyles'
+import { CalendarCell, Day, GridWrapper, CalendarWrapper } from '../CalendarStyled'
+import moment, { Moment } from 'moment'
+import EventsBlocks from './EventsBlocks'
+import EventsList from './EventsList'
+import { useMemo, useCallback, memo } from 'react'
+import CalendarHeader from './CalendarHeader'
 
-const CalendarGrid = (props: { startDay; today }) => {
-  const day = props.startDay.clone()
+interface Props {
+  startMonthDay: Moment
+  today: Moment
+}
 
-  const classes = useStyles()
-  const totalDays: number = 42
-  const daysArray = [...Array(totalDays)].map(() => day.add(1, 'day').clone())
-  const weekArray = [...Array(7)].map(() => day.day(1, 'day').clone())
+const setDaysArray = (day: Moment) => {
+  return [...Array(42)].map(() => day.add(1, 'day').clone())
+}
 
-  const isSelectedMoth = (day) => moment().isSame(day, 'month')
+const CalendarGrid: React.FC<Props> = ({ startMonthDay, today }) => {
+  //I'll delete this after events implemented
+  const eventsCount = 3
 
-  console.log(props.today)
+  const classes = useCalendarStyles()
+  const day = startMonthDay.clone()
+  const daysArray = setDaysArray(day)
+
+  // helps to mark current day in the calendar
+  const current = useMemo(() => moment().format('DDMMYYYY'), [])
+
+  const getIsSelectedMoth = useCallback(
+    day => {
+      return moment(today).isSame(day, 'month')
+    },
+    [day],
+  )
+
   return (
-    <div>
+    <CalendarWrapper>
+      <CalendarHeader />
       <GridWrapper>
-        {[...Array(7)].map((_, index) => {
-          return (
-            <CalendarCell key={index} isWeekEnd={index === 5 || index === 6}>
-              <div className={classes.rowInCell}>
-                {moment()
-                  .day(index + 1)
-                  .format('ddd')}
-              </div>
-            </CalendarCell>
-          )
-        })}
-      </GridWrapper>
-      <GridWrapper>
-        {daysArray.map((dayItem) => {
+        {daysArray.map(dayItem => {
           return (
             <CalendarCell
               key={dayItem.unix()}
               isWeekEnd={dayItem.day() === 6 || dayItem.day() === 0}
-              isSelectedMoth={isSelectedMoth}
+              isSelectedMoth={getIsSelectedMoth(dayItem)}
             >
               <div className={classes.rowInCell}>
                 <Day
                   className={classes.flexCenter}
-                  current={props.today === dayItem.format('DDMMYYYY')}
+                  current={current === dayItem.format('DDMMYYYY')}
                 >
-                  {' '}
                   {dayItem.format('D')}
                 </Day>
+              </div>
+              <div className={classes.calendarEventWrapper}>
+                {/* there(???) need's to be fetch of events where date is in format (DMMYYYY). 
+                    data needs to be pusshed to an array and then eventsArray.length is checked.
+                    if length <= 2 then we map separate eventBlocks to calendar,
+                    if length > 2 - we're heading to EventsList so there will be one eventBlock 
+                    with a dropdown list of events for a day
+                */}
+                {/* or we'll fetch data to an array */}
+
+                {eventsCount <= 2 ? <EventsBlocks /> : <EventsList />}
               </div>
             </CalendarCell>
           )
         })}
       </GridWrapper>
-    </div>
+    </CalendarWrapper>
   )
 }
 
-export { CalendarGrid }
+export default memo(CalendarGrid)

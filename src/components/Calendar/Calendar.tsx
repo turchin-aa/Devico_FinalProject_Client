@@ -1,41 +1,39 @@
-import { Header } from './Header/Header'
 import { Monitor } from './Monitor/Monitor'
-import { CalendarGrid } from './CalendarGrid/CalendarGrid'
+import CalendarGrid from './CalendarGrid/CalendarGrid'
 import moment from 'moment'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
-const Calendar = () => {
+const Calendar: React.FC = () => {
   moment.updateLocale('en', { week: { dow: 1 } })
-  const startDay = moment().startOf('month').startOf('week').subtract(1, 'day')
-  const endDay = moment().endOf('month').endOf('week').subtract(1, 'day')
 
   const [today, setToday] = useState(moment())
 
-  const startDateQuery = startDay.clone().format('X')
-  const endDateQuery = endDay.clone().format('X')
+  const [startMonthDay, setStartMonthDay] = useState(
+    today.clone().startOf('month').startOf('week').subtract(1, 'day'),
+  )
+
+  useEffect(() => {
+    // sets new start day of month to render in the CalendarGrid, after today field was modified
+    setStartMonthDay(today.clone().startOf('month').startOf('week').subtract(1, 'day'))
+  }, [today])
 
   const prevHandler = useCallback(() => {
-    setToday((prev) => prev.clone().subtract(1, 'month'))
+    setToday(prev => prev.clone().subtract(1, 'month'))
   }, [])
+
   const nextHandler = useCallback(() => {
-    setToday((next) => next.clone().add(1, 'month'))
+    setToday(next => next.clone().add(1, 'month'))
   }, [])
 
   const events = [
-    { id: 1, title: 'Race 1', description: '', date: 1651830176 },
-    { id: 2, title: 'Race 2', description: '', date: 1651916576 },
-    { id: 3, title: 'Race 3', description: '', date: 1651657376 },
+    { id: 1, title: 'Race 1', description: '', date: 6052022 },
+    { id: 2, title: 'Race 2', description: '', date: 8052022 },
+    { id: 3, title: 'Race 3', description: '', date: 9052022 },
   ]
-
   return (
     <div>
-      <Header />
-      <Monitor
-        prevHandler={prevHandler}
-        nextHandler={nextHandler}
-        today={today}
-      />
-      <CalendarGrid startDay={startDay} today={today.format('DDMMYYYY')} />
+      <Monitor prevHandler={prevHandler} nextHandler={nextHandler} today={today} />
+      <CalendarGrid startMonthDay={startMonthDay} today={today} />
     </div>
   )
 }
