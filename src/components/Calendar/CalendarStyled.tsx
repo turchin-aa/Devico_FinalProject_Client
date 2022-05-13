@@ -41,6 +41,9 @@ export const CalendarEvent = styled.div`
   border-radius: 5px;
   text-align: start;
   background-color: #9771de;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `
 
 export const CalendarWrapper = styled.div`
@@ -74,10 +77,11 @@ export const EventsNumber = styled.div`
 export const CalendarList = styled.div`
   position: absolute;
   width: 100%;
-  z-index: 1;
+  z-index: 2;
   background-color: #6e52a3;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 5px 0px 5px 2px;
+  padding: 5px 2px 5px 2px;
+  margin-left: -2px;
 `
