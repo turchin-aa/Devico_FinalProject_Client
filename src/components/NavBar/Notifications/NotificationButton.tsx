@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { Badge } from '@mui/material'
 import { NotificationsOutlined } from '@mui/icons-material'
 import useNavbarStyles from '../useNavbarStyles'
@@ -21,4 +21,4 @@ const NotificationButton: React.FC = () => {
   )
 }
 
-export default NotificationButton
+export default memo(NotificationButton)

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import PageNotFound from './pages/404'
@@ -38,4 +38,4 @@ const App: React.FC = () => {
   )
 }
 
-export default App
+export default memo(App)

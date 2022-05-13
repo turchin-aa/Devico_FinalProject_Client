@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import useWelcomeStyles from './useWelcomeStyles'
 
 const WelcomeEvent = () => {
@@ -30,4 +31,4 @@ const WelcomeEvent = () => {
     </div>
   )
 }
-export default WelcomeEvent
+export default memo(WelcomeEvent)

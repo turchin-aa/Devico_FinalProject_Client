@@ -1,6 +1,6 @@
 import { Divider, MenuList } from '@mui/material'
 import ContentNull from './ContentNull'
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import useNavbarStyles from '../useNavbarStyles'
 
 const NotificationMenu: React.FC = () => {
@@ -23,4 +23,4 @@ const NotificationMenu: React.FC = () => {
   )
 }
 
-export default NotificationMenu
+export default memo(NotificationMenu)

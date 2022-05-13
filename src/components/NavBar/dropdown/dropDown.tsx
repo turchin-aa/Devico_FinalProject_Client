@@ -1,4 +1,5 @@
 import { Menu } from '@mui/material'
+import { memo } from 'react'
 
 interface Props {
   children: React.ReactNode
@@ -20,4 +21,4 @@ const DropDownMenu: React.FC<Props> = ({ children, anchorEl, handleCloseMenu, cl
   )
 }
 
-export default DropDownMenu
+export default memo(DropDownMenu)

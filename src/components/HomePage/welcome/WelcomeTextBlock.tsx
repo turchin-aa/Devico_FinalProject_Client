@@ -1,7 +1,7 @@
 import { Button, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { uiActions } from '../../../store/ui-slice'
-import { useCallback } from 'react'
+import { memo, useCallback } from 'react'
 import useWelcomeStyles from './useWelcomeStyles'
 
 const WelcomeText = () => {
@@ -47,4 +47,4 @@ const WelcomeText = () => {
   )
 }
 
-export default WelcomeText
+export default memo(WelcomeText)

@@ -1,4 +1,5 @@
 import { Divider } from '@mui/material'
+import { memo } from 'react'
 import useStyles from '../../../theme/useStyle'
 import ScrollableItems from '../scrollable-items/ScrollableItems'
 
@@ -17,4 +18,4 @@ const EventsForLastYears: React.FC = () => {
   )
 }
 
-export default EventsForLastYears
+export default memo(EventsForLastYears)

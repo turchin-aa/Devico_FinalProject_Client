@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { CalendarEvent } from '../CalendarStyled'
 
 const EventsBlocks: React.FC = () => {
@@ -8,4 +9,4 @@ const EventsBlocks: React.FC = () => {
   )
 }
 
-export default EventsBlocks
+export default memo(EventsBlocks)

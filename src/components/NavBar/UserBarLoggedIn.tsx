@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import useNavbarStyles from './useNavbarStyles'
 import { Divider } from '@mui/material'
 import NotificationButton from './Notifications/NotificationButton'
@@ -21,4 +22,4 @@ const UserBarLoggedIn = () => {
   )
 }
 
-export default UserBarLoggedIn
+export default memo(UserBarLoggedIn)

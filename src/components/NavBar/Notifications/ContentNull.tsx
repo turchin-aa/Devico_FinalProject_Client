@@ -1,5 +1,6 @@
 import { NotificationsNoneOutlined } from '@mui/icons-material'
 import clsx from 'clsx'
+import { memo } from 'react'
 import useNavbarStyles from '../useNavbarStyles'
 
 const ContentNull = () => {
@@ -18,4 +19,4 @@ const ContentNull = () => {
   )
 }
 
-export default ContentNull
+export default memo(ContentNull)

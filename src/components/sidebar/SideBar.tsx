@@ -1,6 +1,7 @@
 import useSideBarStyles from './SideBarStyles'
 import SideBarItem from './SideBarItem'
 import { Drawer, CardMedia, Link } from '@mui/material'
+import { memo } from 'react'
 
 const SideBar: React.FC = () => {
   const classes = useSideBarStyles()
@@ -24,4 +25,4 @@ const SideBar: React.FC = () => {
   )
 }
 
-export default SideBar
+export default memo(SideBar)

@@ -1,4 +1,5 @@
 import { Divider } from '@mui/material'
+import { memo } from 'react'
 import useStyles from '../../../theme/useStyle'
 import ScrollableItems from '../scrollable-items/ScrollableItems'
 
@@ -16,4 +17,4 @@ const UpcomingEvents: React.FC = () => {
   )
 }
 
-export default UpcomingEvents
+export default memo(UpcomingEvents)

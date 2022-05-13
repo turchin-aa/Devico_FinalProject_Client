@@ -1,4 +1,4 @@
-import { MouseEventHandler, useCallback, useRef } from 'react'
+import { memo, MouseEventHandler, useCallback, useRef } from 'react'
 import { Divider, Button } from '@mui/material'
 import useStyles from '../../../theme/useStyle'
 import useScrollableStyles from './useScrollableStyles'
@@ -148,4 +148,4 @@ const ScrollableItems: React.FC = () => {
   )
 }
 
-export default ScrollableItems
+export default memo(ScrollableItems)

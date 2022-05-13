@@ -1,4 +1,4 @@
-import { useCallback, useState, ChangeEvent } from 'react'
+import { useCallback, useState, ChangeEvent, memo } from 'react'
 import { Table, TableContainer, Paper, Pagination } from '@mui/material'
 import useStyles from '../../../theme/useStyle'
 import EventsHeaders from './TableEventsHeaders'
@@ -146,4 +146,4 @@ const AllEventsTable: React.FC = () => {
   )
 }
 
-export default AllEventsTable
+export default memo(AllEventsTable)

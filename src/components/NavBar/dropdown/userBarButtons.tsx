@@ -1,4 +1,4 @@
-import { useState, MouseEvent, useCallback } from 'react'
+import { useState, MouseEvent, useCallback, memo } from 'react'
 import { Button } from '@mui/material'
 import DropDownMenu from './dropDown'
 
@@ -36,4 +36,4 @@ const UserBarButtons: React.FC<Props> = props => {
   )
 }
 
-export default UserBarButtons
+export default memo(UserBarButtons)

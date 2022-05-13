@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import useWelcomeStyles from './useWelcomeStyles'
 import WelcomeEvent from './WelcomeEventComponent'
 import WelcomeText from './WelcomeTextBlock'
@@ -12,4 +13,4 @@ const Welcome: React.FC = () => {
   )
 }
 
-export default Welcome
+export default memo(Welcome)

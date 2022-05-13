@@ -1,11 +1,10 @@
-import { Monitor } from './Monitor/Monitor'
+import Monitor from './Monitor/Monitor'
 import CalendarGrid from './CalendarGrid/CalendarGrid'
 import moment from 'moment'
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, memo } from 'react'
 
 const Calendar: React.FC = () => {
   moment.updateLocale('en', { week: { dow: 1 } })
-
   const [today, setToday] = useState(moment())
 
   const [startMonthDay, setStartMonthDay] = useState(
@@ -38,4 +37,4 @@ const Calendar: React.FC = () => {
   )
 }
 
-export { Calendar }
+export default memo(Calendar)

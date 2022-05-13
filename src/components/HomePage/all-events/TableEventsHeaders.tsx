@@ -1,4 +1,5 @@
 import { TableCell, TableHead, TableRow } from '@mui/material'
+import { memo } from 'react'
 import { Column } from './TableTypes'
 
 interface Props {
@@ -30,4 +31,4 @@ const EventsHeaders: React.FC<Props> = ({ columns }) => {
   )
 }
 
-export default EventsHeaders
+export default memo(EventsHeaders)

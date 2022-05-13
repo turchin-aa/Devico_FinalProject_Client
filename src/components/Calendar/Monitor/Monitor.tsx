@@ -6,6 +6,7 @@ import { Moment } from 'moment'
 import { useCalendarStyles } from '../useCalenadrStyles'
 import UserBarButtons from '../../NavBar/dropdown/userBarButtons'
 import FilterOptions from './FilterOptions'
+import { memo } from 'react'
 
 interface Props {
   prevHandler: () => void
@@ -43,4 +44,4 @@ const Monitor: React.FC<Props> = ({ prevHandler, nextHandler, today }) => {
   )
 }
 
-export { Monitor }
+export default memo(Monitor)

@@ -4,6 +4,7 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import clsx from 'clsx'
+import { memo } from 'react'
 
 const settings = {
   infinite: true,
@@ -125,4 +126,4 @@ const PartnersList: React.FC = () => {
   )
 }
 
-export default PartnersList
+export default memo(PartnersList)

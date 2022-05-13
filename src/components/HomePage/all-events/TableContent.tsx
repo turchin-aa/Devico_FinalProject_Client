@@ -1,4 +1,5 @@
 import { TableBody, TableCell, TableRow } from '@mui/material'
+import { memo } from 'react'
 import { Column, Data } from './TableTypes'
 interface Props {
   columns: Column[]
@@ -34,4 +35,4 @@ const TableContent: React.FC<Props> = ({ columns, rows, page, rowsPerPage }) => 
   )
 }
 
-export default TableContent
+export default memo(TableContent)

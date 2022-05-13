@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, MouseEvent } from 'react'
+import { useEffect, useRef, useCallback, MouseEvent, memo } from 'react'
 import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material'
 import useNewsStyles from './useNewsStyle'
 import Slider from 'react-slick'
@@ -139,4 +139,4 @@ const NewsComponent: React.FC = () => {
   )
 }
 
-export default NewsComponent
+export default memo(NewsComponent)

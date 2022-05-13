@@ -1,4 +1,4 @@
-import { useState, useCallback, MouseEvent } from 'react'
+import { useState, useCallback, MouseEvent, memo } from 'react'
 import useSideBarStyles from './SideBarStyles'
 import { List, ListItem } from '@mui/material'
 import { HashLink as Link } from 'react-router-hash-link'
@@ -108,4 +108,4 @@ const SideBarItem: React.FC = () => {
   )
 }
 
-export default SideBarItem
+export default memo(SideBarItem)

@@ -1,5 +1,6 @@
-import { Calendar } from '../../Calendar/Calendar'
+import Calendar from '../../Calendar/Calendar'
 import useStyles from '../../../theme/useStyle'
+import { memo } from 'react'
 
 const EventsCalendar: React.FC = () => {
   const classes = useStyles()
@@ -16,4 +17,4 @@ const EventsCalendar: React.FC = () => {
   )
 }
 
-export default EventsCalendar
+export default memo(EventsCalendar)
