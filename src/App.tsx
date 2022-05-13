@@ -1,15 +1,17 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Theme, createTheme, ThemeProvider } from '@mui/material'
 import HomePage from './pages/HomePage'
 import PageNotFound from './pages/404'
 import FAQ from './pages/FAQ'
+import { sagaActions } from './store/saga-actions'
 import { makeStyles } from '@mui/styles'
 import SideBar from './components/Navigation/SideBar/SideBar'
 import NavBar from './components/Navigation/NavBar/NavBar'
 import SignUp from './components/Auth/SignUp/SignUp'
 import SignIn from './components/Auth/SignIn/SignIn'
 import PassRecover from './components/PasswordRecover/PassRecover'
+import { useAppDispatch } from './hooks/redux.hook'
 
 const theme = createTheme({
   spacing: [0, 2, 3, 5, 8],
@@ -28,6 +30,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 const App: React.FC = () => {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch({ type: sagaActions.USER_REFRESH_SAGA })
+    }
+  }, [dispatch])
+
   const classes = useStyles()
 
   const homeRef = useRef(null)

@@ -1,10 +1,9 @@
 import * as yup from 'yup'
 import { useCallback, useState } from 'react'
 import { useFormik } from 'formik'
-import { useHttp } from '../../myhook/http.hook'
-import { RootState } from '../../store'
+import { useHttp } from '../../hooks/http.hook'
 import { uiActions } from '../../store/ui-slice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import {
   createTheme,
   ThemeProvider,
@@ -26,7 +25,7 @@ const PassRecover = () => {
   const { loading, request } = useHttp()
   const [isSend, setIsSend] = useState(false)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const formik = useFormik({
     initialValues: {
@@ -44,7 +43,7 @@ const PassRecover = () => {
     },
   })
 
-  const recoverIsShown = useSelector<RootState, boolean>(state => state.ui.showForgetPassword)
+  const recoverIsShown = useAppSelector(state => state.ui.showForgetPassword)
 
   const toggleHandler = useCallback(() => {
     if (recoverIsShown) {

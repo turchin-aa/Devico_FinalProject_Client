@@ -1,10 +1,9 @@
 import * as yup from 'yup'
 import { memo, useCallback } from 'react'
 import { useFormik } from 'formik'
-import { useHttp } from '../../../myhook/http.hook'
-import { RootState } from '../../../store'
+import { useHttp } from '../../../hooks/http.hook'
 import { uiActions } from '../../../store/ui-slice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hook'
 import {
   createTheme,
   ThemeProvider,
@@ -36,7 +35,7 @@ const theme = createTheme()
 const SignIn = () => {
   const { loading, request } = useHttp()
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const formik = useFormik({
     initialValues: {
@@ -56,7 +55,7 @@ const SignIn = () => {
     },
   })
 
-  const logCartIsShown = useSelector<RootState, boolean>(state => state.ui.showLog)
+  const logCartIsShown = useAppSelector(state => state.ui.showLog)
 
   const toggleHandler = useCallback(() => {
     if (logCartIsShown) {

@@ -1,10 +1,9 @@
 import * as yup from 'yup'
-import { useHttp } from '../../../myhook/http.hook'
 import { useFormik } from 'formik'
-import { RootState } from '../../../store'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hook'
 import { memo, useCallback } from 'react'
 import { uiActions } from '../../../store/ui-slice'
+import { sagaActions } from '../../../store/saga-actions'
 import {
   CssBaseline,
   TextField,
@@ -35,8 +34,7 @@ import {
 const theme = createTheme()
 
 const SignUp = () => {
-  const { loading, request } = useHttp()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const formik = useFormik({
     initialValues: {
@@ -48,20 +46,26 @@ const SignUp = () => {
     },
     validationSchema: yup.object().shape({
       email: yup.string().email('Write correct email').required('The email is required'),
-      password: yup.string().min(8).max(32).required('Write correct password'),
-      telephone: yup.string().min(10),
+      password: yup
+        .string()
+        .min(6, 'The length must be at least 6')
+        .max(32)
+        .required('The password is required'),
+      telephone: yup
+        .string()
+        .matches(
+          /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
+          'Invalid telephone format',
+        ),
       confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
-      terms: yup.boolean().required().oneOf([true], 'Check'),
+      terms: yup.boolean().required().oneOf([true], 'Check the terms'),
     }),
     onSubmit: async (values, { resetForm }) => {
-      try {
-        await request('http://localhost:8000/api/auth/register', 'POST', { ...values })
-        resetForm()
-      } catch (e) {}
+      dispatch({ type: sagaActions.USER_SIGNUP_SAGA, payload: values })
     },
   })
 
-  const regCartIsShown = useSelector<RootState, boolean>(state => state.ui.showReg)
+  const regCartIsShown = useAppSelector(state => state.ui.showReg)
 
   const toggleHandler = useCallback(() => {
     if (regCartIsShown) {
@@ -69,10 +73,10 @@ const SignUp = () => {
     }
   }, [dispatch, regCartIsShown])
 
-  const changeSignHandler = () => {
+  const changeSignHandler = useCallback(() => {
     dispatch(uiActions.toggleReg())
     dispatch(uiActions.toggleLog())
-  }
+  }, [dispatch])
 
   return (
     <Dialog open={regCartIsShown} onClose={toggleHandler}>
@@ -208,7 +212,7 @@ const SignUp = () => {
                   ) : null}
                 </Grid>
               </Grid>
-              <RegisterButton disabled={loading} type="submit" fullWidth variant="contained">
+              <RegisterButton type="submit" fullWidth variant="contained">
                 Sign Up
               </RegisterButton>
               <Grid container justifyContent="center">

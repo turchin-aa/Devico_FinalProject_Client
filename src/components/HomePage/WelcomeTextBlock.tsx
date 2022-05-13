@@ -17,6 +17,10 @@ const WelcomeText = () => {
     dispatch(uiActions.toggleLog())
   }, [dispatch])
 
+  const showRecoverPasHandler = useCallback(() => {
+    dispatch(uiActions.toggleForgetPassword())
+  }, [dispatch])
+
   return (
     <div className={classes.welcomeBlock}>
       <p className={classes.mainText}>
@@ -32,7 +36,10 @@ const WelcomeText = () => {
         </Button>
       </div>
       <div>
-        <Typography sx={{ textDecoration: 'underline', cursor: 'pointer' }}>
+        <Typography
+          sx={{ textDecoration: 'underline', cursor: 'pointer' }}
+          onClick={showRecoverPasHandler}
+        >
           Forgot the password?
         </Typography>
       </div>
