@@ -1,4 +1,4 @@
-import { Calendar } from '../../calendar/Calendar'
+import { Calendar } from '../../Calendar/Calendar'
 import useStyles from '../../../theme/useStyle'
 
 const EventsCalendar: React.FC = () => {
