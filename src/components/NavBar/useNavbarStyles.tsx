@@ -59,8 +59,8 @@ const useNavbarStyles = makeStyles((theme: Theme) => ({
 
   userBarDropdown: {
     width: 224,
-    marginTop: 6,
-    marginLeft: 12,
+    marginTop: 12,
+    marginLeft: 15,
   },
   userBarNotifDropdown: {
     '@media (min-width: 400px)': {
@@ -89,16 +89,6 @@ const useNavbarStyles = makeStyles((theme: Theme) => ({
     position: 'absolute',
     top: 40,
     right: 237,
-  },
-  userBarDropdownButtons: {
-    width: 224,
-    height: 48,
-    color: '#8F8F8F',
-    '&:hover': {
-      cursor: 'pointer',
-      backgroundColor: '#dbd3de',
-      color: '#000',
-    },
   },
 
   notifContent: {

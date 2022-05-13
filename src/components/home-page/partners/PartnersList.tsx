@@ -1,4 +1,4 @@
-import useStyles from '../../styles/useStyle'
+import useStyles from '../../../theme/useStyle'
 import usePartnersStyles from './usePartnersStyle'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'

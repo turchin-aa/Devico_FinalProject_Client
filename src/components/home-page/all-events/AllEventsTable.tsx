@@ -1,6 +1,6 @@
 import { useCallback, useState, ChangeEvent } from 'react'
 import { Table, TableContainer, Paper, Pagination } from '@mui/material'
-import useStyles from '../../styles/useStyle'
+import useStyles from '../../../theme/useStyle'
 import EventsHeaders from './TableEventsHeaders'
 import TableContent from './TableContent'
 import { Column, Data } from './TableTypes'

@@ -1,5 +1,5 @@
 import { Toolbar, Typography, AppBar, Slide, useScrollTrigger } from '@mui/material'
-import UserBar from './userBar'
+import NavbarContent from './NavbarContent'
 import useNavbarStyles from './useNavbarStyles'
 
 interface Props {
@@ -23,7 +23,7 @@ const NavBar = () => {
       <AppBar elevation={0} className={classes.navbar}>
         <Toolbar>
           <Typography variant="h6" component="div">
-            <UserBar />
+            <NavbarContent />
           </Typography>
         </Toolbar>
       </AppBar>

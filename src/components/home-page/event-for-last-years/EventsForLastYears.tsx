@@ -1,6 +1,6 @@
 import { Divider } from '@mui/material'
-import useStyles from '../../styles/useStyle'
-import ScrollableItems from '../ScrollableItems/ScrollableItems'
+import useStyles from '../../../theme/useStyle'
+import ScrollableItems from '../scrollable-items/ScrollableItems'
 
 const EventsForLastYears: React.FC = () => {
   const classes = useStyles()

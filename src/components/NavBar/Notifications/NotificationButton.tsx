@@ -3,7 +3,7 @@ import { Badge } from '@mui/material'
 import { NotificationsOutlined } from '@mui/icons-material'
 import useNavbarStyles from '../useNavbarStyles'
 import NotificationMenu from './NotificationDropDown'
-import UserBarButtons from '../dropdown/userBarButtons'
+import UserBarButtons from '../dropdown/UserBarButtons'
 
 const NotificationButton: React.FC = () => {
   const classes = useNavbarStyles()

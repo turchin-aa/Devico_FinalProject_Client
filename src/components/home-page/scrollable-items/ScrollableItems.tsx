@@ -1,6 +1,6 @@
 import { MouseEventHandler, useCallback, useRef } from 'react'
 import { Divider, Button } from '@mui/material'
-import useStyles from '../../styles/useStyle'
+import useStyles from '../../../theme/useStyle'
 import useScrollableStyles from './useScrollableStyles'
 import clsx from 'clsx'
 import Slider from 'react-slick'

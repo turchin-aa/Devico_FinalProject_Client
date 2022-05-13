@@ -5,11 +5,11 @@ import { memo } from 'react'
 import { RootState } from '../../store/index'
 import { useSelector } from 'react-redux'
 import { Avatar } from '@mui/material'
-import UserBarButtons from './dropdown/userBarButtons'
+import UserBarButtons from './dropdown/UserBarButtons'
 import { KeyboardArrowDownOutlined } from '@mui/icons-material'
-import UserMenu from './userMenu'
+import UserMenu from './UserMenu'
 
-const UserBar: React.FC = () => {
+const NavbarContent: React.FC = () => {
   const classes = useNavbarStyles()
   const isUserAuth = useSelector<RootState, boolean>(state => state.ui.isUserAuth)
 
@@ -19,7 +19,10 @@ const UserBar: React.FC = () => {
       <div className={clsx(classes.userBarInner, classes.flexCenter)}>
         <Avatar sx={{ width: 30, height: 30 }} src="/broken-image.jpg" />
       </div>
-      <UserBarButtons menuClass={classes.userBarDropdown}>
+      <UserBarButtons
+        menuClass={classes.userBarDropdown}
+        buttonClass={clsx(classes.userBarButton, classes.userBarInner, classes.flexCenter)}
+      >
         <KeyboardArrowDownOutlined className={classes.userBarComponentW} fontSize="large" />
         <UserMenu />
       </UserBarButtons>
@@ -27,4 +30,4 @@ const UserBar: React.FC = () => {
   )
 }
 
-export default memo(UserBar)
+export default memo(NavbarContent)

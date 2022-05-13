@@ -1,4 +1,4 @@
-import useStyles from '../../styles/useStyle'
+import useStyles from '../../../theme/useStyle'
 import AllEventsTable from './AllEventsTable'
 
 const AllEvents: React.FC = () => {

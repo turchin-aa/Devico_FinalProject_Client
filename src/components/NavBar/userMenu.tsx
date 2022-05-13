@@ -1,15 +1,15 @@
 import { MenuItem } from '@mui/material'
 import { useState, MouseEvent, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import useNavbarStyles from './useNavbarStyles'
 import { memo } from 'react'
 import { RootState } from '../../store/index'
 import { uiActions } from '../../store/ui-slice'
 import { useDispatch, useSelector } from 'react-redux'
-import { menuOut, menuIn } from './userMenuVar'
+import { menuOut, menuIn } from './UserMenuVar'
+import useStyles from '../../theme/useStyle'
 
 const UserMenu = () => {
-  const classes = useNavbarStyles()
+  const classes = useStyles()
 
   const isUserAuth = useSelector<RootState, boolean>(state => state.ui.isUserAuth)
   const dispatch = useDispatch()

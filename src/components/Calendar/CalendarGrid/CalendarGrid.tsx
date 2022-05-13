@@ -1,4 +1,4 @@
-import useStyles from '../../styles/useStyle'
+import { useCalendarStyles } from '../useCalenadrStyles'
 import { CalendarCell, Day, GridWrapper, CalendarWrapper } from '../CalendarStyled'
 import moment, { Moment } from 'moment'
 import EventsBlocks from './EventsBlocks'
@@ -16,10 +16,10 @@ const setDaysArray = (day: Moment) => {
 }
 
 const CalendarGrid: React.FC<Props> = ({ startMonthDay, today }) => {
-  //delete after events implemented
+  //I'll delete this after events implemented
   const eventsCount = 3
 
-  const classes = useStyles()
+  const classes = useCalendarStyles()
   const day = startMonthDay.clone()
   const daysArray = setDaysArray(day)
 
@@ -52,9 +52,17 @@ const CalendarGrid: React.FC<Props> = ({ startMonthDay, today }) => {
                   {dayItem.format('D')}
                 </Day>
               </div>
-              {/* <div className={classes.calendarEventWrapper}>
+              <div className={classes.calendarEventWrapper}>
+                {/* there(???) need's to be fetch of events where date is in format (DMMYYYY). 
+                    data needs to be pusshed to an array and then eventsArray.length is checked.
+                    if length <= 2 then we map separate eventBlocks to calendar,
+                    if length > 2 - we're heading to EventsList so there will be one eventBlock 
+                    with a dropdown list of events for a day
+                */}
+                {/* or we'll fetch data to an array */}
+
                 {eventsCount <= 2 ? <EventsBlocks /> : <EventsList />}
-              </div> */}
+              </div>
             </CalendarCell>
           )
         })}

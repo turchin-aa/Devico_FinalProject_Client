@@ -36,7 +36,7 @@ export const CalendarEvent = styled.div`
   margin: 0 1px 1px 1px;
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 96%;
   height: 22px;
   border-radius: 5px;
   text-align: start;
@@ -70,4 +70,14 @@ export const EventsNumber = styled.div`
   z-index: 1;
   background-color: #6e52a3;
   margin: 0 2px 1px 1px;
+`
+export const CalendarList = styled.div`
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  background-color: #6e52a3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px 0px 5px 2px;
 `

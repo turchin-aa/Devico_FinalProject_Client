@@ -1,16 +1,15 @@
 import { useState, MouseEvent, useCallback } from 'react'
 import { Button } from '@mui/material'
-import clsx from 'clsx'
 import useNavbarStyles from '../useNavbarStyles'
-import DropDownMenu from './dropDown'
+import DropDownMenu from './DropDown'
 
 type Props = {
   children: React.ReactNode[]
   menuClass?: string
+  buttonClass?: string
 }
 
 const UserBarButtons: React.FC<Props> = props => {
-  const classes = useNavbarStyles()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const handleOpenMenu = useCallback((event: MouseEvent<HTMLButtonElement>) => {
@@ -24,11 +23,7 @@ const UserBarButtons: React.FC<Props> = props => {
 
   return (
     <div>
-      <Button
-        aria-controls="menu"
-        className={clsx(classes.userBarButton, classes.userBarInner, classes.flexCenter)}
-        onClick={handleOpenMenu}
-      >
+      <Button aria-controls="menu" className={props.buttonClass} onClick={handleOpenMenu}>
         {props.children[0]}
       </Button>
       <DropDownMenu

@@ -1,9 +1,11 @@
 import DynamicIcon from '../../DynamicIcon'
-import useStyles from '../../styles/useStyle'
 import { FilterAlt } from '@mui/icons-material'
 import { Button } from '@mui/material'
 import clsx from 'clsx'
 import { Moment } from 'moment'
+import UserBarButtons from '../../NavBar/dropdown/UserBarButtons'
+import FilterOptions from './FilterOptions'
+import { useCalendarStyles } from '../useCalenadrStyles'
 
 interface Props {
   prevHandler: () => void
@@ -12,15 +14,20 @@ interface Props {
 }
 
 const Monitor: React.FC<Props> = ({ prevHandler, nextHandler, today }) => {
-  const classes = useStyles()
+  const classes = useCalendarStyles()
   return (
     <div className={classes.calendarHeader}>
       <div className={clsx(classes.flexCenter)}>
         <span id="month">{today.format('MMMM')} </span>
         <span>{today.format('YYYY')}</span>
-        <div className={clsx(classes.flexCenter, 'filter')}>
-          <FilterAlt fontSize="small" />
-          Filter
+        <div>
+          <UserBarButtons buttonClass={classes.flexCenter}>
+            <div className={clsx(classes.filterButton, classes.flexCenter)}>
+              <FilterAlt fontSize="small" />
+              <span>Filter</span>
+            </div>
+            <FilterOptions />
+          </UserBarButtons>
         </div>
       </div>
 

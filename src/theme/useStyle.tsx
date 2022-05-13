@@ -9,36 +9,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   appContainer: {
     display: 'flex',
   },
-  calendarHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    fontWeight: 700,
-    '& > div': {
-      '& >  span': {
-        fontSize: 30,
-      },
-      '& > div.filter': {
-        marginTop: 10,
-        fontSize: 14,
-        '&:hover': {
-          cursor: 'pointer',
-        },
-      },
-    },
-  },
-  calendarEventWrapper: {
-    width: '100%',
-    position: 'absolute',
-    bottom: 0,
-    color: '#fff',
-    fontSize: 12,
-  },
-  rowInCell: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    marginRight: 1,
-    marginLeft: 1,
-  },
+
   flexCenter: {
     display: 'flex',
     justifyContent: 'center',
@@ -103,6 +74,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         textDecoration: 'underline',
         cursor: 'pointer',
       },
+    },
+  },
+  userBarDropdownButtons: {
+    width: 224,
+    height: 48,
+    color: '#8F8F8F',
+    '&:hover': {
+      cursor: 'pointer',
+      backgroundColor: '#dbd3de',
+      color: '#000',
     },
   },
 
