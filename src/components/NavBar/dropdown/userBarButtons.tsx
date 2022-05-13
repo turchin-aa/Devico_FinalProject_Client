@@ -1,7 +1,6 @@
 import { useState, MouseEvent, useCallback } from 'react'
 import { Button } from '@mui/material'
-import useNavbarStyles from '../useNavbarStyles'
-import DropDownMenu from './DropDown'
+import DropDownMenu from './dropDown'
 
 type Props = {
   children: React.ReactNode[]

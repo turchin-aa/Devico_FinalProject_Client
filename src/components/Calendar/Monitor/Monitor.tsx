@@ -3,9 +3,9 @@ import { FilterAlt } from '@mui/icons-material'
 import { Button } from '@mui/material'
 import clsx from 'clsx'
 import { Moment } from 'moment'
-import UserBarButtons from '../../NavBar/dropdown/UserBarButtons'
-import FilterOptions from './FilterOptions'
 import { useCalendarStyles } from '../useCalenadrStyles'
+import UserBarButtons from '../../NavBar/dropdown/userBarButtons'
+import FilterOptions from './FilterOptions'
 
 interface Props {
   prevHandler: () => void

@@ -5,7 +5,7 @@ import { memo } from 'react'
 import { RootState } from '../../store/index'
 import { useSelector } from 'react-redux'
 import { Avatar } from '@mui/material'
-import UserBarButtons from './dropdown/UserBarButtons'
+import UserBarButtons from './dropdown/userBarButtons'
 import { KeyboardArrowDownOutlined } from '@mui/icons-material'
 import UserMenu from './userMenu'
 

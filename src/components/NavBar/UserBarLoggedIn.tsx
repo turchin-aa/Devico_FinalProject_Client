@@ -1,6 +1,6 @@
 import useNavbarStyles from './useNavbarStyles'
 import { Divider } from '@mui/material'
-import NotificationButton from './notifications/NotificationButton'
+import NotificationButton from './Notifications/NotificationButton'
 
 const UserBarLoggedIn = () => {
   const classes = useNavbarStyles()
