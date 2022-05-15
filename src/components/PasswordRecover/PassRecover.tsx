@@ -1,7 +1,6 @@
 import * as yup from 'yup'
 import { useCallback, useState } from 'react'
 import { useFormik } from 'formik'
-import { useHttp } from '../../hooks/http.hook'
 import { uiActions } from '../../store/ui-slice'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import {
@@ -22,7 +21,6 @@ import { CBox, RegisterButton, LinkTypography, SignLink, ErrorMessage } from '..
 const theme = createTheme()
 
 const PassRecover = () => {
-  const { loading, request } = useHttp()
   const [isSend, setIsSend] = useState(false)
 
   const dispatch = useAppDispatch()
@@ -36,8 +34,6 @@ const PassRecover = () => {
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
-        await request('http://localhost:8000/api/forgotPassword', 'POST', { ...values })
-        setIsSend(!isSend)
         resetForm()
       } catch (e) {}
     },
@@ -94,7 +90,7 @@ const PassRecover = () => {
                   {formik.errors.email && formik.touched.email ? (
                     <ErrorMessage>{formik.errors.email}</ErrorMessage>
                   ) : null}
-                  <RegisterButton disabled={loading} type="submit" fullWidth variant="contained">
+                  <RegisterButton type="submit" fullWidth variant="contained">
                     Submit
                   </RegisterButton>
                   <Grid container justifyContent="center">

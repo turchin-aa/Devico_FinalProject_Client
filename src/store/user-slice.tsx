@@ -21,7 +21,10 @@ const userSlice = createSlice({
       state.id = ''
     },
     toggleAuth(state) {
-      state.isAuth = !state.isAuth
+      state.isAuth = true
+    },
+    unToggleAuth(state) {
+      state.isAuth = false
     },
   },
 })

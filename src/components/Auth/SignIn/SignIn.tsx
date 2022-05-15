@@ -1,8 +1,8 @@
 import * as yup from 'yup'
 import { memo, useCallback } from 'react'
 import { useFormik } from 'formik'
-import { useHttp } from '../../../hooks/http.hook'
 import { uiActions } from '../../../store/ui-slice'
+import { sagaActions } from '../../../store/saga-actions'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hook'
 import {
   createTheme,
@@ -33,8 +33,6 @@ import {
 const theme = createTheme()
 
 const SignIn = () => {
-  const { loading, request } = useHttp()
-
   const dispatch = useAppDispatch()
 
   const formik = useFormik({
@@ -48,10 +46,9 @@ const SignIn = () => {
       password: yup.string().min(8).max(32).required('Invalid login or password'),
     }),
     onSubmit: async (values, { resetForm }) => {
-      try {
-        await request('http://localhost:8000/api/auth/login', 'POST', { ...values })
-        resetForm()
-      } catch (e) {}
+      dispatch({ type: sagaActions.USER_LOGIN_SAGA, payload: values })
+      toggleHandler()
+      resetForm()
     },
   })
 
@@ -174,7 +171,7 @@ const SignIn = () => {
                   <SignLink onClick={showRecoverPasHandler}>Forgot password?</SignLink>
                 </Grid>
               </Grid>
-              <RegisterButton disabled={loading} type="submit" fullWidth variant="contained">
+              <RegisterButton type="submit" fullWidth variant="contained">
                 Sign In
               </RegisterButton>
               <Grid container justifyContent="center">

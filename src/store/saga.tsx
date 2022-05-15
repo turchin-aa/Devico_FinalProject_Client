@@ -7,7 +7,7 @@ type RegisterServiceType = SagaReturnType<typeof AuthService.register>
 type LoginServiceType = SagaReturnType<typeof AuthService.login>
 type RefreshServerType = SagaReturnType<typeof AuthService.checkAuth>
 
-const { setUser, toggleAuth, removeUser } = userSliceActions
+const { setUser, toggleAuth, removeUser, unToggleAuth } = userSliceActions
 
 export function* userSignUpSaga(action: Effect) {
   try {
@@ -37,7 +37,7 @@ export function* userLogoutSaga(action: Effect) {
   try {
     yield call(AuthService.logout)
     localStorage.removeItem('token')
-    yield put(toggleAuth())
+    yield put(unToggleAuth())
     yield put(removeUser())
   } catch (error) {
     console.log(error)

@@ -18,7 +18,7 @@ const App: React.FC = () => {
     if (localStorage.getItem('token')) {
       dispatch({ type: sagaActions.USER_REFRESH_SAGA })
     }
-  }, [dispatch])
+  }, [])
 
   return (
     <>

@@ -62,6 +62,8 @@ const SignUp = () => {
     }),
     onSubmit: async (values, { resetForm }) => {
       dispatch({ type: sagaActions.USER_SIGNUP_SAGA, payload: values })
+      changeSignHandler()
+      resetForm()
     },
   })
 
