@@ -7,7 +7,7 @@ interface SliceState {
 
 const initialState: SliceState = {
   id: '',
-  isAuth: false,
+  isAuth: true,
 }
 
 const userSlice = createSlice({

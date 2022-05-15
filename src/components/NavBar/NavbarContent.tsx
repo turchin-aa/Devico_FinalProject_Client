@@ -8,6 +8,7 @@ import { Avatar } from '@mui/material'
 import UserBarButtons from './dropdown/userBarButtons'
 import { KeyboardArrowDownOutlined } from '@mui/icons-material'
 import UserMenu from './userMenu'
+import UserLoggedMenu from './UserLoggedMenu'
 
 const NavbarContent: React.FC = () => {
   const classes = useNavbarStyles()
@@ -24,7 +25,7 @@ const NavbarContent: React.FC = () => {
         buttonClass={clsx(classes.userBarButton, classes.userBarInner, classes.flexCenter)}
       >
         <KeyboardArrowDownOutlined className={classes.userBarComponentW} fontSize="large" />
-        {isUserAuth ? null : <UserMenu />}
+        {isUserAuth ? <UserLoggedMenu /> : <UserMenu />}
       </UserBarButtons>
     </div>
   )
