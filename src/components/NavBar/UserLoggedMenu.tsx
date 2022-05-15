@@ -3,15 +3,15 @@ import { useCallback } from 'react'
 import { memo } from 'react'
 import { useDispatch } from 'react-redux'
 import useStyles from '../../theme/useStyle'
-import { userSliceActions } from '../../store/user-slice'
+import { sagaActions } from '../../store/saga-actions'
 
 const UserLoggedMenu = () => {
   const classes = useStyles()
 
   const dispatch = useDispatch()
 
-  const toggleAuthHandler = useCallback(() => {
-    dispatch(userSliceActions.toggleAuth())
+  const logoutHandler = useCallback(() => {
+    dispatch({ type: sagaActions.USER_LOGOUT_SAGA })
   }, [dispatch])
 
   return (
@@ -25,7 +25,7 @@ const UserLoggedMenu = () => {
       <MenuItem
         component="button"
         className={classes.userBarDropdownButtons}
-        onClick={toggleAuthHandler}
+        onClick={logoutHandler}
       >
         Sign Out
       </MenuItem>

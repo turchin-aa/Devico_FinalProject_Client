@@ -48,7 +48,6 @@ export function* userRefreshSaga(action: Effect) {
   try {
     const data: RefreshServerType = yield call(AuthService.checkAuth)
     const { accessToken, id } = data.data
-
     yield put(setUser({ id }))
     localStorage.setItem('token', accessToken)
     yield put(toggleAuth())

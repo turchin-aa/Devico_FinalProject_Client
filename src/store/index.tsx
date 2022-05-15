@@ -12,6 +12,7 @@ let sagaMiddleware = createSagaMiddleware()
 const store = configureStore({
   reducer: { ui: uiSlice.reducer, user: userSlice.reducer },
   middleware: getDefaultMiddleware => getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
+  devTools: true,
 })
 
 sagaMiddleware.run(saga)

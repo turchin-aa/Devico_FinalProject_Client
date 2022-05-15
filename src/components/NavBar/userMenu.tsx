@@ -1,7 +1,7 @@
 import { MenuItem } from '@mui/material'
 import { useCallback } from 'react'
 import { memo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import useStyles from '../../theme/useStyle'
 import { uiActions } from '../../store/ui-slice'
 

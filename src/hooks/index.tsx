@@ -1,5 +1,6 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios from 'axios'
 import { AuthResponse } from '../services/AuthService'
+import createAuthRefreshInterceptor from 'axios-auth-refresh'
 
 const host = 'http://localhost:8000/api'
 
@@ -8,27 +9,14 @@ const api = axios.create({
   baseURL: host,
 })
 
-api.interceptors.request.use<AxiosRequestConfig>(config => {
-  config!.headers!.Autorization = `Bearer ${localStorage.getItem('token')}`
-  return config
-})
+const refreshAuthLogic = failedRequest =>
+  api.get<AuthResponse>('/auth/refresh', { withCredentials: true }).then(tokenRefreshResponse => {
+    localStorage.setItem('token', tokenRefreshResponse.data.accessToken)
+    failedRequest.response.config.headers['Authorization'] =
+      'Bearer ' + tokenRefreshResponse.data.accessToken
+    return Promise.resolve()
+  })
 
-api.interceptors.response.use(
-  config => config,
-  async error => {
-    const originalRequest = error.config
-    if (error.response.status === 401 && error.config && !error.config.isRetry) {
-      originalRequest.isRetry = true
-      try {
-        const response = await api.get<AuthResponse>('/auth/refresh', { withCredentials: true })
-        localStorage.setItem('token', response.data.accessToken)
-        return api.request(originalRequest)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    throw error
-  },
-)
+createAuthRefreshInterceptor(axios, refreshAuthLogic)
 
 export default api
