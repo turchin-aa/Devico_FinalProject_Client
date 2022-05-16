@@ -9,6 +9,7 @@ import NavBar from './components/NavBar/NavBar'
 import SignUp from './components/Auth/SignUp/SignUp'
 import SignIn from './components/Auth/SignIn/SignIn'
 import PassRecover from './components/PasswordRecover/PassRecover'
+import CreateNewPass from './components/PasswordRecover/CreateNewPass'
 import { useAppDispatch } from './hooks/redux.hook'
 
 const App: React.FC = () => {
@@ -29,6 +30,7 @@ const App: React.FC = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="*" element={<PageNotFound />} />
+          <Route path="resetPass" element={<CreateNewPass />} />
         </Routes>
       </Router>
       <SignUp />

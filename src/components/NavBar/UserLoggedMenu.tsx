@@ -1,14 +1,14 @@
 import { MenuItem } from '@mui/material'
 import { useCallback } from 'react'
 import { memo } from 'react'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '../../hooks/redux.hook'
 import useStyles from '../../theme/useStyle'
 import { sagaActions } from '../../store/saga-actions'
 
 const UserLoggedMenu = () => {
   const classes = useStyles()
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const logoutHandler = useCallback(() => {
     dispatch({ type: sagaActions.USER_LOGOUT_SAGA })

@@ -1,5 +1,5 @@
 import { Button, Typography } from '@mui/material'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '../../../hooks/redux.hook'
 import { uiActions } from '../../../store/ui-slice'
 import { memo, useCallback } from 'react'
 import useWelcomeStyles from './useWelcomeStyles'
@@ -7,7 +7,7 @@ import useWelcomeStyles from './useWelcomeStyles'
 const WelcomeText = () => {
   const classes = useWelcomeStyles()
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const toggleRegHandler = useCallback(() => {
     dispatch(uiActions.toggleReg())

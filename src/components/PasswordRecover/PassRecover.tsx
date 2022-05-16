@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react'
 import { useFormik } from 'formik'
 import { uiActions } from '../../store/ui-slice'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
+import { sagaActions } from '../../store/saga-actions'
 import {
   createTheme,
   ThemeProvider,
@@ -33,9 +34,9 @@ const PassRecover = () => {
       email: yup.string().email('Invalid format').required('Invalid email'),
     }),
     onSubmit: async (values, { resetForm }) => {
-      try {
-        resetForm()
-      } catch (e) {}
+      dispatch({ type: sagaActions.USER_RESET_SAGA, payload: values })
+      resetForm()
+      setIsSend(true)
     },
   })
 
