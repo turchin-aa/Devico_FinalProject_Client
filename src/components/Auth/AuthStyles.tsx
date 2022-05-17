@@ -76,7 +76,7 @@ export const RegisterButton = styled(Button)({
   fontSize: 12,
 })
 
-export const ErrorMessage = styled(Typography)({
+export const styledDiv = {
   color: '#e53e3e',
   marginTop: '8px',
-})
+}

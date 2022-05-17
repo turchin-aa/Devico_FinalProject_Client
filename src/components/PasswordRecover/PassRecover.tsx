@@ -7,7 +7,6 @@ import { sagaActions } from '../../store/saga-actions'
 import {
   createTheme,
   ThemeProvider,
-  CssBaseline,
   Dialog,
   DialogContent,
   DialogContentText,
@@ -15,9 +14,10 @@ import {
   Grid,
   Box,
   Typography,
-  Container,
+  useMediaQuery,
+  Divider,
 } from '@mui/material'
-import { CBox, RegisterButton, LinkTypography, SignLink, ErrorMessage } from '../Auth/AuthStyles'
+import { RegisterButton, LinkTypography, SignLink, styledDiv } from '../Auth/AuthStyles'
 
 const theme = createTheme()
 
@@ -43,70 +43,70 @@ const PassRecover = () => {
   const recoverIsShown = useAppSelector(state => state.ui.showForgetPassword)
 
   const toggleHandler = useCallback(() => {
-    if (recoverIsShown) {
-      dispatch(uiActions.toggleForgetPassword())
-      setIsSend(false)
-    }
-  }, [dispatch, recoverIsShown])
+    dispatch(uiActions.toggleForgetPassword())
+    setIsSend(false)
+  }, [dispatch])
 
   const changeSignHandler = useCallback(() => {
     dispatch(uiActions.toggleForgetPassword())
     dispatch(uiActions.toggleLog())
   }, [dispatch])
 
-  return (
-    <Dialog open={recoverIsShown} onClose={toggleHandler}>
-      <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs" sx={{ overflow: 'hidden' }}>
-          <CssBaseline />
-          <CBox>
-            <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold', fontSize: 26 }}>
-              Password Recover
-            </Typography>
-            <Box sx={{ height: '1px', width: '100%', background: '#E5E5E5', mt: 1 }}></Box>
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-            <DialogContent>
-              {isSend ? (
-                <>
-                  <DialogContentText>
-                    A password reset email has been sent to the email address on file for your
-                    account, but may take several minutes to show up in your inbox. Link valid 24h
-                  </DialogContentText>
-                  <RegisterButton onClick={toggleHandler} fullWidth variant="contained">
-                    OK
-                  </RegisterButton>
-                </>
-              ) : (
-                <Box component="form" sx={{ mt: 3 }} onSubmit={formik.handleSubmit}>
-                  <Typography sx={{ fontFamily: 'Arial', fontSize: 12, mb: 1 }}>EMAIL</Typography>
-                  <TextField
-                    fullWidth
-                    id="email"
-                    name="email"
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    sx={{ mb: 5 }}
-                  />
-                  {formik.errors.email && formik.touched.email ? (
-                    <ErrorMessage>{formik.errors.email}</ErrorMessage>
-                  ) : null}
-                  <RegisterButton type="submit" fullWidth variant="contained">
-                    Submit
-                  </RegisterButton>
-                  <Grid container justifyContent="center">
-                    <Grid item>
-                      <LinkTypography>
-                        Want to comeback? &nbsp;
-                        <SignLink onClick={changeSignHandler}>Log in</SignLink>
-                      </LinkTypography>
-                    </Grid>
-                  </Grid>
-                </Box>
-              )}
-            </DialogContent>
-          </CBox>
-        </Container>
+  return (
+    <Dialog fullScreen={fullScreen} fullWidth={true} open={recoverIsShown} onClose={toggleHandler}>
+      <ThemeProvider theme={theme}>
+        <Typography
+          component="h1"
+          variant="h5"
+          sx={{ fontWeight: 'bold', fontSize: 26, mb: 1, mt: 1, textAlign: 'center' }}
+        >
+          Password Recover
+        </Typography>
+        <Divider />
+        <DialogContent>
+          {isSend ? (
+            <>
+              <DialogContentText>
+                A password reset email has been sent to the email address on file for your account,
+                but may take several minutes to show up in your inbox. Link valid 24h
+              </DialogContentText>
+              <RegisterButton onClick={toggleHandler} fullWidth variant="contained">
+                OK
+              </RegisterButton>
+            </>
+          ) : (
+            <Box component="form" sx={{ mt: 1 }} onSubmit={formik.handleSubmit}>
+              <Grid item xs={12}>
+                <Typography sx={{ fontFamily: 'Arial', fontSize: 12, mb: 1 }}>EMAIL</Typography>
+                <TextField
+                  fullWidth
+                  id="email"
+                  name="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  sx={{ mb: 3 }}
+                />
+                {formik.errors.email && formik.touched.email ? (
+                  <div style={styledDiv}>{formik.errors.email}</div>
+                ) : null}
+              </Grid>
+              <RegisterButton type="submit" fullWidth variant="contained">
+                Submit
+              </RegisterButton>
+              <Grid container justifyContent="center">
+                <Grid item>
+                  <LinkTypography>
+                    Want to comeback? &nbsp;
+                    <SignLink onClick={changeSignHandler}>Log in</SignLink>
+                  </LinkTypography>
+                </Grid>
+              </Grid>
+            </Box>
+          )}
+        </DialogContent>
       </ThemeProvider>
     </Dialog>
   )

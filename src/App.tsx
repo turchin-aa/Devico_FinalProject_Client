@@ -10,6 +10,7 @@ import SignUp from './components/Auth/SignUp/SignUp'
 import SignIn from './components/Auth/SignIn/SignIn'
 import PassRecover from './components/PasswordRecover/PassRecover'
 import CreateNewPass from './components/PasswordRecover/CreateNewPass'
+import CongratModal from './components/CongratModal/CongratModal'
 import { useAppDispatch } from './hooks/redux.hook'
 
 const App: React.FC = () => {
@@ -36,6 +37,7 @@ const App: React.FC = () => {
       <SignUp />
       <SignIn />
       <PassRecover />
+      <CongratModal />
     </>
   )
 }

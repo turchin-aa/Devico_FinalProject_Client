@@ -1,5 +1,4 @@
 import * as yup from 'yup'
-import { useCallback } from 'react'
 import { useFormik } from 'formik'
 import { uiActions } from '../../store/ui-slice'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
@@ -8,16 +7,16 @@ import useQuery from '../../hooks/query.hook'
 import {
   createTheme,
   ThemeProvider,
-  CssBaseline,
   Dialog,
   DialogContent,
   TextField,
   Box,
   Typography,
-  Container,
+  useMediaQuery,
+  Divider,
+  Grid,
 } from '@mui/material'
-import { CBox, RegisterButton, ErrorMessage } from '../Auth/AuthStyles'
-import React from 'react'
+import { RegisterButton, styledDiv } from '../Auth/AuthStyles'
 
 const theme = createTheme()
 
@@ -38,73 +37,79 @@ const CreateNewPass = () => {
       confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
     }),
     onSubmit: async (values, { resetForm }) => {
-      dispatch({ type: sagaActions.USER_NEWPASS_SAGA, payload: { ...values, token, id } })
-      toggleCreateNewPassword()
+      dispatch({
+        type: sagaActions.USER_NEWPASS_SAGA,
+        payload: { ...values, token, id },
+      })
+      dispatch(uiActions.toggleCreateNewPassword())
+      dispatch(uiActions.toggleLog())
       resetForm()
     },
   })
 
   const createNewPassIsShown = useAppSelector(state => state.ui.showCreateNewPassword)
 
-  const toggleCreateNewPassword = useCallback(() => {
-    dispatch(uiActions.toggleCreateNewPassword())
-  }, [dispatch])
-
   let query = useQuery()
 
   const token = query.get('token')
   const id = query.get('id')
 
-  return (
-    <Dialog open={createNewPassIsShown} onClose={toggleCreateNewPassword}>
-      <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs" sx={{ overflow: 'hidden' }}>
-          <CssBaseline />
-          <CBox>
-            <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold', fontSize: 26 }}>
-              Password Recover
-            </Typography>
-            <Box sx={{ height: '1px', width: '100%', background: '#E5E5E5', mt: 1 }}></Box>
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-            <DialogContent>
-              <Box component="form" sx={{ mt: 3 }} onSubmit={formik.handleSubmit}>
-                <Typography sx={{ fontFamily: 'Arial', fontSize: 12, mb: 1 }}>
-                  NEW PASSWORD
-                </Typography>
-                <TextField
-                  fullWidth
-                  id="password"
-                  name="password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  sx={{ mb: 5 }}
-                />
-                {formik.errors.password && formik.touched.password ? (
-                  <ErrorMessage>{formik.errors.password}</ErrorMessage>
-                ) : null}
-                <Typography sx={{ fontFamily: 'Arial', fontSize: 12, mb: 1 }}>
-                  CONFIRM PASSWORD
-                </Typography>
-                <TextField
-                  fullWidth
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formik.values.confirmPassword}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  sx={{ mb: 5 }}
-                />
-                {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
-                  <ErrorMessage>{formik.errors.confirmPassword}</ErrorMessage>
-                ) : null}
-                <RegisterButton type="submit" fullWidth variant="contained">
-                  Change password
-                </RegisterButton>
-              </Box>
-            </DialogContent>
-          </CBox>
-        </Container>
+  return (
+    <Dialog fullScreen={fullScreen} fullWidth={true} open={createNewPassIsShown}>
+      <ThemeProvider theme={theme}>
+        <Typography
+          component="h1"
+          variant="h5"
+          sx={{ fontWeight: 'bold', fontSize: 26, mt: 1, mb: 1, textAlign: 'center' }}
+        >
+          Password Recover
+        </Typography>
+        <Divider />
+        <DialogContent>
+          <Box component="form" sx={{ mt: 3 }} onSubmit={formik.handleSubmit}>
+            <Grid item xs={12}>
+              <Typography sx={{ fontFamily: 'Arial', fontSize: 12, mb: 1 }}>
+                NEW PASSWORD
+              </Typography>
+              <TextField
+                fullWidth
+                id="password"
+                type="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                sx={{ mb: 1 }}
+              />
+              {formik.errors.password && formik.touched.password ? (
+                <div style={styledDiv}>{formik.errors.password}</div>
+              ) : null}
+            </Grid>
+            <Grid>
+              <Typography sx={{ fontFamily: 'Arial', fontSize: 12, mb: 1, mt: 2 }}>
+                CONFIRM PASSWORD
+              </Typography>
+              <TextField
+                fullWidth
+                id="confirmPassword"
+                type="password"
+                name="confirmPassword"
+                value={formik.values.confirmPassword}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                sx={{ mb: 1 }}
+              />
+              {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
+                <div style={styledDiv}>{formik.errors.confirmPassword}</div>
+              ) : null}
+            </Grid>
+            <RegisterButton type="submit" fullWidth variant="contained">
+              Change password
+            </RegisterButton>
+          </Box>
+        </DialogContent>
       </ThemeProvider>
     </Dialog>
   )

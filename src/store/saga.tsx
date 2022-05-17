@@ -3,6 +3,7 @@ import { userSliceActions } from './user-slice'
 import { sagaActions } from './saga-actions'
 import AuthService from '../services/AuthService'
 import PasswordService from '../services/PasswordService'
+
 type RegisterServiceType = SagaReturnType<typeof AuthService.register>
 type LoginServiceType = SagaReturnType<typeof AuthService.login>
 type RefreshServerType = SagaReturnType<typeof AuthService.checkAuth>
@@ -17,7 +18,7 @@ export function* userSignUpSaga(action: Effect) {
     yield put(setUser({ id }))
     localStorage.setItem('token', accessToken)
   } catch (error) {
-    console.log(error)
+    return console.log(error)
   }
 }
 export function* userLoginSaga(action: Effect) {
@@ -67,8 +68,8 @@ export function* userResetPassSaga(action: Effect) {
 
 export function* userNewPassSaga(action: Effect) {
   try {
-    const { password } = action.payload
-    yield call(PasswordService.createNewPass, password)
+    const { password, token, id } = action.payload
+    yield call(PasswordService.createNewPass, password, token, id)
   } catch (error) {
     console.log(error)
   }
