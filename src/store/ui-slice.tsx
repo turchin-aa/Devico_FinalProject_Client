@@ -4,6 +4,7 @@ interface SliceState {
   showReg: boolean
   showLog: boolean
   showForgetPassword: boolean
+  showCreateNewPassword: boolean
   congratAuth: boolean
 }
 
@@ -11,6 +12,7 @@ const initialState: SliceState = {
   showReg: false,
   showLog: false,
   showForgetPassword: false,
+  showCreateNewPassword: true,
   congratAuth: false,
 }
 
@@ -26,6 +28,9 @@ const uiSlice = createSlice({
     },
     toggleForgetPassword(state) {
       state.showForgetPassword = !state.showForgetPassword
+    },
+    toggleCreateNewPassword(state) {
+      state.showCreateNewPassword = !state.showCreateNewPassword
     },
     toggleCongratAuth(state) {
       state.congratAuth = !state.congratAuth

@@ -20,6 +20,6 @@ export default class AuthService {
   }
 
   static async checkAuth(): Promise<AxiosResponse<AuthResponse>> {
-    return await api.get<AuthResponse>('/auth/refresh', { withCredentials: true })
+    return await api.post<AuthResponse>('/auth/refresh', { withCredentials: true })
   }
 }

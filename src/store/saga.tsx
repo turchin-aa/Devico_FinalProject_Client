@@ -2,6 +2,7 @@ import { call, takeEvery, put, Effect, SagaReturnType } from 'redux-saga/effects
 import { userSliceActions } from './user-slice'
 import { sagaActions } from './saga-actions'
 import AuthService from '../services/AuthService'
+import PasswordService from '../services/PasswordService'
 
 type RegisterServiceType = SagaReturnType<typeof AuthService.register>
 type LoginServiceType = SagaReturnType<typeof AuthService.login>
@@ -56,9 +57,29 @@ export function* userRefreshSaga(action: Effect) {
   }
 }
 
+export function* userResetPassSaga(action: Effect) {
+  try {
+    const { email } = action.payload
+    yield call(PasswordService.resetPass, email)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export function* userNewPassSaga(action: Effect) {
+  try {
+    const { password, token, id } = action.payload
+    yield call(PasswordService.createNewPass, password, token, id)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_SIGNUP_SAGA, userSignUpSaga)
   yield takeEvery(sagaActions.USER_LOGIN_SAGA, userLoginSaga)
   yield takeEvery(sagaActions.USER_LOGOUT_SAGA, userLogoutSaga)
   yield takeEvery(sagaActions.USER_REFRESH_SAGA, userRefreshSaga)
+  yield takeEvery(sagaActions.USER_NEWPASS_SAGA, userNewPassSaga)
+  yield takeEvery(sagaActions.USER_RESET_SAGA, userResetPassSaga)
 }

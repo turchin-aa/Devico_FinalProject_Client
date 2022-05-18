@@ -1,14 +1,14 @@
 import { MenuItem } from '@mui/material'
 import { useCallback } from 'react'
 import { memo } from 'react'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '../../hooks/redux.hook'
 import useStyles from '../../theme/useStyle'
 import { uiActions } from '../../store/ui-slice'
 
 const UserMenu = () => {
   const classes = useStyles()
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const toggleRegHandler = useCallback(() => {
     dispatch(uiActions.toggleReg())
