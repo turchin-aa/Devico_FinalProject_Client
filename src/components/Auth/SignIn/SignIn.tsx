@@ -75,7 +75,7 @@ const SignIn = () => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
-    <Dialog fullScreen={fullScreen} fullWidth={true} open={logCartIsShown} onClose={toggleHandler}>
+    <Dialog fullScreen={fullScreen} fullWidth open={logCartIsShown} onClose={toggleHandler}>
       <ThemeProvider theme={theme}>
         <Typography
           component="h1"

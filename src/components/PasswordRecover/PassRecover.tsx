@@ -55,7 +55,7 @@ const PassRecover = () => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
-    <Dialog fullScreen={fullScreen} fullWidth={true} open={recoverIsShown} onClose={toggleHandler}>
+    <Dialog fullScreen={fullScreen} fullWidth open={recoverIsShown} onClose={toggleHandler}>
       <ThemeProvider theme={theme}>
         <Typography
           component="h1"

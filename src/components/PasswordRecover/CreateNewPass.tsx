@@ -57,7 +57,7 @@ const CreateNewPass = () => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
-    <Dialog fullScreen={fullScreen} fullWidth={true} open={createNewPassIsShown}>
+    <Dialog fullScreen={fullScreen} fullWidth open={createNewPassIsShown}>
       <ThemeProvider theme={theme}>
         <Typography
           component="h1"

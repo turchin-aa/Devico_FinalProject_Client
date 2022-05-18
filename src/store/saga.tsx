@@ -18,7 +18,7 @@ export function* userSignUpSaga(action: Effect) {
     yield put(setUser({ id }))
     localStorage.setItem('token', accessToken)
   } catch (error) {
-    return console.log(error)
+    console.log(error)
   }
 }
 export function* userLoginSaga(action: Effect) {
