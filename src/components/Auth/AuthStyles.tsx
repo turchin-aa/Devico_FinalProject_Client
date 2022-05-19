@@ -78,5 +78,6 @@ export const RegisterButton = styled(Button)({
 
 export const styledDiv = {
   color: '#e53e3e',
-  marginTop: '8px',
+  marginTop: '3px',
+  fontSize: 12,
 }

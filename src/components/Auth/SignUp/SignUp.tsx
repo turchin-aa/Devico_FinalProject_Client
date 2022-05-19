@@ -48,7 +48,7 @@ const SignUp = () => {
       email: yup.string().email('Write correct email').required('The email is required'),
       password: yup
         .string()
-        .min(6, 'The length must be at least 6')
+        .min(8, 'The length must be at least 8')
         .max(32)
         .required('The password is required'),
       telephone: yup
@@ -94,7 +94,7 @@ const SignUp = () => {
         </Typography>
         <Divider />
         <DialogContent>
-          <Box component="form" sx={{ mt: 3 }} onSubmit={formik.handleSubmit}>
+          <Box component="form" onSubmit={formik.handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <FacebookButton type="button" variant="contained" fullWidth>

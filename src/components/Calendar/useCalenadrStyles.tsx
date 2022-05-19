@@ -23,7 +23,7 @@ export const useCalendarStyles = makeStyles((theme: Theme) => ({
     left: 130,
     top: 110,
     color: '#8F8F8F',
-    width: 224,
+    width: 174,
   },
   calendarEventWrapper: {
     width: '100%',

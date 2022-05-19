@@ -87,23 +87,27 @@ const SignIn = () => {
         <Divider />
         <DialogContent>
           <Box component="form" onSubmit={formik.handleSubmit}>
-            <FacebookButton type="button" variant="contained" fullWidth>
-              <Grid item xs={2}>
-                <Facebook />
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <FacebookButton type="button" variant="contained" fullWidth>
+                  <Grid item xs={2}>
+                    <Facebook />
+                  </Grid>
+                  <Grid item xs={12}>
+                    CONNECT WITH FACEBOOK
+                  </Grid>
+                </FacebookButton>
               </Grid>
-              <Grid item xs={12}>
-                CONNECT WITH FACEBOOK
+              <Grid item xs={12} sm={6}>
+                <GoogleButton type="button" variant="contained" fullWidth>
+                  <Grid item xs={2}>
+                    <Google />
+                  </Grid>
+                  <Grid item xs={12}>
+                    CONNECT WITH GOOGLE
+                  </Grid>
+                </GoogleButton>
               </Grid>
-            </FacebookButton>
-            <Grid item xs={12}>
-              <GoogleButton type="button" variant="contained" fullWidth>
-                <Grid item xs={2}>
-                  <Google />
-                </Grid>
-                <Grid item xs={12}>
-                  CONNECT WITH GOOGLE
-                </Grid>
-              </GoogleButton>
             </Grid>
             <Divider variant="middle" sx={{ mt: '12px' }}>
               OR

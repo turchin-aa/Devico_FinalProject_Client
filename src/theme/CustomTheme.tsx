@@ -1,6 +1,6 @@
 import { makeStyles } from '@mui/styles'
 import { Theme, createTheme, ThemeProvider } from '@mui/material'
-const theme = createTheme({
+export const theme = createTheme({
   spacing: [0, 2, 3, 5, 8],
   palette: {
     primary: {

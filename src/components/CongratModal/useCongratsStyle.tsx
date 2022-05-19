@@ -1,0 +1,48 @@
+import { makeStyles } from '@mui/styles'
+import { Theme } from '@mui/material'
+
+export const useCongratsStyles = makeStyles((theme: Theme) => ({
+  dialog: {
+    position: 'relative',
+  },
+  dialogContainer: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+  dialogTitle: {
+    height: '20%',
+  },
+  dialogActionsContainer: {
+    position: 'relative',
+  },
+  dialogActions: {
+    marginTop: 10,
+    height: 40,
+  },
+  dialogBox: {
+    width: '100%',
+  },
+  dialogButton: {
+    width: '35%',
+    position: 'absolute',
+    left: 0,
+  },
+  dialogContent: {
+    marginTop: -30,
+  },
+
+  dialogText: {
+    '& > div#welcome': {
+      marginTop: -5,
+      fontWeight: 700,
+      fontSize: 18,
+    },
+    '& > div#text': {
+      fontSize: 16,
+    },
+  },
+}))
