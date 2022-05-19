@@ -9,27 +9,23 @@ type Props = {
 }
 
 const UserBarButtons: React.FC<Props> = props => {
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
+  const [isOpen, setOpen] = useState<boolean>(false)
 
-  const handleOpenMenu = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-    const target = event.target as HTMLButtonElement
-    return setAnchorEl(target)
-  }, [])
+  const handleOpenMenu = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      const target = event.target as HTMLButtonElement
 
-  const handleCloseMenu = useCallback(() => {
-    return setAnchorEl(null)
-  }, [])
+      return setOpen(!isOpen)
+    },
+    [isOpen],
+  )
 
   return (
     <div>
       <Button aria-controls="menu" className={props.buttonClass} onClick={handleOpenMenu}>
         {props.children[0]}
       </Button>
-      <DropDownMenu
-        anchorEl={anchorEl}
-        handleCloseMenu={handleCloseMenu}
-        className={props.menuClass}
-      >
+      <DropDownMenu isOpen={isOpen} className={props.menuClass}>
         {props.children[1]}
       </DropDownMenu>
     </div>

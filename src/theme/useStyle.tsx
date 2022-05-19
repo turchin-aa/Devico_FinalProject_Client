@@ -79,7 +79,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   userBarDropdownButtons: {
     width: 224,
     height: 48,
-    color: '#8F8F8F',
     '&:hover': {
       cursor: 'pointer',
       backgroundColor: '#dbd3de',

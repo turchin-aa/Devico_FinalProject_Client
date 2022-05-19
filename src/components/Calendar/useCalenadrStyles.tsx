@@ -19,6 +19,12 @@ export const useCalendarStyles = makeStyles((theme: Theme) => ({
       },
     },
   },
+  filterClass: {
+    left: 130,
+    top: 110,
+    color: '#8F8F8F',
+    width: 224,
+  },
   calendarEventWrapper: {
     width: '100%',
     position: 'absolute',

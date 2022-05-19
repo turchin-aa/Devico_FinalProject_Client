@@ -1,7 +1,7 @@
 import { NotificationsNoneOutlined } from '@mui/icons-material'
 import clsx from 'clsx'
 import { memo } from 'react'
-import useNavbarStyles from '../useNavbarStyles'
+import useNavbarStyles from '../style/useNavbarStyles'
 
 const ContentNull = () => {
   const classes = useNavbarStyles()

@@ -1,23 +1,17 @@
-import { Menu } from '@mui/material'
+import { MenuContainer } from '../style/ElementsStyled'
 import { memo } from 'react'
 
 interface Props {
   children: React.ReactNode
-  anchorEl: Element | null
-  handleCloseMenu: () => void
+  isOpen: boolean
   className?: string
 }
 
-const DropDownMenu: React.FC<Props> = ({ children, anchorEl, handleCloseMenu, className }) => {
+const DropDownMenu: React.FC<Props> = ({ children, isOpen, className }) => {
   return (
-    <Menu
-      onClose={handleCloseMenu}
-      anchorEl={anchorEl}
-      open={Boolean(anchorEl)}
-      className={className}
-    >
+    <MenuContainer isOpen={isOpen} className={className}>
       {children}
-    </Menu>
+    </MenuContainer>
   )
 }
 

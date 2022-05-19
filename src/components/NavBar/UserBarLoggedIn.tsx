@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import useNavbarStyles from './useNavbarStyles'
+import useNavbarStyles from './style/useNavbarStyles'
 import { Divider } from '@mui/material'
 import NotificationButton from './Notifications/NotificationButton'
 

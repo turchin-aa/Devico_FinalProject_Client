@@ -59,10 +59,14 @@ const useNavbarStyles = makeStyles((theme: Theme) => ({
 
   userBarDropdown: {
     width: 224,
-    marginTop: 12,
-    marginLeft: 15,
+    right: 0,
+    top: 60,
+    color: '#8F8F8F',
   },
   userBarNotifDropdown: {
+    position: 'relative',
+    color: '#000',
+
     '@media (min-width: 400px)': {
       width: 300,
       height: '100%',
@@ -73,17 +77,18 @@ const useNavbarStyles = makeStyles((theme: Theme) => ({
     },
   },
   userBarNotif: {
+    top: 60,
+    right: 220,
     position: 'relative',
-    width: '100%',
+
     '@media (min-width: 400px)': {
-      marginTop: 8,
-      marginRight: '50%',
+      width: 300,
+      height: '100%',
     },
     '@media (min-width: 570px)': {
-      marginTop: 20,
-      marginRight: '50%',
+      width: 500,
+      height: 400,
     },
-    marginTop: 12,
   },
   userBarNotifArrow: {
     position: 'absolute',
