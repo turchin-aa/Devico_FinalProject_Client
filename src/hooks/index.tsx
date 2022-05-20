@@ -9,6 +9,11 @@ const api = axios.create({
   baseURL: host,
 })
 
+api.interceptors.request.use(config => {
+  config.headers!.Autorization = `Bearer ${localStorage.getItem('token')}`!
+  return config
+})
+
 const refreshAuthLogic = failedRequest =>
   api.get<AuthResponse>('/auth/refresh', { withCredentials: true }).then(tokenRefreshResponse => {
     localStorage.setItem('token', tokenRefreshResponse.data.accessToken)

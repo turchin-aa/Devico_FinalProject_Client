@@ -5,21 +5,28 @@ import AuthService from '../services/AuthService'
 import PasswordService from '../services/PasswordService'
 import { eventSliceActions } from './event-slice'
 import EventService from '../services/EventService'
+import { uiActions } from '../store/ui-slice'
+import UserService from '../services/UserService'
 
 type RegisterServiceType = SagaReturnType<typeof AuthService.register>
 type LoginServiceType = SagaReturnType<typeof AuthService.login>
 type RefreshServerType = SagaReturnType<typeof AuthService.checkAuth>
 type GetServiceType = SagaReturnType<typeof EventService.getEvent>
 
-const { setUser, toggleAuth, removeUser, unToggleAuth } = userSliceActions
 const { setEvent } = eventSliceActions
+const { setUser, toggleAuth, removeUser, unToggleAuth, toggleEmailSend } = userSliceActions
+
+const { toggleLog, toggleReg, toggleCongratAuth, toggleCreateNewPassword } = uiActions
 
 export function* userSignUpSaga(action: Effect) {
   try {
     const { email, password } = action.payload
     const data: RegisterServiceType = yield call(AuthService.register, email, password)
     const { accessToken, id } = data.data
-    yield put(setUser({ id }))
+    yield put(setUser({ id, email }))
+    yield put(toggleReg())
+    yield put(toggleCongratAuth())
+    yield put(toggleAuth())
     localStorage.setItem('token', accessToken)
   } catch (error) {
     console.log(error)
@@ -30,15 +37,17 @@ export function* userLoginSaga(action: Effect) {
     const { email, password } = action.payload
     const data: LoginServiceType = yield call(AuthService.login, email, password)
     const { accessToken, id } = data.data
-    yield put(setUser({ id }))
-    localStorage.setItem('token', accessToken)
+    yield put(setUser({ id, email }))
+    yield put(toggleLog())
+    yield put(toggleCongratAuth())
     yield put(toggleAuth())
+    localStorage.setItem('token', accessToken)
   } catch (error) {
     console.log(error)
   }
 }
 
-export function* userLogoutSaga(action: Effect) {
+export function* userLogoutSaga() {
   try {
     yield call(AuthService.logout)
     localStorage.removeItem('token')
@@ -49,11 +58,11 @@ export function* userLogoutSaga(action: Effect) {
   }
 }
 
-export function* userRefreshSaga(action: Effect) {
+export function* userRefreshSaga() {
   try {
     const data: RefreshServerType = yield call(AuthService.checkAuth)
-    const { accessToken, id } = data.data
-    yield put(setUser({ id }))
+    const { accessToken, id, email } = data.data
+    yield put(setUser({ id, email }))
     localStorage.setItem('token', accessToken)
     yield put(toggleAuth())
   } catch (error) {
@@ -65,6 +74,7 @@ export function* userResetPassSaga(action: Effect) {
   try {
     const { email } = action.payload
     yield call(PasswordService.resetPass, email)
+    yield put(toggleEmailSend())
   } catch (error) {
     console.log(error)
   }
@@ -74,6 +84,42 @@ export function* userNewPassSaga(action: Effect) {
   try {
     const { password, token, id } = action.payload
     yield call(PasswordService.createNewPass, password, token, id)
+    yield put(toggleCreateNewPassword())
+    yield put(toggleLog())
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export function* userUpdateSaga(action: Effect) {
+  try {
+    const {
+      email,
+      phone,
+      newPassword,
+      fullName,
+      city,
+      birthdayDate,
+      driverLicenseNum,
+      regAddress,
+      representiveLicenseNum,
+      fullNameOf,
+      idNumber,
+    } = action.payload
+    yield call(
+      UserService.updateUser,
+      email,
+      phone,
+      newPassword,
+      fullName,
+      city,
+      birthdayDate,
+      driverLicenseNum,
+      regAddress,
+      representiveLicenseNum,
+      fullNameOf,
+      idNumber,
+    )
   } catch (error) {
     console.log(error)
   }
@@ -97,6 +143,6 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_REFRESH_SAGA, userRefreshSaga)
   yield takeEvery(sagaActions.USER_NEWPASS_SAGA, userNewPassSaga)
   yield takeEvery(sagaActions.USER_RESET_SAGA, userResetPassSaga)
-
   yield takeEvery(eventActions.EVENT_GET_SAGA, eventGetSaga)
+  yield takeEvery(sagaActions.USER_UPDATE_SAGA, userUpdateSaga)
 }

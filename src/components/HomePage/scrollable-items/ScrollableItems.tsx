@@ -1,4 +1,4 @@
-import { memo, useRef } from 'react'
+import { memo, useCallback, useRef } from 'react'
 import { Divider, Button } from '@mui/material'
 import useStyles from '../../../theme/useStyle'
 import useScrollableStyles from './useScrollableStyles'
@@ -8,6 +8,8 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { EventData } from '../../../types/globalTypes'
+import { useAppDispatch } from '../../../hooks/redux.hook'
+import { uiActions } from '../../../store/ui-slice'
 
 interface Props {
   eventData: EventData
@@ -56,7 +58,14 @@ const img =
 const ScrollableItems: React.FC<Props> = ({ eventData, resent }) => {
   const classes = useStyles()
   const classesScrollable = useScrollableStyles()
+
   const sRef = useRef<typeof Slider>(null)
+
+  const dispatch = useAppDispatch()
+
+  const regHanlder = useCallback(() => {
+    dispatch(uiActions.toggleReg())
+  }, [dispatch])
 
   return (
     <div>
@@ -92,7 +101,7 @@ const ScrollableItems: React.FC<Props> = ({ eventData, resent }) => {
                     <Divider variant="middle" />
                     <div id="event-footer">
                       <a href="#">View details</a>
-                      <Button id="event-button" variant="contained" href="">
+                      <Button id="event-button" variant="contained" onClick={regHanlder}>
                         Register
                       </Button>
                     </div>

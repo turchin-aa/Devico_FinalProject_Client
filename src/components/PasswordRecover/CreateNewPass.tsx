@@ -1,6 +1,5 @@
 import * as yup from 'yup'
 import { useFormik } from 'formik'
-import { uiActions } from '../../store/ui-slice'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import { sagaActions } from '../../store/saga-actions'
 import useQuery from '../../hooks/query.hook'
@@ -17,6 +16,7 @@ import {
   Grid,
 } from '@mui/material'
 import { RegisterButton, styledDiv } from '../Auth/AuthStyles'
+import { memo } from 'react'
 
 const theme = createTheme()
 
@@ -41,8 +41,6 @@ const CreateNewPass = () => {
         type: sagaActions.USER_NEWPASS_SAGA,
         payload: { ...values, token, id },
       })
-      dispatch(uiActions.toggleCreateNewPassword())
-      dispatch(uiActions.toggleLog())
       resetForm()
     },
   })
@@ -115,4 +113,4 @@ const CreateNewPass = () => {
   )
 }
 
-export default CreateNewPass
+export default memo(CreateNewPass)

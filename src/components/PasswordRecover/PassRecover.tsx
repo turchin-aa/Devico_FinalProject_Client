@@ -1,9 +1,10 @@
 import * as yup from 'yup'
-import { useCallback, useState } from 'react'
+import { useCallback, memo } from 'react'
 import { useFormik } from 'formik'
 import { uiActions } from '../../store/ui-slice'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import { sagaActions } from '../../store/saga-actions'
+import { userSliceActions } from '../../store/user-slice'
 import {
   createTheme,
   ThemeProvider,
@@ -22,7 +23,7 @@ import { RegisterButton, LinkTypography, SignLink, styledDiv } from '../Auth/Aut
 const theme = createTheme()
 
 const PassRecover = () => {
-  const [isSend, setIsSend] = useState(false)
+  const isSend = useAppSelector(state => state.user.isEmailSend)
 
   const dispatch = useAppDispatch()
 
@@ -36,7 +37,6 @@ const PassRecover = () => {
     onSubmit: async (values, { resetForm }) => {
       dispatch({ type: sagaActions.USER_RESET_SAGA, payload: values })
       resetForm()
-      setIsSend(true)
     },
   })
 
@@ -44,7 +44,8 @@ const PassRecover = () => {
 
   const toggleHandler = useCallback(() => {
     dispatch(uiActions.toggleForgetPassword())
-    setIsSend(false)
+    dispatch(userSliceActions.unToggleEmailSend())
+    dispatch(uiActions.toggleLog())
   }, [dispatch])
 
   const changeSignHandler = useCallback(() => {
@@ -112,4 +113,4 @@ const PassRecover = () => {
   )
 }
 
-export default PassRecover
+export default memo(PassRecover)

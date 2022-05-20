@@ -1,20 +1,19 @@
 import { memo, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import PageNotFound from './pages/404'
 import FAQ from './pages/FAQ'
 import { sagaActions, eventActions } from './store/saga-actions'
 import SideBar from './components/Sidebar/SideBar'
 import NavBar from './components/NavBar/NavBar'
-import SignUp from './components/Auth/SignUp/SignUp'
-import SignIn from './components/Auth/SignIn/SignIn'
-import PassRecover from './components/PasswordRecover/PassRecover'
 import CreateNewPass from './components/PasswordRecover/CreateNewPass'
-import CongratModal from './components/CongratModal/CongratModal'
-import { useAppDispatch } from './hooks/redux.hook'
-
+import Auth from './components/Auth'
+import { useAppDispatch, useAppSelector } from './hooks/redux.hook'
+import Profile from './components/Profile/Profile'
 const App: React.FC = () => {
   const dispatch = useAppDispatch()
+
+  const isAuth = useAppSelector(state => state.user.isAuth)
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -33,13 +32,14 @@ const App: React.FC = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="*" element={<PageNotFound />} />
-          <Route path="resetPass" element={<CreateNewPass />} />
+          <Route
+            path="resetPass"
+            element={isAuth ? <Navigate to="/" replace /> : <CreateNewPass />}
+          />
+          <Route path="profile" element={!isAuth ? <Navigate to="/" replace /> : <Profile />} />
         </Routes>
+        <Auth />
       </Router>
-      <SignUp />
-      <SignIn />
-      <PassRecover />
-      <CongratModal />
     </>
   )
 }

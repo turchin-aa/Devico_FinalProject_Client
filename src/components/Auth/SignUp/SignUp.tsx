@@ -62,7 +62,6 @@ const SignUp = () => {
     }),
     onSubmit: async (values, { resetForm }) => {
       dispatch({ type: sagaActions.USER_SIGNUP_SAGA, payload: values })
-      changeSignHandler()
       resetForm()
     },
   })
@@ -75,9 +74,9 @@ const SignUp = () => {
     }
   }, [dispatch, regCartIsShown])
 
-  const changeSignHandler = useCallback(() => {
+  const changeHandler = useCallback(() => {
     dispatch(uiActions.toggleReg())
-    dispatch(uiActions.toggleCongratAuth())
+    dispatch(uiActions.toggleLog())
   }, [dispatch])
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -221,7 +220,7 @@ const SignUp = () => {
               <Grid item>
                 <LinkTypography>
                   Already a member? &nbsp;
-                  <SignLink onClick={changeSignHandler}>Sign in</SignLink>
+                  <SignLink onClick={changeHandler}>Sign in</SignLink>
                 </LinkTypography>
               </Grid>
             </Grid>

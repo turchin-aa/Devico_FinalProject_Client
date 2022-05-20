@@ -4,6 +4,7 @@ import { memo } from 'react'
 import { useAppDispatch } from '../../hooks/redux.hook'
 import useStyles from '../../theme/useStyle'
 import { sagaActions } from '../../store/saga-actions'
+import { Link } from 'react-router-dom'
 
 const UserLoggedMenu = () => {
   const classes = useStyles()
@@ -17,17 +18,21 @@ const UserLoggedMenu = () => {
   return (
     <div>
       <MenuItem component="button" className={classes.userBarDropdownButtons}>
-        My Profile
+        <Link to="profile" className={classes.link}>
+          My Profile
+        </Link>
       </MenuItem>
       <MenuItem component="button" className={classes.userBarDropdownButtons}>
-        My Event
+        <Link to="event" className={classes.link}>
+          My Event
+        </Link>
       </MenuItem>
       <MenuItem
         component="button"
         className={classes.userBarDropdownButtons}
         onClick={logoutHandler}
       >
-        Sign Out
+        <span className={classes.link}>Sign Out</span>
       </MenuItem>
     </div>
   )
