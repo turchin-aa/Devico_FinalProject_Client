@@ -143,33 +143,36 @@ const SignIn = () => {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name="rememberMe"
-                    value={formik.values.rememberMe}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                  />
-                }
-                label={
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      fontSize: 14,
-                      fontFamily: 'Lato',
-                      fontWeight: 40,
-                      color: '#595353',
-                    }}
-                  >
-                    Remember me
-                  </Typography>
-                }
-              />
+              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name="rememberMe"
+                      value={formik.values.rememberMe}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+                  }
+                  label={
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontSize: 14,
+                        fontFamily: 'Lato',
+                        fontWeight: 40,
+                        color: '#595353',
+                      }}
+                    >
+                      Remember me
+                    </Typography>
+                  }
+                />
+                <SignLink sx={{ position: 'absolute', right: 0 }} onClick={showRecoverPasHandler}>
+                  Forgot password?
+                </SignLink>
+              </div>
             </Grid>
-            <Grid item xs={12} sm={6} sx={{ textAlign: 'right' }}>
-              <SignLink onClick={showRecoverPasHandler}>Forgot password?</SignLink>
-            </Grid>
+
             <RegisterButton type="submit" fullWidth variant="contained">
               Sign In
             </RegisterButton>
