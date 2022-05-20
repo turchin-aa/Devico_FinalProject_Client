@@ -8,7 +8,6 @@ interface Props {
 }
 
 const DropDownMenu: React.FC<Props> = ({ children, isOpen, className }) => {
-  console.log(isOpen)
   return (
     <MenuContainer isOpen={isOpen} className={className}>
       {children}

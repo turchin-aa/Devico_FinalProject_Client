@@ -13,12 +13,13 @@ const TableContent: React.FC<Props> = ({ columns, rows, page, rowsPerPage }) => 
     <TableBody>
       {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
         return (
-          <TableRow hover role="checkbox" tabIndex={0} key={row.event}>
+          <TableRow hover role="checkbox" tabIndex={0} key={index}>
             {columns.map(column => {
               const value = row[column.id]
               return (
                 <TableCell
                   style={{
+                    height: column.height,
                     fontSize: 'calc(4px + 0.8vw)',
                   }}
                   key={column.id}

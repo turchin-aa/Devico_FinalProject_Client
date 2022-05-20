@@ -1,10 +1,17 @@
 import { memo } from 'react'
 import { CalendarEvent } from '../CalendarStyled'
+import { EventData } from '../../../types/globalTypes'
 
-const EventsBlocks: React.FC = () => {
+interface Props {
+  result: EventData
+}
+
+const EventsBlocks: React.FC<Props> = ({ result }) => {
   return (
     <div>
-      <CalendarEvent> some event</CalendarEvent>
+      {result.map((item, index) => {
+        return <CalendarEvent key={index}> {item.title}</CalendarEvent>
+      })}
     </div>
   )
 }

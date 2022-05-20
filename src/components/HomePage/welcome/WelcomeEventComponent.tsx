@@ -1,30 +1,44 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import useWelcomeStyles from './useWelcomeStyles'
+import moment from 'moment'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../store'
+import { EventData } from '../../../types/globalTypes'
 
-const WelcomeEvent = () => {
+const img =
+  'https://64.media.tumblr.com/1438f240f252cd35c61717e909bc39e6/2c2b030ebff2d9fa-50/s1280x1920/547f2c3c3513e545f202c513496de1c58db54c9d.png'
+
+const createData = (date: string, title: string, place: string) => {
+  return { date, title, place }
+}
+
+const WelcomeEvent: React.FC = () => {
   const classes = useWelcomeStyles()
-  const next_event = {
-    title: 'next event',
-    name: 'AUTO.RIA Race',
-    date: '12.12.2021',
-    place: 'Kharkiv. Maidan constitution',
-    img: 'https://64.media.tumblr.com/1438f240f252cd35c61717e909bc39e6/2c2b030ebff2d9fa-50/s1280x1920/547f2c3c3513e545f202c513496de1c58db54c9d.png',
+  const today = moment().format('YYYY-MM-DD')
+
+  const events = useSelector<RootState, EventData>(state => state.event.events)
+
+  let nextEvent = {
+    date: '22.05.2022',
+    title: 'AUTO.Ria Race',
+    place: 'Kharkiv. Freedom square',
   }
+
   return (
     <div>
       <div className={classes.flexCenter}>
         <div className={classes.eventImg}>
-          <img src={next_event.img} alt="event img" />
+          <img src={img} alt="event img" />
         </div>
       </div>
       <div className={classes.flexCenter}>
         <div className={classes.welcomeEventContainer}>
           <div>
-            <p>{next_event.title.toUpperCase()}</p>
+            <p>{'next event'.toUpperCase()}</p>
           </div>
-          <p id="event-name">{next_event.name}</p>
-          <p id="event-date">{next_event.date}</p>
-          <p id="event-place">{next_event.place}</p>
+          <p id="event-name">{nextEvent.title}</p>
+          <p id="event-date">{nextEvent.date}</p>
+          <p id="event-place">{nextEvent.place}</p>
           <a href="#">View details</a>
         </div>
       </div>

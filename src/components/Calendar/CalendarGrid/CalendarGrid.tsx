@@ -5,6 +5,9 @@ import EventsBlocks from './EventsBlocks'
 import EventsList from './EventsList'
 import { useMemo, useCallback, memo } from 'react'
 import CalendarHeader from './CalendarHeader'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../store'
+import { EventData } from '../../../types/globalTypes'
 
 interface Props {
   startMonthDay: Moment
@@ -15,13 +18,17 @@ const setDaysArray = (day: Moment) => {
   return [...Array(42)].map(() => day.add(1, 'day').clone())
 }
 
-const CalendarGrid: React.FC<Props> = ({ startMonthDay, today }) => {
-  //I'll delete this after events implemented
-  const eventsCount = 3
+const filterEvents = (result, events: EventData, day: string) => {
+  result = events.filter(event => event.date == day)
+  return result.length <= 2 ? <EventsBlocks result={result} /> : <EventsList result={result} />
+}
 
+const CalendarGrid: React.FC<Props> = ({ startMonthDay, today }) => {
+  let result = []
   const classes = useCalendarStyles()
   const day = startMonthDay.clone()
   const daysArray = setDaysArray(day)
+  const events = useSelector<RootState, EventData>(state => state.event.events)
 
   // helps to mark current day in the calendar
   const current = useMemo(() => moment().format('DDMMYYYY'), [])
@@ -53,15 +60,7 @@ const CalendarGrid: React.FC<Props> = ({ startMonthDay, today }) => {
                 </Day>
               </div>
               <div className={classes.calendarEventWrapper}>
-                {/* there(???) need's to be fetch of events where date is in format (DMMYYYY). 
-                    data needs to be pusshed to an array and then eventsArray.length is checked.
-                    if length <= 2 then we map separate eventBlocks to calendar,
-                    if length > 2 - we're heading to EventsList so there will be one eventBlock 
-                    with a dropdown list of events for a day
-                */}
-                {/* or we'll fetch data to an array */}
-
-                {eventsCount <= 2 ? <EventsBlocks /> : <EventsList />}
+                {filterEvents(result, events, dayItem.format('YYYY-MM-DD').toString())}
               </div>
             </CalendarCell>
           )

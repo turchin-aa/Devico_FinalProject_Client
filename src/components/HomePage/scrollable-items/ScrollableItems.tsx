@@ -1,11 +1,18 @@
-import { memo, MouseEventHandler, useCallback, useRef } from 'react'
+import { memo, useRef } from 'react'
 import { Divider, Button } from '@mui/material'
 import useStyles from '../../../theme/useStyle'
 import useScrollableStyles from './useScrollableStyles'
 import clsx from 'clsx'
+import moment from 'moment'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import { EventData } from '../../../types/globalTypes'
+
+interface Props {
+  eventData: EventData
+  resent: boolean
+}
 
 const settings = {
   infinite: true,
@@ -43,64 +50,13 @@ const settings = {
     },
   ],
 }
+const img =
+  'https://64.media.tumblr.com/1438f240f252cd35c61717e909bc39e6/2c2b030ebff2d9fa-50/s1280x1920/547f2c3c3513e545f202c513496de1c58db54c9d.png'
 
-const ScrollableItems: React.FC = () => {
+const ScrollableItems: React.FC<Props> = ({ eventData, resent }) => {
   const classes = useStyles()
   const classesScrollable = useScrollableStyles()
   const sRef = useRef<typeof Slider>(null)
-
-  const next_event = [
-    {
-      title: 'next event',
-      name: 'AUTO.RIA Race',
-      date: '12.12.2021',
-      place: 'Kharkiv. Maidan constitution',
-      img: 'https://64.media.tumblr.com/1438f240f252cd35c61717e909bc39e6/2c2b030ebff2d9fa-50/s1280x1920/547f2c3c3513e545f202c513496de1c58db54c9d.png',
-      discipline: 'Digital motorsport',
-      status: 'National Seria',
-      series: 'National Digital Time Attack Series (NS-CTA) 2021',
-    },
-    {
-      title: 'next event',
-      name: 'AUTO.RIA Race',
-      date: '12.12.2021',
-      place: 'Kharkiv. Maidan constitution',
-      img: 'https://64.media.tumblr.com/1438f240f252cd35c61717e909bc39e6/2c2b030ebff2d9fa-50/s1280x1920/547f2c3c3513e545f202c513496de1c58db54c9d.png',
-      discipline: 'Digital motorsport',
-      status: 'National Seria',
-      series: 'National Digital Time Attack Series (NS-CTA) 2021',
-    },
-    {
-      title: 'next event',
-      name: 'AUTO.RIA Race',
-      date: '12.12.2021',
-      place: 'Kharkiv. Maidan constitution',
-      img: 'https://64.media.tumblr.com/1438f240f252cd35c61717e909bc39e6/2c2b030ebff2d9fa-50/s1280x1920/547f2c3c3513e545f202c513496de1c58db54c9d.png',
-      discipline: 'Digital motorsport',
-      status: 'National Seria',
-      series: 'National Digital Time Attack Series (NS-CTA) 2021',
-    },
-    {
-      title: 'next event',
-      name: 'AUTO.RIA Race',
-      date: '12.12.2021',
-      place: 'Kharkiv. Maidan constitution',
-      img: 'https://64.media.tumblr.com/1438f240f252cd35c61717e909bc39e6/2c2b030ebff2d9fa-50/s1280x1920/547f2c3c3513e545f202c513496de1c58db54c9d.png',
-      discipline: 'Digital motorsport',
-      status: 'National Seria',
-      series: 'National Digital Time Attack Series (NS-CTA) 2021',
-    },
-    {
-      title: 'next event',
-      name: 'AUTO.RIA Race',
-      date: '12.12.2021',
-      place: 'Kharkiv. Maidan constitution',
-      img: 'https://64.media.tumblr.com/1438f240f252cd35c61717e909bc39e6/2c2b030ebff2d9fa-50/s1280x1920/547f2c3c3513e545f202c513496de1c58db54c9d.png',
-      discipline: 'Digital motorsport',
-      status: 'National Seria',
-      series: 'National Digital Time Attack Series (NS-CTA) 2021',
-    },
-  ]
 
   return (
     <div>
@@ -110,7 +66,7 @@ const ScrollableItems: React.FC = () => {
         style={{ maxWidth: '86vw', width: '100%', overflow: 'hidden' }}
         {...settings}
       >
-        {next_event.map((item, index) => {
+        {eventData.map((item, index) => {
           return (
             <div
               key={index}
@@ -118,12 +74,15 @@ const ScrollableItems: React.FC = () => {
             >
               <div>
                 <div id="img">
-                  <img src={item.img} alt="event img" />
+                  <img src={img} alt="event img" />
                   <div className={classesScrollable.eventContent}>
-                    <p id="event-title">{item.title.toUpperCase()}</p>
-                    <p id="event-name">{item.name}</p>
+                    <p id="event-title">
+                      {resent ? 'resent event'.toUpperCase() : 'next event'.toUpperCase()}
+                    </p>
+                    <p id="event-name">{item.title}</p>
                     <p id="event-date">
-                      {item.date} <span id="event-place">{item.place}</span>
+                      {moment(item.date).format('DD.MM.YYYY')}{' '}
+                      <span id="event-place">{item.place}</span>
                     </p>
                     <div id="event-info">
                       <p id="event-discipline">Discipline: {item.discipline}</p>

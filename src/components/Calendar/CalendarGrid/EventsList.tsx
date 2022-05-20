@@ -1,10 +1,15 @@
 import clsx from 'clsx'
 import { memo, useCallback, useState } from 'react'
+import { EventData } from '../../../types/globalTypes'
 import { CalendarEvent, EventsNumber } from '../CalendarStyled'
 import { useCalendarStyles } from '../useCalenadrStyles'
 import CalendarDropDown from './CalendarDropDown'
 
-const EventsList: React.FC = () => {
+interface Props {
+  result: EventData
+}
+
+const EventsList: React.FC<Props> = ({ result }) => {
   const classes = useCalendarStyles()
   const [open, setOpen] = useState(false)
 
@@ -22,9 +27,9 @@ const EventsList: React.FC = () => {
           </span>
           <span id="title"> EVENTS</span>
         </CalendarEvent>
-        <EventsNumber>4</EventsNumber>
+        <EventsNumber>{result.length}</EventsNumber>
       </div>
-      {open ? <CalendarDropDown /> : null}
+      {open ? <CalendarDropDown result={result} /> : null}
     </div>
   )
 }

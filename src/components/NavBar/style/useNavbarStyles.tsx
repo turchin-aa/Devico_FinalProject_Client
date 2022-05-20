@@ -66,30 +66,25 @@ const useNavbarStyles = makeStyles((theme: Theme) => ({
   userBarNotifDropdown: {
     color: '#000',
 
-    '@media (min-width: 400px)': {
-      width: '100%',
-      height: '100%',
-    },
-    '@media (min-width: 600px)': {
-      width: 500,
-      height: 400,
-    },
+    width: '100%',
+    height: '100%',
   },
 
   // fix notif relative
   userBarNotif: {
     top: 60,
     position: 'relative',
+    zIndex: 8,
 
     '@media (min-width: 400px)': {
       width: 350,
       height: 300,
-      left: -100,
+      left: -90,
     },
     '@media (min-width: 600px)': {
-      width: 500,
-      height: 400,
-      left: -350,
+      width: 450,
+      height: 300,
+      left: -200,
       // right
     },
   },

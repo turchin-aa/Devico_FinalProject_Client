@@ -1,6 +1,7 @@
 export interface Column {
   id: 'start' | 'discipline' | 'status' | 'event' | 'location'
   label: string
+  height?: number
   minWidth?: number
   maxWidth?: number
   width?: string | number

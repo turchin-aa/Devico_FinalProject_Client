@@ -17,6 +17,7 @@ const EventsHeaders: React.FC<Props> = ({ columns }) => {
             style={{
               backgroundColor: '#9470CE',
               color: '#fff',
+              height: column.height,
               minWidth: column.minWidth,
               maxWidth: column.maxWidth,
               width: column.width,

@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Typography,
   useMediaQuery,
 } from '@mui/material'
 import { memo, useCallback } from 'react'

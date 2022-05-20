@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import PageNotFound from './pages/404'
 import FAQ from './pages/FAQ'
-import { sagaActions } from './store/saga-actions'
+import { sagaActions, eventActions } from './store/saga-actions'
 import SideBar from './components/Sidebar/SideBar'
 import NavBar from './components/NavBar/NavBar'
 import SignUp from './components/Auth/SignUp/SignUp'
@@ -20,6 +20,8 @@ const App: React.FC = () => {
     if (localStorage.getItem('token')) {
       dispatch({ type: sagaActions.USER_REFRESH_SAGA })
     }
+
+    dispatch({ type: eventActions.EVENT_GET_SAGA })
   }, [])
 
   return (
