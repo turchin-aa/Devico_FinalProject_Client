@@ -1,4 +1,4 @@
-import { Button, styled, Typography, Link } from '@mui/material'
+import { Button, styled, Typography, Link, DialogTitle } from '@mui/material'
 import { Box } from '@mui/system'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import GoogleIcon from '@mui/icons-material/Google'
@@ -80,3 +80,16 @@ export const styledDiv = {
   color: '#e53e3e',
   marginTop: '8px',
 }
+
+export const StyledTypography = styled(Typography)({
+  paddingLeft: '10px',
+  letterSpacing: '2px',
+  fontSize: '13px',
+})
+
+export const StyledDialogTitle = styled(DialogTitle)({
+  margin: 'auto',
+  fontWeight: 'bold',
+  fontSize: '20px',
+  lineHeight: '30px',
+})

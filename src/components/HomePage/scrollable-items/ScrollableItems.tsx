@@ -1,4 +1,4 @@
-import { memo, MouseEventHandler, useCallback, useRef } from 'react'
+import { memo, useCallback, useRef } from 'react'
 import { Divider, Button } from '@mui/material'
 import useStyles from '../../../theme/useStyle'
 import useScrollableStyles from './useScrollableStyles'
@@ -6,6 +6,8 @@ import clsx from 'clsx'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import { useAppDispatch } from '../../../hooks/redux.hook'
+import { uiActions } from '../../../store/ui-slice'
 
 const settings = {
   infinite: true,
@@ -47,7 +49,14 @@ const settings = {
 const ScrollableItems: React.FC = () => {
   const classes = useStyles()
   const classesScrollable = useScrollableStyles()
+
   const sRef = useRef<typeof Slider>(null)
+
+  const dispatch = useAppDispatch()
+
+  const regHanlder = useCallback(() => {
+    dispatch(uiActions.toggleReg())
+  }, [dispatch])
 
   const next_event = [
     {
@@ -133,7 +142,7 @@ const ScrollableItems: React.FC = () => {
                     <Divider variant="middle" />
                     <div id="event-footer">
                       <a href="#">View details</a>
-                      <Button id="event-button" variant="contained" href="">
+                      <Button id="event-button" variant="contained" onClick={regHanlder}>
                         Register
                       </Button>
                     </div>

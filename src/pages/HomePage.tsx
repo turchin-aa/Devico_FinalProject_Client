@@ -7,12 +7,11 @@ import AllEvents from '../components/HomePage/all-events/AllEvents'
 import News from '../components/HomePage/news/News'
 import useStyles from '../theme/useStyle'
 import { memo } from 'react'
-import { RootState } from '../store/index'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../hooks/redux.hook'
 
 const HomePage: React.FC = () => {
   const classes = useStyles()
-  const isUserAuth = useSelector<RootState, boolean>(state => state.user.isAuth)
+  const isUserAuth = useAppSelector(state => state.user.isAuth)
 
   return (
     <div className={classes.homePageContainer}>

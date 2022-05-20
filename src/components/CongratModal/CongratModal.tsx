@@ -14,7 +14,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import { uiActions } from '../../store/ui-slice'
 import defaultImg from '../../assets/default.png'
 import { RegisterButton } from '../Auth/AuthStyles'
-import { userSliceActions } from '../../store/user-slice'
 
 const theme = createTheme()
 
@@ -25,7 +24,6 @@ const CongratModule = () => {
 
   const toggleHandler = useCallback(() => {
     dispatch(uiActions.toggleCongratAuth())
-    dispatch(userSliceActions.toggleAuth())
   }, [dispatch])
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))

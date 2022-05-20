@@ -4,6 +4,7 @@ import api from '../hooks/index'
 export interface AuthResponse {
   accessToken: string
   id: string
+  email?: string
 }
 
 export default class AuthService {

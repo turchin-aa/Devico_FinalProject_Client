@@ -47,7 +47,6 @@ const SignIn = () => {
     }),
     onSubmit: async (values, { resetForm }) => {
       dispatch({ type: sagaActions.USER_LOGIN_SAGA, payload: values })
-      toggleHandler()
       resetForm()
     },
   })

@@ -1,9 +1,6 @@
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material'
 
-const white: string = '#fff'
-const black: string = '#000'
-
 const useStyles = makeStyles((theme: Theme) => ({
   //gradle for navbar and pages
   appContainer: {
@@ -25,6 +22,10 @@ const useStyles = makeStyles((theme: Theme) => ({
       filter: 'grayscale(0%)',
       transform: 'scale(1.02)',
     },
+  },
+  link: {
+    color: '#000',
+    textDecoration: 'none',
   },
   homePageContainer: {
     position: 'relative',
