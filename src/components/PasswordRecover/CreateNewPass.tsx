@@ -45,7 +45,7 @@ const CreateNewPass = () => {
     },
   })
 
-  const createNewPassIsShown = useAppSelector(state => state.ui.showCreateNewPassword)
+  const createNewPassIsShown = useAppSelector<boolean>(state => state.ui.showCreateNewPassword)
 
   const query = useQuery()
 

@@ -11,7 +11,7 @@ import UserLoggedMenu from './UserLoggedMenu'
 
 const NavbarContent: React.FC = () => {
   const classes = useNavbarStyles()
-  const isUserAuth = useAppSelector(state => state.user.isAuth)
+  const isUserAuth = useAppSelector<boolean>(state => state.user.isAuth)
 
   return (
     <div className={clsx(classes.userBar, classes.flexCenter)}>

@@ -66,7 +66,7 @@ const SignUp = () => {
     },
   })
 
-  const regCartIsShown = useAppSelector(state => state.ui.showReg)
+  const regCartIsShown = useAppSelector<boolean>(state => state.ui.showReg)
 
   const toggleHandler = useCallback(() => {
     if (regCartIsShown) {

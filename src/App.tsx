@@ -14,7 +14,7 @@ import Profile from './components/Profile/Profile'
 const App: React.FC = () => {
   const dispatch = useAppDispatch()
 
-  const isAuth = useAppSelector(state => state.user.isAuth)
+  const isAuth = useAppSelector<boolean>(state => state.user.isAuth)
 
   useEffect(() => {
     if (localStorage.getItem('token')) {

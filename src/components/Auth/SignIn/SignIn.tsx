@@ -51,7 +51,7 @@ const SignIn = () => {
     },
   })
 
-  const logCartIsShown = useAppSelector(state => state.ui.showLog)
+  const logCartIsShown = useAppSelector<boolean>(state => state.ui.showLog)
 
   const toggleHandler = useCallback(() => {
     if (logCartIsShown) {

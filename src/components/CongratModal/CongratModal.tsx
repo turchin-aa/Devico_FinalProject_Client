@@ -21,7 +21,7 @@ const CongratModule = () => {
   const classes = useCongratsStyles()
   const dispatch = useAppDispatch()
 
-  const regCartIsShown = useAppSelector(state => state.ui.congratAuth)
+  const regCartIsShown = useAppSelector<boolean>(state => state.ui.congratAuth)
 
   const toggleHandler = useCallback(() => {
     dispatch(uiActions.toggleCongratAuth())

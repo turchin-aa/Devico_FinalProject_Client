@@ -27,7 +27,7 @@ const CalendarGrid: React.FC<Props> = ({ startMonthDay, today }) => {
   const classes = useCalendarStyles()
   const day = startMonthDay.clone()
   const daysArray = setDaysArray(day)
-  const events = useAppSelector(state => state.event.events)
+  const events = useAppSelector<EventData>(state => state.event.events)
 
   // helps to mark current day in the calendar
   const current = useMemo(() => moment().format('DDMMYYYY'), [])
