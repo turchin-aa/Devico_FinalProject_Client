@@ -1,83 +1,94 @@
-import { Avatar, Stack, IconButton, InputAdornment, Badge } from '@mui/material'
-import ModeEditIcon from '@mui/icons-material/ModeEdit'
+import { Avatar, Stack, IconButton, InputAdornment, Box, Fab } from '@mui/material'
 import useStyles, { ProfileSubmitButton } from './ProfileStyles'
-import { Box } from '@mui/system'
-import { Field, Form, Formik, ErrorMessage } from 'formik'
+import { Field, Form, Formik, ErrorMessage, useFormik } from 'formik'
 import * as yup from 'yup'
 import { FC, memo, useCallback, useState } from 'react'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { Visibility, VisibilityOff, ModeEdit } from '@mui/icons-material'
 import { useAppDispatch } from '../../hooks/redux.hook'
 import { sagaActions } from '../../store/saga-actions'
+
+const initialValues = {
+  picture: null,
+  fullName: '',
+  email: '',
+  telephone: '',
+  password: '',
+  confirmPassword: '',
+}
+
+const validationSchema = yup.object().shape({
+  picture: yup.mixed().test('fileSize', 'The file is too large', value => {
+    return value && value[0].size <= 2000000
+  }),
+  fullName: yup.string().min(3).nullable(true),
+  email: yup.string().email('Write correct email').required('The email is required'),
+  password: yup.string().min(6, 'The length must be at least 6').max(32).nullable(true),
+  telephone: yup
+    .string()
+    .matches(
+      /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
+      'Invalid telephone format',
+    )
+    .nullable(true),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .nullable(true),
+})
 
 const ProfileData: FC = () => {
   const [passShow, setShow] = useState(false)
 
   const dispatch = useAppDispatch()
-
   const classes = useStyles()
+
+  const onSubmit = async (values, { resetForm }) => {
+    dispatch({ type: sagaActions.USER_UPDATE_SAGA, payload: values })
+    resetForm()
+  }
+
+  const formik = useFormik({ initialValues, validationSchema, onSubmit })
 
   const handleClickpassShow = useCallback(() => {
     setShow(!passShow)
   }, [passShow, setShow])
+  const img =
+    'https://decider.com/wp-content/uploads/2022/03/the-girl-from-plainville-glee.jpg?quality=75&strip=all&w=1200'
 
   return (
-    <Formik
-      initialValues={{
-        picture: null,
-        fullName: '',
-        email: '',
-        telephone: '',
-        password: '',
-        confirmPassword: '',
-      }}
-      validationSchema={yup.object().shape({
-        picture: yup.mixed().test('fileSize', 'The file is too large', value => {
-          return value && value[0].size <= 2000000
-        }),
-        fullName: yup.string().min(3).nullable(true),
-        email: yup.string().email('Write correct email').required('The email is required'),
-        password: yup.string().min(6, 'The length must be at least 6').max(32).nullable(true),
-        telephone: yup
-          .string()
-          .matches(
-            /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
-            'Invalid telephone format',
-          )
-          .nullable(true),
-        confirmPassword: yup
-          .string()
-          .oneOf([yup.ref('password'), null], 'Passwords must match')
-          .nullable(true),
-      })}
-      onSubmit={async (values, { resetForm }) => {
-        dispatch({ type: sagaActions.USER_UPDATE_SAGA, payload: values })
-        resetForm()
-      }}
-    >
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
       {({ isSubmitting }) => (
         <Form>
           <Stack direction="row" sx={{ mt: '2%' }}>
             <Box flex={1} m={2}>
-              <Badge
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }}
-                badgeContent={<ModeEditIcon sx={{ height: '30px', width: '30px' }} />}
-              >
-                <label className={classes.label} htmlFor="icon-button-file">
-                  <input accept="image/*" id="icon-button-file" type="file" name="picture" hidden />
-                  <IconButton color="primary" aria-label="upload picture" component="span">
-                    <Avatar alt="Remy Sharp" sx={{ height: '180px', width: '180px' }} />
-                  </IconButton>
-                </label>
-              </Badge>
-              <ProfileSubmitButton disabled={isSubmitting} type="submit">
+              <div className={classes.profileAvatarContainer}>
+                <Avatar
+                  sx={{ height: '100%', width: '100%' }}
+                  // className={classes.profileAvatar}
+                  alt="Remy Sharp"
+                  src={img}
+                />
+                <div className={classes.profileEditAvatar}>
+                  <label className={classes.label} htmlFor="icon-button-file">
+                    <input
+                      accept="image/*"
+                      id="icon-button-file"
+                      type="file"
+                      name="picture"
+                      hidden
+                    />
+                    <Fab color="primary" aria-label="upload picture" component="span">
+                      <ModeEdit fontSize="large" />
+                    </Fab>
+                  </label>
+                </div>
+              </div>
+              <ProfileSubmitButton loading={isSubmitting} disabled={isSubmitting} type="submit">
                 Save
               </ProfileSubmitButton>
             </Box>
             <Box flex={3}>
-              <Stack direction="column" sx={{ width: '350px' }}>
+              <Stack direction="column" className={classes.profileFormContainer}>
                 <label className={classes.label} htmlFor="fullName">
                   FULL NAME
                 </label>
@@ -89,9 +100,11 @@ const ProfileData: FC = () => {
                   id="fullName"
                   variant="outlined"
                 />
-                <ErrorMessage className={classes.error} name="fullName" component="div" />
+                <div className={classes.errorContainer}>
+                  <ErrorMessage name="fullName" component="div" />
+                </div>
                 <label className={classes.label} htmlFor="email">
-                  EMAIL
+                  EMAIL*
                 </label>
                 <Field
                   className={classes.textField}
@@ -102,7 +115,9 @@ const ProfileData: FC = () => {
                   id="email"
                   variant="outlined"
                 />
-                <ErrorMessage className={classes.error} name="email" component="div" />
+                <div className={classes.errorContainer}>
+                  <ErrorMessage name="email" component="div" />
+                </div>
                 <label className={classes.label} htmlFor="phone">
                   PHONE
                 </label>
@@ -114,7 +129,9 @@ const ProfileData: FC = () => {
                   id="phone"
                   variant="outlined"
                 />
-                <ErrorMessage className={classes.error} name="telephone" component="div" />
+                <div className={classes.errorContainer}>
+                  <ErrorMessage name="telephone" component="div" />
+                </div>
                 <label className={classes.label} htmlFor="newPass">
                   NEW PASSWORD
                 </label>
@@ -140,7 +157,9 @@ const ProfileData: FC = () => {
                     ),
                   }}
                 />
-                <ErrorMessage className={classes.error} name="password" component="div" />
+                <div className={classes.errorContainer}>
+                  <ErrorMessage name="password" component="div" />
+                </div>
                 <label className={classes.label} htmlFor="confPass">
                   CONFRIM NEW PASSWORD
                 </label>
@@ -152,7 +171,9 @@ const ProfileData: FC = () => {
                   id="confPass"
                   variant="outlined"
                 />
-                <ErrorMessage className={classes.error} name="confirmPassword" component="div" />
+                <div className={classes.errorContainer}>
+                  <ErrorMessage name="confirmPassword" component="div" />
+                </div>
               </Stack>
             </Box>
           </Stack>

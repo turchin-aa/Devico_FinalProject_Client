@@ -36,7 +36,7 @@ const App: React.FC = () => {
             path="resetPass"
             element={isAuth ? <Navigate to="/" replace /> : <CreateNewPass />}
           />
-          <Route path="profile" element={!isAuth ? <Navigate to="/" replace /> : <Profile />} />
+          <Route path="/profile" element={!isAuth ? <Navigate to="/" replace /> : <Profile />} />
         </Routes>
         <Auth />
       </Router>

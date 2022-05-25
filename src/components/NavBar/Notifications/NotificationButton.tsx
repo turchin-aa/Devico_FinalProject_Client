@@ -11,7 +11,7 @@ const NotificationButton: React.FC = () => {
 
   return (
     <div>
-      <UserBarButtons menuClass={classes.userBarNotif}>
+      <UserBarButtons menuClass={classes.userBarNotif} popperClassName={classes.popper}>
         <Badge color="primary" variant="dot" invisible={invisible}>
           <NotificationsOutlined className={classes.userBarComponentW} />
         </Badge>

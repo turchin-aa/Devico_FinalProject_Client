@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hook'
-import { memo, useCallback } from 'react'
+import { memo, useCallback, useState } from 'react'
 import { uiActions } from '../../../store/ui-slice'
 import { sagaActions } from '../../../store/saga-actions'
 import {
@@ -15,13 +15,13 @@ import {
   Dialog,
   DialogContent,
   Divider,
-  createTheme,
-  ThemeProvider,
   useMediaQuery,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
 } from '@mui/material'
 import {
-  FacebookButton,
-  GoogleButton,
+  SideButton,
   MyTypography,
   RegisterButton,
   LinkTypography,
@@ -30,41 +30,51 @@ import {
   Google,
   styledDiv,
 } from '../AuthStyles'
+import { useAuthStyles } from '../useAuthStyles'
+import clsx from 'clsx'
+import { theme } from '../../../theme/CustomTheme'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 
-const theme = createTheme()
+const initialValues = {
+  email: '',
+  password: '',
+  telephone: '',
+  confirmPassword: '',
+  terms: false,
+}
 
-const SignUp = () => {
+const validationSchema = yup.object().shape({
+  email: yup.string().email('Write correct email').required('The email is required'),
+  password: yup
+    .string()
+    .min(8, 'The length must be at least 8')
+    .max(32)
+    .required('The password is required'),
+  telephone: yup
+    .string()
+    .matches(
+      /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
+      'Invalid telephone format',
+    ),
+  confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
+  terms: yup.boolean().required().oneOf([true], 'Check the terms'),
+})
+
+const SignUp: React.FC = () => {
   const dispatch = useAppDispatch()
+  const classes = useAuthStyles()
+  const [showPassword, setShowPassword] = useState(false)
 
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-      telephone: '',
-      confirmPassword: '',
-      terms: false,
-    },
-    validationSchema: yup.object().shape({
-      email: yup.string().email('Write correct email').required('The email is required'),
-      password: yup
-        .string()
-        .min(8, 'The length must be at least 8')
-        .max(32)
-        .required('The password is required'),
-      telephone: yup
-        .string()
-        .matches(
-          /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
-          'Invalid telephone format',
-        ),
-      confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
-      terms: yup.boolean().required().oneOf([true], 'Check the terms'),
-    }),
-    onSubmit: async (values, { resetForm }) => {
-      dispatch({ type: sagaActions.USER_SIGNUP_SAGA, payload: values })
-      resetForm()
-    },
-  })
+  const handleClickShowPassword = useCallback(() => {
+    return setShowPassword(!showPassword)
+  }, [showPassword])
+
+  const onSubmit = async (values: object, { resetForm }) => {
+    dispatch({ type: sagaActions.USER_SIGNUP_SAGA, payload: values })
+    resetForm()
+  }
+
+  const formik = useFormik({ initialValues, validationSchema, onSubmit })
 
   const regCartIsShown = useAppSelector(state => state.ui.showReg)
 
@@ -72,6 +82,8 @@ const SignUp = () => {
     if (regCartIsShown) {
       dispatch(uiActions.toggleReg())
     }
+    formik.resetForm()
+    setShowPassword(false)
   }, [dispatch, regCartIsShown])
 
   const changeHandler = useCallback(() => {
@@ -83,90 +95,113 @@ const SignUp = () => {
 
   return (
     <Dialog fullScreen={fullScreen} open={regCartIsShown} onClose={toggleHandler}>
-      <ThemeProvider theme={theme}>
-        <Typography
-          component="h1"
-          variant="h5"
-          sx={{ fontWeight: 'bold', fontSize: 26, textAlign: 'center', mt: 1, mb: 1 }}
-        >
-          Sign up
-        </Typography>
-        <Divider />
-        <DialogContent>
-          <Box component="form" onSubmit={formik.handleSubmit}>
+      <Typography component="h1" variant="h5" className={classes.flexCenter}>
+        <p className={classes.titleTypo}> Sign up </p>
+      </Typography>
+      <Divider />
+      <DialogContent>
+        <Box component="form" onSubmit={formik.handleSubmit}>
+          <div className={clsx(classes.flexCenter, classes.mobileView)}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <FacebookButton type="button" variant="contained" fullWidth>
+                <SideButton id="facebook" type="button" variant="contained" fullWidth>
                   <Grid item xs={2}>
                     <Facebook />
                   </Grid>
                   <Grid item xs={12}>
                     CONNECT WITH FACEBOOK
                   </Grid>
-                </FacebookButton>
+                </SideButton>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <GoogleButton type="button" variant="contained" fullWidth>
-                  <Grid item xs={3}>
+                <SideButton id="google" type="button" variant="contained" fullWidth>
+                  <Grid item xs={2}>
                     <Google />
                   </Grid>
                   <Grid item xs={12}>
                     CONNECT WITH GOOGLE
                   </Grid>
-                </GoogleButton>
+                </SideButton>
               </Grid>
-              <Box
-                sx={{ height: '1px', width: '42%', background: '#E5E5E5', mt: 2, ml: 2, mr: 3 }}
-              ></Box>
-              <Typography>OR</Typography>
-              <Box sx={{ height: '1px', width: '36%', background: '#E5E5E5', mt: 2, ml: 3 }}></Box>
-              <Grid item xs={12} sm={6}>
-                <Typography sx={{ fontFamily: 'Arial', fontSize: 12, mb: 1 }}>EMAIL*</Typography>
-                <TextField
-                  fullWidth
-                  id="email"
-                  name="email"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
+            </Grid>
+          </div>
+          <div className={classes.divider}>
+            <Divider variant="middle">OR</Divider>
+          </div>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <MyTypography>EMAIL*</MyTypography>
+              <TextField
+                fullWidth
+                error={formik.errors.email && formik.touched.email ? true : false}
+                id="email"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              <div className={classes.errorMessege}>
                 {formik.errors.email && formik.touched.email ? (
                   <div style={styledDiv}>{formik.errors.email}</div>
                 ) : null}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Typography sx={{ fontFamily: 'Arial', fontSize: 12, mb: 1 }}>TELEPHONE</Typography>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <div className={classes.leftTextField}>
+                <MyTypography>TELEPHONE</MyTypography>
                 <TextField
                   fullWidth
+                  error={formik.errors.telephone && formik.touched.telephone ? true : false}
                   name="telephone"
                   id="telephone"
                   value={formik.values.telephone}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {formik.errors.telephone && formik.touched.telephone ? (
-                  <div style={styledDiv}>{formik.errors.telephone}</div>
-                ) : null}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <MyTypography>PASSWORD*</MyTypography>
-                <TextField
-                  fullWidth
-                  name="password"
-                  type="password"
-                  id="password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
+                <div className={classes.errorMessege}>
+                  {formik.errors.telephone && formik.touched.telephone ? (
+                    <div style={styledDiv}>{formik.errors.telephone}</div>
+                  ) : null}
+                </div>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <MyTypography>PASSWORD*</MyTypography>
+              <OutlinedInput
+                fullWidth
+                error={formik.errors.password && formik.touched.password ? true : false}
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+              <div className={classes.errorMessege}>
                 {formik.errors.password && formik.touched.password ? (
                   <div style={styledDiv}>{formik.errors.password}</div>
                 ) : null}
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <div className={classes.leftTextField}>
                 <MyTypography>CONFIRM PASSWORD*</MyTypography>
-                <TextField
+                <OutlinedInput
                   fullWidth
+                  error={
+                    formik.errors.confirmPassword && formik.touched.confirmPassword ? true : false
+                  }
                   name="confirmPassword"
                   type="password"
                   id="confirmPassword"
@@ -174,11 +209,15 @@ const SignUp = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
-                  <div style={styledDiv}>{formik.errors.confirmPassword}</div>
-                ) : null}
-              </Grid>
-              <Grid item xs={12}>
+                <div className={classes.errorMessege}>
+                  {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
+                    <div style={styledDiv}>{formik.errors.confirmPassword}</div>
+                  ) : null}
+                </div>
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <div className={classes.formControl}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -189,44 +228,37 @@ const SignUp = () => {
                     />
                   }
                   label={
-                    <Typography
-                      variant="body2"
-                      sx={{ fontSize: 14, fontFamily: 'Lato', fontWeight: 40, color: '#595353' }}
-                    >
-                      I agree to &nbsp;
-                      <Link
-                        href="#"
-                        sx={{
-                          fontSize: 16,
-                          fontFamily: 'Lato',
-                          fontWeight: 40,
-                          color: '#000000',
-                        }}
-                      >
-                        Processing, use, dissemination and access to my personal data
+                    <Typography variant="body2">
+                      <span className={classes.rememberSpan}>I agree to </span>
+                      <Link href="#">
+                        <span className={classes.rememberSpan} id="process">
+                          Processing, use, dissemination and access to my personal data
+                        </span>
                       </Link>
                     </Typography>
                   }
                 />
-                {formik.errors.terms && formik.touched.terms ? (
-                  <div style={styledDiv}>{formik.errors.terms}</div>
-                ) : null}
-              </Grid>
+                <div className={classes.errorMessege} id="terms">
+                  {formik.errors.terms && formik.touched.terms ? (
+                    <div style={styledDiv}>{formik.errors.terms}</div>
+                  ) : null}
+                </div>
+              </div>
             </Grid>
-            <RegisterButton type="submit" fullWidth variant="contained">
-              Sign Up
-            </RegisterButton>
-            <Grid container justifyContent="center">
-              <Grid item>
-                <LinkTypography>
-                  Already a member? &nbsp;
-                  <SignLink onClick={changeHandler}>Sign in</SignLink>
-                </LinkTypography>
-              </Grid>
+          </Grid>
+          <RegisterButton type="submit" fullWidth variant="contained">
+            Sign Up
+          </RegisterButton>
+          <Grid container justifyContent="center">
+            <Grid item>
+              <LinkTypography>
+                Already a member? &nbsp;
+                <SignLink onClick={changeHandler}>Sign in</SignLink>
+              </LinkTypography>
             </Grid>
-          </Box>
-        </DialogContent>
-      </ThemeProvider>
+          </Grid>
+        </Box>
+      </DialogContent>
     </Dialog>
   )
 }

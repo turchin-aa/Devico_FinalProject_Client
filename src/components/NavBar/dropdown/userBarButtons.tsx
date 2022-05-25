@@ -1,39 +1,41 @@
-import { useState, MouseEvent, useCallback, memo, useEffect } from 'react'
+import { useState, useCallback, memo, useRef } from 'react'
 import { Button } from '@mui/material'
 import DropDownMenu from './dropDown'
 
 type Props = {
-  children: React.ReactNode[]
+  children: React.ReactElement[]
   menuClass?: string
   buttonClass?: string
+  popperClassName?: string
 }
 
 const UserBarButtons: React.FC<Props> = props => {
   const [isOpen, setOpen] = useState<boolean>(false)
+  const anchorRef = useRef<HTMLDivElement>(null)
 
-  const handleOpenMenu = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
-      const target = event.target as HTMLButtonElement
+  const handleOpen = useCallback(() => {
+    return setOpen(true)
+  }, [isOpen])
 
-      return setOpen(!isOpen)
-    },
-    [isOpen],
-  )
-  const handleCloseMenu = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
-      const target = event.target as HTMLButtonElement
-
-      return setOpen(!isOpen)
+  const handleClose = useCallback(
+    (event: Event) => {
+      return setOpen(false)
     },
     [isOpen],
   )
 
   return (
     <div>
-      <Button aria-controls="menu" className={props.buttonClass} onClick={handleOpenMenu}>
+      <Button aria-controls="menu" className={props.buttonClass} onClick={handleOpen}>
         {props.children[0]}
       </Button>
-      <DropDownMenu isOpen={isOpen} className={props.menuClass}>
+      <DropDownMenu
+        isOpen={isOpen}
+        anchorRef={anchorRef}
+        className={props.menuClass}
+        popperClassName={props.popperClassName}
+        handleClose={handleClose}
+      >
         {props.children[1]}
       </DropDownMenu>
     </div>

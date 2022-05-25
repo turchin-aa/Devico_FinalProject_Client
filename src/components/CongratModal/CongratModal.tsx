@@ -1,5 +1,4 @@
 import {
-  createTheme,
   Box,
   Dialog,
   DialogActions,
@@ -14,8 +13,7 @@ import { uiActions } from '../../store/ui-slice'
 import defaultImg from '../../assets/default.png'
 import { RegisterButton } from '../Auth/AuthStyles'
 import { useCongratsStyles } from './useCongratsStyle'
-
-const theme = createTheme()
+import { theme } from '../../theme/CustomTheme'
 
 const CongratModule = () => {
   const classes = useCongratsStyles()
@@ -46,24 +44,14 @@ const CongratModule = () => {
           <DialogContent>
             <DialogContentText className={classes.dialogText}>
               <div id="welcome">Welcome!</div>
-            </DialogContentText>
-            <DialogContentText className={classes.dialogText}>
               <div id="text">
-                You have successfully logged in to Kharkiv Racing.ua now you have access to your
+                You have successfully logged in to Kharkiv Racing.ua. Now you have access to your
                 personal account
               </div>
             </DialogContentText>
             <div className={classes.dialogActionsContainer}>
               <DialogActions className={classes.dialogActions}>
-                <RegisterButton
-                  sx={{
-                    width: '35%',
-                    position: 'absolute',
-                    left: 0,
-                  }}
-                  variant="contained"
-                  onClick={toggleHandler}
-                >
+                <RegisterButton id="cancel" variant="contained" onClick={toggleHandler}>
                   Cancel
                 </RegisterButton>
               </DialogActions>

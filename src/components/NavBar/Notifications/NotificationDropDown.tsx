@@ -17,7 +17,9 @@ const NotificationMenu: React.FC = () => {
           </div>
         </div>
         <Divider variant="middle" />
-        {content === null ? <ContentNull /> : null}
+        <div className={classes.notifContentContainer}>
+          {content === null ? <ContentNull /> : null}
+        </div>
       </MenuList>
     </div>
   )

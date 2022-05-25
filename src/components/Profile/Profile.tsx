@@ -1,16 +1,14 @@
 import { FC, memo, useState } from 'react'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
-import Box from '@mui/material/Box'
+import { Tabs, Tab, Box, Stack, Typography } from '@mui/material'
 import ProfilePanel from './ProfilePanel'
 import PersonalData from './PersonalData'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
-import { Stack, Typography } from '@mui/material'
 import ProfileData from './ProfileData'
 import AddCarModal from './AddCarModal/AddCarModal'
 import { Link } from 'react-router-dom'
 import { useAppSelector, useAppDispatch } from '../../hooks/redux.hook'
 import { uiActions } from '../../store/ui-slice'
+import useStyles from './ProfileStyles'
 
 const allyProps = (index: number) => {
   return {
@@ -21,6 +19,7 @@ const allyProps = (index: number) => {
 
 const Profile: FC = () => {
   const [value, setValue] = useState(0)
+  const classes = useStyles()
 
   const isAuth = useAppSelector(state => state.user.isAuth)
   const dispatch = useAppDispatch()
@@ -30,20 +29,18 @@ const Profile: FC = () => {
   }
 
   return isAuth ? (
-    <Box sx={{ width: '100%' }}>
+    <Box className={classes.profileContainer}>
       <AddCarModal />
-      <Box sx={{ paddingLeft: '10px', marginTop: '7%' }}>
+      <Box className={classes.navBack}>
         <Stack direction="row">
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-            <ArrowBackIosIcon sx={{ height: '15px' }} />
-            <Typography> Back</Typography>
+          <Link to="/" className={classes.navLinkBack}>
+            <ArrowBackIosIcon fontSize="small" />
+            <Typography>Back</Typography>
           </Link>
         </Stack>
-        <Typography variant="h5" component="div">
-          My Profile
-        </Typography>
+        <div className={classes.profileTitle}>My Profile</div>
       </Box>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '95%', mt: '1%' }}>
+      <Box className={classes.profileTabs}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="PROFILE DATA" {...allyProps(0)} />
           <Tab label="PERSONAL DATA" {...allyProps(1)} />

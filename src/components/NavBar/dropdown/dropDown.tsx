@@ -1,17 +1,36 @@
-import { MenuContainer } from '../style/ElementsStyled'
-import { memo } from 'react'
+import { ClickAwayListener, Fade, Paper, Popper } from '@mui/material'
+import { memo, RefObject } from 'react'
 
 interface Props {
-  children: React.ReactNode
+  children: React.ReactElement
+  anchorRef: RefObject<HTMLDivElement>
   isOpen: boolean
   className?: string
+  popperClassName?: string
+  handleClose: (event: Event) => void
 }
 
-const DropDownMenu: React.FC<Props> = ({ children, isOpen, className }) => {
+const DropDownMenu: React.FC<Props> = ({
+  children,
+  popperClassName,
+  anchorRef,
+  isOpen,
+  className,
+  handleClose,
+}) => {
   return (
-    <MenuContainer isOpen={isOpen} className={className}>
-      {children}
-    </MenuContainer>
+    <Popper
+      open={isOpen}
+      anchorEl={anchorRef.current}
+      className={popperClassName}
+      disablePortal={true}
+    >
+      <ClickAwayListener onClickAway={handleClose}>
+        <Fade in={isOpen}>
+          <Paper className={className}>{children}</Paper>
+        </Fade>
+      </ClickAwayListener>
+    </Popper>
   )
 }
 
