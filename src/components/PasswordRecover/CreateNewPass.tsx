@@ -47,7 +47,7 @@ const CreateNewPass = () => {
 
   const createNewPassIsShown = useAppSelector(state => state.ui.showCreateNewPassword)
 
-  let query = useQuery()
+  const query = useQuery()
 
   const token = query.get('token')
   const id = query.get('id')

@@ -23,8 +23,8 @@ export function* userSignUpSaga(action: Effect) {
     const { email, password } = action.payload
     const data: RegisterServiceType = yield call(AuthService.register, email, password)
     const { accessToken, id } = data.data
-    yield put(setUser({ id, email }))
     yield put(toggleReg())
+    yield put(setUser({ id, email }))
     yield put(toggleCongratAuth())
     yield put(toggleAuth())
     localStorage.setItem('token', accessToken)
@@ -91,41 +91,48 @@ export function* userNewPassSaga(action: Effect) {
   }
 }
 
-export function* userUpdateSaga(action: Effect) {
+export function* updateProfileDataSaga(action: Effect) {
+  try {
+    const { fullName, email, telephone, password } = action.payload
+    yield call(UserService.updateProfileData, fullName, email, telephone, password)
+    yield put(setUser({ email }))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export function* updatePersonalDataSaga(action: Effect) {
   try {
     const {
-      email,
-      phone,
-      newPassword,
-      fullName,
-      city,
-      birthdayDate,
+      nickName,
+      birthday,
+      address,
       driverLicenseNum,
-      regAddress,
+      representiveFullName,
+      cellNumber,
       representiveLicenseNum,
-      fullNameOf,
+      sportDriverLicenseNum,
       idNumber,
+      city,
     } = action.payload
     yield call(
-      UserService.updateUser,
-      email,
-      phone,
-      newPassword,
-      fullName,
-      city,
-      birthdayDate,
+      UserService.updatePersonalData,
+      nickName,
+      birthday,
+      address,
       driverLicenseNum,
-      regAddress,
+      representiveFullName,
+      cellNumber,
       representiveLicenseNum,
-      fullNameOf,
+      sportDriverLicenseNum,
       idNumber,
+      city,
     )
   } catch (error) {
     console.log(error)
   }
 }
 
-// events saga
 export function* eventGetSaga(action: Effect) {
   try {
     const data: GetServiceType = yield call(EventService.getEvent)
@@ -144,5 +151,6 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_NEWPASS_SAGA, userNewPassSaga)
   yield takeEvery(sagaActions.USER_RESET_SAGA, userResetPassSaga)
   yield takeEvery(eventActions.EVENT_GET_SAGA, eventGetSaga)
-  yield takeEvery(sagaActions.USER_UPDATE_SAGA, userUpdateSaga)
+  yield takeEvery(sagaActions.USER_UPDATE_PROFILE_SAGA, updateProfileDataSaga)
+  yield takeEvery(sagaActions.USER_UPDATE_PERSONAL_SAGA, updatePersonalDataSaga)
 }

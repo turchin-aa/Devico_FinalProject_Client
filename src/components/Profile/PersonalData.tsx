@@ -1,4 +1,4 @@
-import { Stack, Typography, MenuItem } from '@mui/material'
+import { Stack, Typography, MenuItem, SelectChangeEvent } from '@mui/material'
 import useStyles, {
   ProfileConfirmBox,
   PersonalModalButton,
@@ -10,7 +10,7 @@ import useStyles, {
 import { Box } from '@mui/system'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
-import { FC, memo, useCallback } from 'react'
+import { FC, memo, useCallback, useState } from 'react'
 import { useAppDispatch } from '../../hooks/redux.hook'
 import { uiActions } from '../../store/ui-slice'
 import { sagaActions } from '../../store/saga-actions'
@@ -26,40 +26,44 @@ const PersonalData: FC = () => {
     dispatch(uiActions.toggleShowAddCar())
   }, [dispatch])
 
+  const [city, setCity] = useState('')
+
+  const handleChange = (event: SelectChangeEvent<unknown>) => {
+    setCity(event.target.value as string)
+  }
+
   return (
     <Formik
       initialValues={{
-        fullName: '',
-        representiveLicenseNum: '',
-        city: '',
+        nickName: '',
+        birthday: today,
+        address: '',
         driverLicenseNum: 0,
-        regAddress: '',
-        driverLicense: '',
+        representiveFullName: '',
+        cellNumber: '',
+        representiveLicenseNum: 0,
+        sportDriverLicenseNum: 0,
         idNumber: 0,
-        phone: '',
-        fullNameOf: '',
-        birthdayDate: today,
       }}
       validationSchema={yup.object().shape({
-        fullName: yup.string().min(3).nullable(true),
-        fullNameOf: yup.string().min(3).nullable(true),
+        nickName: yup.string().min(3).nullable(true),
+        representiveFullName: yup.string().min(3).nullable(true),
         representiveLicenseNum: yup.number().min(5).required('Write min 5 numbers'),
-        city: yup.string().nullable(true),
         driverLicenseNum: yup.number().min(5).required('Write min 5 numbers'),
-        regAddress: yup.string().min(5).nullable(true),
-        driverLicense: yup.number().min(8).required('Write min 8 numbers'),
+        address: yup.string().min(5).nullable(true),
+        sportDriverLicenseNum: yup.number().min(8).required('Write min 8 numbers'),
         idNumber: yup.number().min(8).required('Write min 8 numbers'),
-        phone: yup
+        cellNumber: yup
           .string()
           .matches(
             /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
-            'Invalid telephone format',
+            'Invalid phone format',
           )
           .nullable(true),
-        birthdayDate: yup.date().required('Date is required'),
+        birthday: yup.date().required('Date is required'),
       })}
       onSubmit={async (values, { resetForm }) => {
-        dispatch({ type: sagaActions.USER_UPDATE_SAGA, payload: values })
+        dispatch({ type: sagaActions.USER_UPDATE_PERSONAL_SAGA, payload: { ...values, city } })
         resetForm()
       }}
     >
@@ -74,53 +78,53 @@ const PersonalData: FC = () => {
             <Stack direction="column" sx={{ width: '60%' }}>
               <Stack direction="row">
                 <Stack direction="column" flex={1} sx={{ mr: '50px' }}>
-                  <label className={classes.label} htmlFor="fullName">
+                  <label className={classes.label} htmlFor="nickName">
                     FULL NAME (NICKNAME)*
                   </label>
                   <Field
                     className={classes.textField}
-                    name="fullName"
+                    name="nickName"
                     type="text"
                     fullWidth
                     id="outlined-basic"
                   />
-                  <ErrorMessage className={classes.error} name="fullName" component="div" />
-                  <label className={classes.label} htmlFor="birthdayDate">
+                  <ErrorMessage className={classes.error} name="nickName" component="div" />
+                  <label className={classes.label} htmlFor="birthday">
                     DOB*
                   </label>
                   <Field
                     className={classes.textField}
-                    name="birthdayDate"
+                    name="birthday"
                     type="date"
                     fullWidth
                     id="outlined-basic"
                     variant="outlined"
                   />
-                  <ErrorMessage className={classes.error} name="birthdayDate" component="div" />
-                  <label className={classes.label} htmlFor="driverLicense">
+                  <ErrorMessage className={classes.error} name="birthday" component="div" />
+                  <label className={classes.label} htmlFor="driverLicenseNum">
                     DRIVER LICENSE NUMBER*
                   </label>
                   <Field
                     className={classes.textField}
-                    name="driverLicense"
+                    name="driverLicenseNum"
                     type="text"
                     fullWidth
                     id="outlined-basic"
                     variant="outlined"
                   />
-                  <ErrorMessage className={classes.error} name="driverLicense" component="div" />
-                  <label className={classes.label} htmlFor="phone">
+                  <ErrorMessage className={classes.error} name="driverLicenseNum" component="div" />
+                  <label className={classes.label} htmlFor="cellNumber">
                     CELL NUMBER*
                   </label>
                   <Field
                     className={classes.textField}
-                    name="phone"
+                    name="cellNumber"
                     type="text"
                     fullWidth
                     id="outlined-basic"
                     variant="outlined"
                   />
-                  <ErrorMessage className={classes.error} name="phone" component="div" />
+                  <ErrorMessage className={classes.error} name="cellNumber" component="div" />
                   <label className={classes.label} htmlFor="idNumber">
                     ID NUMBER*
                   </label>
@@ -138,35 +142,38 @@ const PersonalData: FC = () => {
                   <label className={classes.label} htmlFor="city">
                     CITY*
                   </label>
-                  <StyledSelectField name="city">
+                  <StyledSelectField value={city} name="city" onChange={handleChange}>
                     <MenuItem value={'Kharkiv'}>Kharkiv</MenuItem>
                     <MenuItem value={'Kiev'}>Kiev</MenuItem>
                   </StyledSelectField>
-                  <ErrorMessage className={classes.error} name="city" component="div" />
-                  <label className={classes.label} htmlFor="regAddress">
+                  <label className={classes.label} htmlFor="address">
                     REG ADRESS*
                   </label>
                   <Field
                     className={classes.textField}
-                    name="regAddress"
+                    name="address"
                     type="text"
                     fullWidth
                     id="outlined-basic"
                     variant="outlined"
                   />
-                  <ErrorMessage className={classes.error} name="regAddress" component="div" />
-                  <label className={classes.label} htmlFor="fullNameOf">
+                  <ErrorMessage className={classes.error} name="address" component="div" />
+                  <label className={classes.label} htmlFor="representiveFullName">
                     FULL NAME OF YOUR REPRESENTATIVE
                   </label>
                   <Field
                     className={classes.textField}
-                    name="fullNameOf"
+                    name="representiveFullName"
                     type="text"
                     fullWidth
                     id="outlined-basic"
                     variant="outlined"
                   />
-                  <ErrorMessage className={classes.error} name="fullNameOf" component="div" />
+                  <ErrorMessage
+                    className={classes.error}
+                    name="representiveFullName"
+                    component="div"
+                  />
                   <label className={classes.label} htmlFor="representiveLicenseNum">
                     REPRESENTAIVE LICENSE NUMBER
                   </label>
@@ -183,18 +190,22 @@ const PersonalData: FC = () => {
                     name="representiveLicenseNum"
                     component="div"
                   />
-                  <label className={classes.label} htmlFor="driverLicenseNum">
+                  <label className={classes.label} htmlFor="sportDriverLicenseNum">
                     SPORT DRIVER LICENSE NUMBER
                   </label>
                   <Field
                     className={classes.textField}
-                    name="driverLicenseNum"
+                    name="sportDriverLicenseNum"
                     type="text"
                     fullWidth
                     id="outlined-basic"
                     variant="outlined"
                   />
-                  <ErrorMessage className={classes.error} name="driverLicenseNum" component="div" />
+                  <ErrorMessage
+                    className={classes.error}
+                    name="sportDriverLicenseNum"
+                    component="div"
+                  />
                 </Stack>
               </Stack>
               <ProfileConfirmBox>

@@ -6,13 +6,15 @@ import { Field, Form, Formik, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 import { FC, memo, useCallback, useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { useAppDispatch } from '../../hooks/redux.hook'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import { sagaActions } from '../../store/saga-actions'
 
 const ProfileData: FC = () => {
   const [passShow, setShow] = useState(false)
 
   const dispatch = useAppDispatch()
+
+  const email = useAppSelector<string | undefined>(state => state.user.email)
 
   const classes = useStyles()
 
@@ -23,7 +25,6 @@ const ProfileData: FC = () => {
   return (
     <Formik
       initialValues={{
-        picture: null,
         fullName: '',
         email: '',
         telephone: '',
@@ -31,11 +32,8 @@ const ProfileData: FC = () => {
         confirmPassword: '',
       }}
       validationSchema={yup.object().shape({
-        picture: yup.mixed().test('fileSize', 'The file is too large', value => {
-          return value && value[0].size <= 2000000
-        }),
         fullName: yup.string().min(3).nullable(true),
-        email: yup.string().email('Write correct email').required('The email is required'),
+        email: yup.string().email('Write correct email').nullable(true),
         password: yup.string().min(6, 'The length must be at least 6').max(32).nullable(true),
         telephone: yup
           .string()
@@ -50,7 +48,7 @@ const ProfileData: FC = () => {
           .nullable(true),
       })}
       onSubmit={async (values, { resetForm }) => {
-        dispatch({ type: sagaActions.USER_UPDATE_SAGA, payload: values })
+        dispatch({ type: sagaActions.USER_UPDATE_PROFILE_SAGA, payload: values })
         resetForm()
       }}
     >
@@ -94,6 +92,7 @@ const ProfileData: FC = () => {
                   EMAIL
                 </label>
                 <Field
+                  placeholder={email}
                   className={classes.textField}
                   name="email"
                   type="email"
@@ -111,11 +110,11 @@ const ProfileData: FC = () => {
                   name="telephone"
                   type="text"
                   fullWidth
-                  id="phone"
+                  id="telephone"
                   variant="outlined"
                 />
                 <ErrorMessage className={classes.error} name="telephone" component="div" />
-                <label className={classes.label} htmlFor="newPass">
+                <label className={classes.label} htmlFor="password">
                   NEW PASSWORD
                 </label>
                 <Field
@@ -123,7 +122,7 @@ const ProfileData: FC = () => {
                   name="password"
                   type={passShow ? 'text' : 'password'}
                   fullWidth
-                  id="newPass"
+                  id="password"
                   variant="outlined"
                   InputProps={{
                     endAdornment: (
@@ -141,7 +140,7 @@ const ProfileData: FC = () => {
                   }}
                 />
                 <ErrorMessage className={classes.error} name="password" component="div" />
-                <label className={classes.label} htmlFor="confPass">
+                <label className={classes.label} htmlFor="confirmPassword">
                   CONFRIM NEW PASSWORD
                 </label>
                 <Field
@@ -149,7 +148,7 @@ const ProfileData: FC = () => {
                   name="confirmPassword"
                   type="password"
                   fullWidth
-                  id="confPass"
+                  id="confirmPassword"
                   variant="outlined"
                 />
                 <ErrorMessage className={classes.error} name="confirmPassword" component="div" />

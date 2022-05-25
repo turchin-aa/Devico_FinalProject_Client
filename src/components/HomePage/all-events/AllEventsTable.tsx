@@ -4,8 +4,7 @@ import useStyles from '../../../theme/useStyle'
 import EventsHeaders from './TableEventsHeaders'
 import TableContent from './TableContent'
 import { Column, Data } from './TableTypes'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../store'
+import { useAppSelector } from '../../../hooks/redux.hook'
 import { EventData } from '../../../types/globalTypes'
 import moment from 'moment'
 
@@ -72,18 +71,19 @@ const AllEventsTable: React.FC = () => {
   const [rowsPerPage, setRowsPerPage] = useState(6)
   const classes = useStyles()
 
-  const events = useSelector<RootState, EventData>(state => state.event.events)
+  const events = useAppSelector<EventData>(state => state.event.events)
 
-  let rows = events.map(event =>
-    createData(
-      moment(event.date).format('DD.MM').toString(),
-      event.discipline,
-      event.series,
-      event.title,
-      event.place,
+  const rows = rowsEmpty(
+    events.map(event =>
+      createData(
+        moment(event.date).format('DD.MM').toString(),
+        event.discipline,
+        event.series,
+        event.title,
+        event.place,
+      ),
     ),
   )
-  rows = rowsEmpty(rows)
 
   const handleChangePage = useCallback(
     (event: ChangeEvent<unknown>, newPage: number) => {

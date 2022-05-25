@@ -1,15 +1,14 @@
 import { Divider } from '@mui/material'
 import moment from 'moment'
 import { memo } from 'react'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../store'
+import { useAppSelector } from '../../../hooks/redux.hook'
 import useStyles from '../../../theme/useStyle'
 import { EventData } from '../../../types/globalTypes'
 import ScrollableItems from '../scrollable-items/ScrollableItems'
 
 const UpcomingEvents: React.FC = () => {
   const today = moment().format('YYYY-MM-DD')
-  const events = useSelector<RootState, EventData>(state => state.event.events)
+  const events = useAppSelector<EventData>(state => state.event.events)
   const eventData = events.filter(event => event.date >= today.toString())
 
   const classes = useStyles()

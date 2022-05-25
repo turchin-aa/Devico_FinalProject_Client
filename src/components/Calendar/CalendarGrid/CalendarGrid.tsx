@@ -5,8 +5,7 @@ import EventsBlocks from './EventsBlocks'
 import EventsList from './EventsList'
 import { useMemo, useCallback, memo } from 'react'
 import CalendarHeader from './CalendarHeader'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../store'
+import { useAppSelector } from '../../../hooks/redux.hook'
 import { EventData } from '../../../types/globalTypes'
 
 interface Props {
@@ -24,11 +23,11 @@ const filterEvents = (result, events: EventData, day: string) => {
 }
 
 const CalendarGrid: React.FC<Props> = ({ startMonthDay, today }) => {
-  let result = []
+  const result = []
   const classes = useCalendarStyles()
   const day = startMonthDay.clone()
   const daysArray = setDaysArray(day)
-  const events = useSelector<RootState, EventData>(state => state.event.events)
+  const events = useAppSelector(state => state.event.events)
 
   // helps to mark current day in the calendar
   const current = useMemo(() => moment().format('DDMMYYYY'), [])

@@ -1,31 +1,43 @@
 import api from '../hooks/index'
 
 export default class UserService {
-  static async updateUser(
-    email?: string,
-    phone?: string,
-    newPassword?: string,
+  static async updateProfileData(
     fullName?: string,
-    city?: string,
-    birthdayDate?: string,
-    driverLicenseNum?: number,
-    regAddress?: string,
-    representiveLicenseNum?: string,
-    fullNameOf?: string,
-    idNumber?: number,
+    email?: string,
+    telephone?: string,
+    password?: string,
   ): Promise<void> {
-    return await api.patch('/updateUser', {
-      email,
-      phone,
-      newPassword,
+    return await api.patch('/updateProfile', {
       fullName,
-      city,
-      birthdayDate,
+      email,
+      telephone,
+      password,
+    })
+  }
+
+  static async updatePersonalData(
+    nickName?: string,
+    birthday?: Date,
+    address?: string,
+    driverLicenseNum?: number,
+    representiveFullName?: string,
+    cellNumber?: string,
+    representiveLicenseNum?: number,
+    sportDriverLicenseNum?: number,
+    idNumber?: number,
+    city?: string,
+  ): Promise<void> {
+    return await api.patch('/updatePersonal', {
+      nickName,
+      birthday,
+      address,
       driverLicenseNum,
-      regAddress,
+      representiveFullName,
+      cellNumber,
       representiveLicenseNum,
-      fullNameOf,
+      sportDriverLicenseNum,
       idNumber,
+      city,
     })
   }
 }
