@@ -15,7 +15,7 @@ api.interceptors.request.use(config => {
 })
 
 const refreshAuthLogic = failedRequest =>
-  api.get<AuthResponse>('/auth/refresh', { withCredentials: true }).then(tokenRefreshResponse => {
+  api.post<AuthResponse>('/auth/refresh', { withCredentials: true }).then(tokenRefreshResponse => {
     localStorage.setItem('token', tokenRefreshResponse.data.accessToken)
     failedRequest.response.config.headers['Authorization'] =
       'Bearer ' + tokenRefreshResponse.data.accessToken

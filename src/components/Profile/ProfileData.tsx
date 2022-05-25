@@ -4,19 +4,55 @@ import useStyles, { ProfileSubmitButton } from './ProfileStyles'
 import { Box } from '@mui/system'
 import { Field, Form, Formik, ErrorMessage } from 'formik'
 import * as yup from 'yup'
-import { FC, memo, useCallback, useState } from 'react'
+import { FC, memo, useCallback, useEffect, useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import { sagaActions } from '../../store/saga-actions'
+import axios from 'axios'
+import api from '../../hooks'
 
 const ProfileData: FC = () => {
   const [passShow, setShow] = useState(false)
+  const [formDataPicture, setFormDataPicture] = useState('')
+  const [previewPicture, setPreviewPicture] = useState('')
 
   const dispatch = useAppDispatch()
-
   const email = useAppSelector<string | undefined>(state => state.user.email)
 
   const classes = useStyles()
+
+  const handleChangeAvatar = e => {
+    setFormDataPicture(e.target.files[0])
+    setPreviewPicture(URL.createObjectURL(e.target.files[0]))
+  }
+
+  const onUploadAvatar = useCallback(async () => {
+    try {
+      const url: string = await api.get('/s3Url').then(res => res.data.url)
+
+      const file = formDataPicture
+
+      await axios.put(url, file)
+
+      const imageUrl = url.split('?')[0]
+
+      await api.patch('/updateAvatar', { imageUrl })
+    } catch (error) {
+      console.log(error)
+    }
+  }, [formDataPicture])
+
+  const getUserInfoHandler = useCallback(async () => {
+    const req = await api.get('/getAvatar')
+
+    setPreviewPicture(req.data.imageUrl)
+  }, [])
+
+  useEffect(() => {
+    if (!previewPicture) {
+      getUserInfoHandler()
+    }
+  }, [getUserInfoHandler, previewPicture])
 
   const handleClickpassShow = useCallback(() => {
     setShow(!passShow)
@@ -49,7 +85,18 @@ const ProfileData: FC = () => {
       })}
       onSubmit={async (values, { resetForm }) => {
         dispatch({ type: sagaActions.USER_UPDATE_PROFILE_SAGA, payload: values })
-        resetForm()
+        resetForm({
+          values: {
+            fullName: values.fullName,
+            email: values.email,
+            telephone: values.telephone,
+            password: '',
+            confirmPassword: '',
+          },
+        })
+        if (formDataPicture) {
+          onUploadAvatar()
+        }
       }}
     >
       {({ isSubmitting }) => (
@@ -64,9 +111,20 @@ const ProfileData: FC = () => {
                 badgeContent={<ModeEditIcon sx={{ height: '30px', width: '30px' }} />}
               >
                 <label className={classes.label} htmlFor="icon-button-file">
-                  <input accept="image/*" id="icon-button-file" type="file" name="picture" hidden />
+                  <input
+                    accept="image/*"
+                    id="icon-button-file"
+                    type="file"
+                    name="picture"
+                    hidden
+                    onChange={handleChangeAvatar}
+                  />
                   <IconButton color="primary" aria-label="upload picture" component="span">
-                    <Avatar alt="Remy Sharp" sx={{ height: '180px', width: '180px' }} />
+                    <Avatar
+                      src={previewPicture}
+                      alt="Remy Sharp"
+                      sx={{ height: '180px', width: '180px' }}
+                    />
                   </IconButton>
                 </label>
               </Badge>
