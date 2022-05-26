@@ -1,4 +1,4 @@
-import { Stack, Typography, MenuItem, SelectChangeEvent } from '@mui/material'
+import { Stack, Typography, MenuItem } from '@mui/material'
 import useStyles, {
   ProfileConfirmBox,
   PersonalModalButton,
@@ -28,9 +28,12 @@ const PersonalData: FC = () => {
 
   const [city, setCity] = useState('')
 
-  const handleChange = (event: SelectChangeEvent<unknown>) => {
-    setCity(event.target.value as string)
-  }
+  const handleChange = useCallback(
+    e => {
+      setCity(e.target.value as string)
+    },
+    [setCity],
+  )
 
   return (
     <Formik
@@ -63,7 +66,7 @@ const PersonalData: FC = () => {
         birthday: yup.date().required('Date is required'),
       })}
       onSubmit={async (values, { resetForm }) => {
-        dispatch({ type: sagaActions.USER_UPDATE_PERSONAL_SAGA, payload: { ...values, city } })
+        dispatch({ type: sagaActions.USER_UPDATE_DATA_SAGA, payload: { ...values, city } })
         resetForm()
       }}
     >

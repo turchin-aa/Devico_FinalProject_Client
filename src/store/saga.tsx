@@ -6,7 +6,7 @@ import PasswordService from '../services/PasswordService'
 import { eventSliceActions } from './event-slice'
 import EventService from '../services/EventService'
 import { uiActions } from '../store/ui-slice'
-import UserService from '../services/UserService'
+import api from '../hooks'
 
 type RegisterServiceType = SagaReturnType<typeof AuthService.register>
 type LoginServiceType = SagaReturnType<typeof AuthService.login>
@@ -49,7 +49,9 @@ export function* userLoginSaga(action: Effect) {
 
 export function* userLogoutSaga() {
   try {
-    yield call(AuthService.logout)
+    yield call(async () => {
+      return await api.post('/auth/logout')
+    })
     localStorage.removeItem('token')
     yield put(unToggleAuth())
     yield put(removeUser())
@@ -91,43 +93,15 @@ export function* userNewPassSaga(action: Effect) {
   }
 }
 
-export function* updateProfileDataSaga(action: Effect) {
+export function* updateUserDataSaga(action: Effect) {
   try {
-    const { fullName, email, telephone, password } = action.payload
-    yield call(UserService.updateProfileData, fullName, email, telephone, password)
-    yield put(setUser({ email }))
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-export function* updatePersonalDataSaga(action: Effect) {
-  try {
-    const {
-      nickName,
-      birthday,
-      address,
-      driverLicenseNum,
-      representiveFullName,
-      cellNumber,
-      representiveLicenseNum,
-      sportDriverLicenseNum,
-      idNumber,
-      city,
-    } = action.payload
-    yield call(
-      UserService.updatePersonalData,
-      nickName,
-      birthday,
-      address,
-      driverLicenseNum,
-      representiveFullName,
-      cellNumber,
-      representiveLicenseNum,
-      sportDriverLicenseNum,
-      idNumber,
-      city,
-    )
+    const { email } = action.payload
+    yield call(async () => {
+      return await api.patch('/updateUser', { ...action.payload })
+    })
+    if (email) {
+      yield put(setUser({ email }))
+    }
   } catch (error) {
     console.log(error)
   }
@@ -151,6 +125,5 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_NEWPASS_SAGA, userNewPassSaga)
   yield takeEvery(sagaActions.USER_RESET_SAGA, userResetPassSaga)
   yield takeEvery(eventActions.EVENT_GET_SAGA, eventGetSaga)
-  yield takeEvery(sagaActions.USER_UPDATE_PROFILE_SAGA, updateProfileDataSaga)
-  yield takeEvery(sagaActions.USER_UPDATE_PERSONAL_SAGA, updatePersonalDataSaga)
+  yield takeEvery(sagaActions.USER_UPDATE_DATA_SAGA, updateUserDataSaga)
 }

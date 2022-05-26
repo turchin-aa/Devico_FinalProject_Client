@@ -10,20 +10,21 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import { sagaActions } from '../../store/saga-actions'
 import axios from 'axios'
 import api from '../../hooks'
+import { userSliceActions } from '../../store/user-slice'
 
 const ProfileData: FC = () => {
   const [passShow, setShow] = useState(false)
   const [formDataPicture, setFormDataPicture] = useState('')
-  const [previewPicture, setPreviewPicture] = useState('')
 
   const dispatch = useAppDispatch()
   const email = useAppSelector<string | undefined>(state => state.user.email)
+  const avatar = useAppSelector<string | undefined>(state => state.user.avatar)
 
   const classes = useStyles()
 
   const handleChangeAvatar = e => {
     setFormDataPicture(e.target.files[0])
-    setPreviewPicture(URL.createObjectURL(e.target.files[0]))
+    dispatch(userSliceActions.setUser({ avatar: URL.createObjectURL(e.target.files[0]), email }))
   }
 
   const onUploadAvatar = useCallback(async () => {
@@ -37,22 +38,23 @@ const ProfileData: FC = () => {
       const imageUrl = url.split('?')[0]
 
       await api.patch('/updateAvatar', { imageUrl })
+      dispatch(userSliceActions.setUser({ avatar: imageUrl, email }))
     } catch (error) {
       console.log(error)
     }
-  }, [formDataPicture])
+  }, [formDataPicture, dispatch])
 
   const getUserInfoHandler = useCallback(async () => {
     const req = await api.get('/getAvatar')
 
-    setPreviewPicture(req.data.imageUrl)
-  }, [])
+    dispatch(userSliceActions.setUser({ avatar: req.data.imageUrl, email }))
+  }, [dispatch])
 
   useEffect(() => {
-    if (!previewPicture) {
+    if (!avatar) {
       getUserInfoHandler()
     }
-  }, [getUserInfoHandler, previewPicture])
+  }, [getUserInfoHandler, avatar])
 
   const handleClickpassShow = useCallback(() => {
     setShow(!passShow)
@@ -84,7 +86,7 @@ const ProfileData: FC = () => {
           .nullable(true),
       })}
       onSubmit={async (values, { resetForm }) => {
-        dispatch({ type: sagaActions.USER_UPDATE_PROFILE_SAGA, payload: values })
+        dispatch({ type: sagaActions.USER_UPDATE_DATA_SAGA, payload: values })
         resetForm({
           values: {
             fullName: values.fullName,
@@ -121,7 +123,7 @@ const ProfileData: FC = () => {
                   />
                   <IconButton color="primary" aria-label="upload picture" component="span">
                     <Avatar
-                      src={previewPicture}
+                      src={avatar}
                       alt="Remy Sharp"
                       sx={{ height: '180px', width: '180px' }}
                     />
