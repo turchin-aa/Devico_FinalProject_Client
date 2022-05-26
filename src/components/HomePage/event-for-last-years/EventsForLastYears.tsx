@@ -4,12 +4,11 @@ import moment from 'moment'
 import useStyles from '../../../theme/useStyle'
 import ScrollableItems from '../scrollable-items/ScrollableItems'
 import { EventData } from '../../../types/globalTypes'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../store'
+import { useAppSelector } from '../../../hooks/redux.hook'
 
 const EventsForLastYears: React.FC = () => {
   const today = moment().format('YYYY-MM-DD')
-  const events = useSelector<RootState, EventData>(state => state.event.events)
+  const events = useAppSelector<EventData>(state => state.event.events)
   const eventData = events.filter(event => event.date < today.toString())
 
   const classes = useStyles()

@@ -4,17 +4,57 @@ import useStyles, { ProfileSubmitButton } from './ProfileStyles'
 import { Box } from '@mui/system'
 import { Field, Form, Formik, ErrorMessage } from 'formik'
 import * as yup from 'yup'
-import { FC, memo, useCallback, useState } from 'react'
+import { FC, memo, useCallback, useEffect, useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { useAppDispatch } from '../../hooks/redux.hook'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import { sagaActions } from '../../store/saga-actions'
+import axios from 'axios'
+import api from '../../hooks'
+import { userSliceActions } from '../../store/user-slice'
 
 const ProfileData: FC = () => {
   const [passShow, setShow] = useState(false)
+  const [formDataPicture, setFormDataPicture] = useState('')
 
   const dispatch = useAppDispatch()
+  const email = useAppSelector<string | undefined>(state => state.user.email)
+  const avatar = useAppSelector<string | undefined>(state => state.user.avatar)
 
   const classes = useStyles()
+
+  const handleChangeAvatar = e => {
+    setFormDataPicture(e.target.files[0])
+    dispatch(userSliceActions.setUser({ avatar: URL.createObjectURL(e.target.files[0]), email }))
+  }
+
+  const onUploadAvatar = useCallback(async () => {
+    try {
+      const url: string = await api.get('/s3Url').then(res => res.data.url)
+
+      const file = formDataPicture
+
+      await axios.put(url, file)
+
+      const imageUrl = url.split('?')[0]
+
+      await api.patch('/updateAvatar', { imageUrl })
+      dispatch(userSliceActions.setUser({ avatar: imageUrl, email }))
+    } catch (error) {
+      console.log(error)
+    }
+  }, [formDataPicture, dispatch])
+
+  const getUserInfoHandler = useCallback(async () => {
+    const req = await api.get('/getAvatar')
+
+    dispatch(userSliceActions.setUser({ avatar: req.data.imageUrl, email }))
+  }, [dispatch])
+
+  useEffect(() => {
+    if (!avatar) {
+      getUserInfoHandler()
+    }
+  }, [getUserInfoHandler, avatar])
 
   const handleClickpassShow = useCallback(() => {
     setShow(!passShow)
@@ -23,7 +63,6 @@ const ProfileData: FC = () => {
   return (
     <Formik
       initialValues={{
-        picture: null,
         fullName: '',
         email: '',
         telephone: '',
@@ -31,11 +70,8 @@ const ProfileData: FC = () => {
         confirmPassword: '',
       }}
       validationSchema={yup.object().shape({
-        picture: yup.mixed().test('fileSize', 'The file is too large', value => {
-          return value && value[0].size <= 2000000
-        }),
         fullName: yup.string().min(3).nullable(true),
-        email: yup.string().email('Write correct email').required('The email is required'),
+        email: yup.string().email('Write correct email').nullable(true),
         password: yup.string().min(6, 'The length must be at least 6').max(32).nullable(true),
         telephone: yup
           .string()
@@ -50,8 +86,19 @@ const ProfileData: FC = () => {
           .nullable(true),
       })}
       onSubmit={async (values, { resetForm }) => {
-        dispatch({ type: sagaActions.USER_UPDATE_SAGA, payload: values })
-        resetForm()
+        dispatch({ type: sagaActions.USER_UPDATE_DATA_SAGA, payload: values })
+        resetForm({
+          values: {
+            fullName: values.fullName,
+            email: values.email,
+            telephone: values.telephone,
+            password: '',
+            confirmPassword: '',
+          },
+        })
+        if (formDataPicture) {
+          onUploadAvatar()
+        }
       }}
     >
       {({ isSubmitting }) => (
@@ -66,9 +113,20 @@ const ProfileData: FC = () => {
                 badgeContent={<ModeEditIcon sx={{ height: '30px', width: '30px' }} />}
               >
                 <label className={classes.label} htmlFor="icon-button-file">
-                  <input accept="image/*" id="icon-button-file" type="file" name="picture" hidden />
+                  <input
+                    accept="image/*"
+                    id="icon-button-file"
+                    type="file"
+                    name="picture"
+                    hidden
+                    onChange={handleChangeAvatar}
+                  />
                   <IconButton color="primary" aria-label="upload picture" component="span">
-                    <Avatar alt="Remy Sharp" sx={{ height: '180px', width: '180px' }} />
+                    <Avatar
+                      src={avatar}
+                      alt="Remy Sharp"
+                      sx={{ height: '180px', width: '180px' }}
+                    />
                   </IconButton>
                 </label>
               </Badge>
@@ -94,6 +152,7 @@ const ProfileData: FC = () => {
                   EMAIL
                 </label>
                 <Field
+                  placeholder={email}
                   className={classes.textField}
                   name="email"
                   type="email"
@@ -111,11 +170,11 @@ const ProfileData: FC = () => {
                   name="telephone"
                   type="text"
                   fullWidth
-                  id="phone"
+                  id="telephone"
                   variant="outlined"
                 />
                 <ErrorMessage className={classes.error} name="telephone" component="div" />
-                <label className={classes.label} htmlFor="newPass">
+                <label className={classes.label} htmlFor="password">
                   NEW PASSWORD
                 </label>
                 <Field
@@ -123,7 +182,7 @@ const ProfileData: FC = () => {
                   name="password"
                   type={passShow ? 'text' : 'password'}
                   fullWidth
-                  id="newPass"
+                  id="password"
                   variant="outlined"
                   InputProps={{
                     endAdornment: (
@@ -141,7 +200,7 @@ const ProfileData: FC = () => {
                   }}
                 />
                 <ErrorMessage className={classes.error} name="password" component="div" />
-                <label className={classes.label} htmlFor="confPass">
+                <label className={classes.label} htmlFor="confirmPassword">
                   CONFRIM NEW PASSWORD
                 </label>
                 <Field
@@ -149,7 +208,7 @@ const ProfileData: FC = () => {
                   name="confirmPassword"
                   type="password"
                   fullWidth
-                  id="confPass"
+                  id="confirmPassword"
                   variant="outlined"
                 />
                 <ErrorMessage className={classes.error} name="confirmPassword" component="div" />

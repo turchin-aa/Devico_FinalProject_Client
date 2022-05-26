@@ -7,7 +7,7 @@ import { useAppSelector } from '../../hooks/redux.hook'
 const UserBarLoggedIn = () => {
   const classes = useNavbarStyles()
 
-  const user = useAppSelector(state => state.user.email)
+  const user = useAppSelector<string | undefined>(state => state.user.email)
 
   return (
     <div className={classes.flexCenter}>

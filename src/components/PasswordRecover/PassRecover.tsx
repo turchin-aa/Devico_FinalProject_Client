@@ -23,7 +23,7 @@ import { RegisterButton, LinkTypography, SignLink, styledDiv } from '../Auth/Aut
 const theme = createTheme()
 
 const PassRecover = () => {
-  const isSend = useAppSelector(state => state.user.isEmailSend)
+  const isSend = useAppSelector<boolean>(state => state.user.isEmailSend)
 
   const dispatch = useAppDispatch()
 
@@ -40,7 +40,7 @@ const PassRecover = () => {
     },
   })
 
-  const recoverIsShown = useAppSelector(state => state.ui.showForgetPassword)
+  const recoverIsShown = useAppSelector<boolean>(state => state.ui.showForgetPassword)
 
   const toggleHandler = useCallback(() => {
     dispatch(uiActions.toggleForgetPassword())

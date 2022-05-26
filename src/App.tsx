@@ -10,16 +10,16 @@ import CreateNewPass from './components/PasswordRecover/CreateNewPass'
 import Auth from './components/Auth'
 import { useAppDispatch, useAppSelector } from './hooks/redux.hook'
 import Profile from './components/Profile/Profile'
+
 const App: React.FC = () => {
   const dispatch = useAppDispatch()
 
-  const isAuth = useAppSelector(state => state.user.isAuth)
+  const isAuth = useAppSelector<boolean>(state => state.user.isAuth)
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch({ type: sagaActions.USER_REFRESH_SAGA })
     }
-
     dispatch({ type: eventActions.EVENT_GET_SAGA })
   }, [])
 
@@ -36,7 +36,7 @@ const App: React.FC = () => {
             path="resetPass"
             element={isAuth ? <Navigate to="/" replace /> : <CreateNewPass />}
           />
-          <Route path="profile" element={!isAuth ? <Navigate to="/" replace /> : <Profile />} />
+          <Route path="profile" element={isAuth ? <Profile /> : <Navigate to="/" replace />} />
         </Routes>
         <Auth />
       </Router>

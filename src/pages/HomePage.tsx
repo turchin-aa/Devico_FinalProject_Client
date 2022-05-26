@@ -11,7 +11,7 @@ import { useAppSelector } from '../hooks/redux.hook'
 
 const HomePage: React.FC = () => {
   const classes = useStyles()
-  const isUserAuth = useAppSelector(state => state.user.isAuth)
+  const isUserAuth = useAppSelector<boolean>(state => state.user.isAuth)
 
   return (
     <div className={classes.homePageContainer}>

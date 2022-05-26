@@ -1,8 +1,7 @@
 import { memo, useEffect } from 'react'
 import useWelcomeStyles from './useWelcomeStyles'
 import moment from 'moment'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../store'
+import { useAppSelector } from '../../../hooks/redux.hook'
 import { EventData } from '../../../types/globalTypes'
 
 const img =
@@ -16,9 +15,9 @@ const WelcomeEvent: React.FC = () => {
   const classes = useWelcomeStyles()
   const today = moment().format('YYYY-MM-DD')
 
-  const events = useSelector<RootState, EventData>(state => state.event.events)
+  const events = useAppSelector<EventData>(state => state.event.events)
 
-  let nextEvent = {
+  const nextEvent = {
     date: '22.05.2022',
     title: 'AUTO.Ria Race',
     place: 'Kharkiv. Freedom square',

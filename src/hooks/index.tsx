@@ -10,12 +10,12 @@ const api = axios.create({
 })
 
 api.interceptors.request.use(config => {
-  config.headers!.Autorization = `Bearer ${localStorage.getItem('token')}`!
+  config.headers!.Authorization = `Bearer ${localStorage.getItem('token')}`
   return config
 })
 
 const refreshAuthLogic = failedRequest =>
-  api.get<AuthResponse>('/auth/refresh', { withCredentials: true }).then(tokenRefreshResponse => {
+  api.post<AuthResponse>('/auth/refresh', { withCredentials: true }).then(tokenRefreshResponse => {
     localStorage.setItem('token', tokenRefreshResponse.data.accessToken)
     failedRequest.response.config.headers['Authorization'] =
       'Bearer ' + tokenRefreshResponse.data.accessToken

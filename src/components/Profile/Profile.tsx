@@ -22,7 +22,7 @@ const allyProps = (index: number) => {
 const Profile: FC = () => {
   const [value, setValue] = useState(0)
 
-  const isAuth = useAppSelector(state => state.user.isAuth)
+  const isAuth = useAppSelector<boolean>(state => state.user.isAuth)
   const dispatch = useAppDispatch()
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {

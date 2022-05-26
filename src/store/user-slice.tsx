@@ -5,6 +5,7 @@ interface SliceState {
   email?: string
   id?: string
   isEmailSend: boolean
+  avatar?: string
 }
 
 const initialState: SliceState = {
@@ -12,6 +13,7 @@ const initialState: SliceState = {
   email: '',
   id: '',
   isEmailSend: false,
+  avatar: '',
 }
 
 const userSlice = createSlice({
@@ -21,10 +23,12 @@ const userSlice = createSlice({
     setUser(state, action) {
       state.email = action.payload.email
       state.id = action.payload.id
+      state.avatar = action.payload.avatar
     },
     removeUser(state) {
       state.email = ''
       state.id = ''
+      state.avatar = ''
     },
     toggleAuth(state) {
       state.isAuth = true

@@ -11,13 +11,15 @@ import UserLoggedMenu from './UserLoggedMenu'
 
 const NavbarContent: React.FC = () => {
   const classes = useNavbarStyles()
-  const isUserAuth = useAppSelector(state => state.user.isAuth)
+
+  const isUserAuth = useAppSelector<boolean>(state => state.user.isAuth)
+  const avatar = useAppSelector<string | undefined>(state => state.user.avatar)
 
   return (
     <div className={clsx(classes.userBar, classes.flexCenter)}>
       {isUserAuth ? <UserBarLoggedIn /> : null}
       <div className={clsx(classes.userBarInner, classes.flexCenter)}>
-        <Avatar sx={{ width: 30, height: 30 }} src="/broken-image.jpg" />
+        <Avatar sx={{ width: 30, height: 30 }} src={isUserAuth ? avatar : '/broken-image.jpg'} />
       </div>
       <UserBarButtons
         menuClass={classes.userBarDropdown}

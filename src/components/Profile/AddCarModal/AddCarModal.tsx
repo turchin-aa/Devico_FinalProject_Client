@@ -16,7 +16,7 @@ const AddCarModal: FC<IAddCarModal> = () => {
 
   const dispatch = useAppDispatch()
 
-  const addCarIsShown = useAppSelector(state => state.ui.showAddCar)
+  const addCarIsShown = useAppSelector<boolean>(state => state.ui.showAddCar)
 
   const toggleShowAddCar = useCallback(() => {
     dispatch(uiActions.toggleShowAddCar())

@@ -6,7 +6,7 @@ import PasswordService from '../services/PasswordService'
 import { eventSliceActions } from './event-slice'
 import EventService from '../services/EventService'
 import { uiActions } from '../store/ui-slice'
-import UserService from '../services/UserService'
+import api from '../hooks'
 
 type RegisterServiceType = SagaReturnType<typeof AuthService.register>
 type LoginServiceType = SagaReturnType<typeof AuthService.login>
@@ -23,8 +23,8 @@ export function* userSignUpSaga(action: Effect) {
     const { email, password } = action.payload
     const data: RegisterServiceType = yield call(AuthService.register, email, password)
     const { accessToken, id } = data.data
-    yield put(setUser({ id, email }))
     yield put(toggleReg())
+    yield put(setUser({ id, email }))
     yield put(toggleCongratAuth())
     yield put(toggleAuth())
     localStorage.setItem('token', accessToken)
@@ -49,7 +49,9 @@ export function* userLoginSaga(action: Effect) {
 
 export function* userLogoutSaga() {
   try {
-    yield call(AuthService.logout)
+    yield call(async () => {
+      return await api.post('/auth/logout')
+    })
     localStorage.removeItem('token')
     yield put(unToggleAuth())
     yield put(removeUser())
@@ -91,41 +93,20 @@ export function* userNewPassSaga(action: Effect) {
   }
 }
 
-export function* userUpdateSaga(action: Effect) {
+export function* updateUserDataSaga(action: Effect) {
   try {
-    const {
-      email,
-      phone,
-      newPassword,
-      fullName,
-      city,
-      birthdayDate,
-      driverLicenseNum,
-      regAddress,
-      representiveLicenseNum,
-      fullNameOf,
-      idNumber,
-    } = action.payload
-    yield call(
-      UserService.updateUser,
-      email,
-      phone,
-      newPassword,
-      fullName,
-      city,
-      birthdayDate,
-      driverLicenseNum,
-      regAddress,
-      representiveLicenseNum,
-      fullNameOf,
-      idNumber,
-    )
+    const { email } = action.payload
+    yield call(async () => {
+      return await api.patch('/updateUser', { ...action.payload })
+    })
+    if (email) {
+      yield put(setUser({ email }))
+    }
   } catch (error) {
     console.log(error)
   }
 }
 
-// events saga
 export function* eventGetSaga(action: Effect) {
   try {
     const data: GetServiceType = yield call(EventService.getEvent)
@@ -144,5 +125,5 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_NEWPASS_SAGA, userNewPassSaga)
   yield takeEvery(sagaActions.USER_RESET_SAGA, userResetPassSaga)
   yield takeEvery(eventActions.EVENT_GET_SAGA, eventGetSaga)
-  yield takeEvery(sagaActions.USER_UPDATE_SAGA, userUpdateSaga)
+  yield takeEvery(sagaActions.USER_UPDATE_DATA_SAGA, updateUserDataSaga)
 }
