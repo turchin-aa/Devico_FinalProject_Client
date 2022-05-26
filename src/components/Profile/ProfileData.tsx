@@ -1,4 +1,13 @@
-import { Avatar, Stack, IconButton, InputAdornment, Box, Fab } from '@mui/material'
+import {
+  Avatar,
+  Stack,
+  IconButton,
+  InputAdornment,
+  Box,
+  Fab,
+  TextField,
+  OutlinedInput,
+} from '@mui/material'
 import useStyles, { ProfileSubmitButton } from './ProfileStyles'
 import { Field, Form, Formik, ErrorMessage, useFormik } from 'formik'
 import * as yup from 'yup'
@@ -17,12 +26,12 @@ const initialValues = {
 }
 
 const validationSchema = yup.object().shape({
-  picture: yup.mixed().test('fileSize', 'The file is too large', value => {
-    return value && value[0].size <= 2000000
-  }),
+  // picture: yup.mixed().test('fileSize', 'The file is too large', value => {
+  //   return value && value[0].size <= 2000000
+  // }),
   fullName: yup.string().min(3).nullable(true),
   email: yup.string().email('Write correct email').required('The email is required'),
-  password: yup.string().min(6, 'The length must be at least 6').max(32).nullable(true),
+  password: yup.string().min(8, 'The length must be at least 8').max(32).nullable(true),
   telephone: yup
     .string()
     .matches(
@@ -36,6 +45,8 @@ const validationSchema = yup.object().shape({
     .nullable(true),
 })
 
+const img = ''
+
 const ProfileData: FC = () => {
   const [passShow, setShow] = useState(false)
 
@@ -43,6 +54,7 @@ const ProfileData: FC = () => {
   const classes = useStyles()
 
   const onSubmit = async (values, { resetForm }) => {
+    alert(values.fullName)
     dispatch({ type: sagaActions.USER_UPDATE_SAGA, payload: values })
     resetForm()
   }
@@ -52,134 +64,141 @@ const ProfileData: FC = () => {
   const handleClickpassShow = useCallback(() => {
     setShow(!passShow)
   }, [passShow, setShow])
-  const img =
-    'https://decider.com/wp-content/uploads/2022/03/the-girl-from-plainville-glee.jpg?quality=75&strip=all&w=1200'
 
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-      {({ isSubmitting }) => (
-        <Form>
-          <Stack direction="row" sx={{ mt: '2%' }}>
-            <Box flex={1} m={2}>
-              <div className={classes.profileAvatarContainer}>
-                <Avatar
-                  sx={{ height: '100%', width: '100%' }}
-                  // className={classes.profileAvatar}
-                  alt="Remy Sharp"
-                  src={img}
-                />
-                <div className={classes.profileEditAvatar}>
-                  <label className={classes.label} htmlFor="icon-button-file">
-                    <input
-                      accept="image/*"
-                      id="icon-button-file"
-                      type="file"
-                      name="picture"
-                      hidden
-                    />
-                    <Fab color="primary" aria-label="upload picture" component="span">
-                      <ModeEdit fontSize="large" />
-                    </Fab>
-                  </label>
-                </div>
-              </div>
-              <ProfileSubmitButton loading={isSubmitting} disabled={isSubmitting} type="submit">
-                Save
-              </ProfileSubmitButton>
-            </Box>
-            <Box flex={3}>
-              <Stack direction="column" className={classes.profileFormContainer}>
-                <label className={classes.label} htmlFor="fullName">
-                  FULL NAME
-                </label>
-                <Field
-                  className={classes.textField}
-                  name="fullName"
-                  type="text"
-                  fullWidth
-                  id="fullName"
-                  variant="outlined"
-                />
-                <div className={classes.errorContainer}>
-                  <ErrorMessage name="fullName" component="div" />
-                </div>
-                <label className={classes.label} htmlFor="email">
-                  EMAIL*
-                </label>
-                <Field
-                  className={classes.textField}
-                  name="email"
-                  type="email"
-                  required
-                  fullWidth
-                  id="email"
-                  variant="outlined"
-                />
-                <div className={classes.errorContainer}>
-                  <ErrorMessage name="email" component="div" />
-                </div>
-                <label className={classes.label} htmlFor="phone">
-                  PHONE
-                </label>
-                <Field
-                  className={classes.textField}
-                  name="telephone"
-                  type="text"
-                  fullWidth
-                  id="phone"
-                  variant="outlined"
-                />
-                <div className={classes.errorContainer}>
-                  <ErrorMessage name="telephone" component="div" />
-                </div>
-                <label className={classes.label} htmlFor="newPass">
-                  NEW PASSWORD
-                </label>
-                <Field
-                  className={classes.textField}
-                  name="password"
-                  type={passShow ? 'text' : 'password'}
-                  fullWidth
-                  id="newPass"
-                  variant="outlined"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickpassShow}
-                          onMouseDown={e => e.preventDefault()}
-                          edge="end"
-                        >
-                          {passShow ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <div className={classes.errorContainer}>
-                  <ErrorMessage name="password" component="div" />
-                </div>
-                <label className={classes.label} htmlFor="confPass">
-                  CONFRIM NEW PASSWORD
-                </label>
-                <Field
-                  className={classes.textField}
-                  name="confirmPassword"
-                  type="password"
-                  fullWidth
-                  id="confPass"
-                  variant="outlined"
-                />
-                <div className={classes.errorContainer}>
-                  <ErrorMessage name="confirmPassword" component="div" />
-                </div>
-              </Stack>
-            </Box>
+    <Box component="form" onSubmit={formik.handleSubmit}>
+      <Stack direction="row" sx={{ mt: '2%' }}>
+        <Box flex={1} m={2}>
+          <div className={classes.profileAvatarContainer}>
+            <Avatar sx={{ height: '100%', width: '100%' }} alt="Remy Sharp" src={img} />
+            <div className={classes.profileEditAvatar}>
+              <label className={classes.label} htmlFor="icon-button-file">
+                <input accept="image/*" id="icon-button-file" type="file" name="picture" hidden />
+                <Fab color="primary" aria-label="upload picture" component="span">
+                  <ModeEdit fontSize="large" />
+                </Fab>
+              </label>
+            </div>
+          </div>
+          <div className={classes.errorContainer}>
+            {formik.errors.picture && formik.touched.picture ? (
+              <div>{formik.errors.picture}</div>
+            ) : null}
+          </div>
+          <ProfileSubmitButton type="submit">Save</ProfileSubmitButton>
+        </Box>
+        <Box flex={3}>
+          <Stack direction="column" className={classes.profileFormContainer}>
+            <label className={classes.label} htmlFor="fullName">
+              FULL NAME
+            </label>
+            <TextField
+              name="fullName"
+              fullWidth
+              size="small"
+              type="text"
+              id="fullName"
+              error={formik.errors.fullName && formik.touched.fullName ? true : false}
+              value={formik.values.fullName}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            <div className={classes.errorContainer}>
+              {formik.errors.fullName && formik.touched.fullName ? (
+                <div>{formik.errors.fullName}</div>
+              ) : null}
+            </div>
+
+            <label className={classes.label} htmlFor="email">
+              EMAIL*
+            </label>
+            <TextField
+              name="email"
+              size="small"
+              type="email"
+              id="email"
+              required
+              error={formik.errors.email && formik.touched.email ? true : false}
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            <div className={classes.errorContainer}>
+              {formik.errors.email && formik.touched.email ? (
+                <div>{formik.errors.email}</div>
+              ) : null}
+            </div>
+
+            <label className={classes.label} htmlFor="phone">
+              PHONE
+            </label>
+            <TextField
+              name="telephone"
+              size="small"
+              type="text"
+              id="phone"
+              error={formik.errors.telephone && formik.touched.telephone ? true : false}
+              value={formik.values.telephone}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            <div className={classes.errorContainer}>
+              {formik.errors.telephone && formik.touched.telephone ? (
+                <div>{formik.errors.telephone}</div>
+              ) : null}
+            </div>
+
+            <label className={classes.label} htmlFor="newPass">
+              NEW PASSWORD
+            </label>
+            <OutlinedInput
+              name="password"
+              size="small"
+              id="newPass"
+              type={passShow ? 'text' : 'password'}
+              error={formik.errors.password && formik.touched.password ? true : false}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickpassShow}
+                    edge="end"
+                  >
+                    {passShow ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            <div className={classes.errorContainer}>
+              {formik.errors.password && formik.touched.password ? (
+                <div>{formik.errors.password}</div>
+              ) : null}
+            </div>
+
+            <label className={classes.label} htmlFor="confPass">
+              CONFRIM NEW PASSWORD
+            </label>
+            <TextField
+              name="confirmPassword"
+              size="small"
+              type="password"
+              id="confPass"
+              error={formik.errors.confirmPassword && formik.touched.confirmPassword ? true : false}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            <div className={classes.errorContainer}>
+              {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
+                <div>{formik.errors.confirmPassword}</div>
+              ) : null}
+            </div>
           </Stack>
-        </Form>
-      )}
-    </Formik>
+        </Box>
+      </Stack>
+    </Box>
   )
 }
 

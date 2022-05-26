@@ -15,47 +15,46 @@ import { useAppDispatch } from '../../hooks/redux.hook'
 import { uiActions } from '../../store/ui-slice'
 import { sagaActions } from '../../store/saga-actions'
 
+const validationSchema = yup.object().shape({
+  fullName: yup.string().min(3).nullable(true),
+  fullNameOf: yup.string().min(3).nullable(true),
+  representiveLicenseNum: yup.number().min(5).required('Write min 5 numbers'),
+  city: yup.string().nullable(true),
+  driverLicenseNum: yup.number().min(5).required('Write min 5 numbers'),
+  regAddress: yup.string().min(5).nullable(true),
+  driverLicense: yup.number().min(8).required('Write min 8 numbers'),
+  idNumber: yup.number().min(8).required('Write min 8 numbers'),
+  phone: yup
+    .string()
+    .matches(
+      /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
+      'Invalid telephone format',
+    )
+    .nullable(true),
+  birthdayDate: yup.date().required('Date is required'),
+})
+
+const initialValues = {
+  fullName: '',
+  representiveLicenseNum: '',
+  city: '',
+  driverLicenseNum: 0,
+  regAddress: '',
+  driverLicense: '',
+  idNumber: 0,
+  phone: '',
+  fullNameOf: '',
+  birthdayDate: new Date(),
+}
+
 const PersonalData: FC = () => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
-  const today = new Date()
 
-  const initialValues = {
-    fullName: '',
-    representiveLicenseNum: '',
-    city: '',
-    driverLicenseNum: 0,
-    regAddress: '',
-    driverLicense: '',
-    idNumber: 0,
-    phone: '',
-    fullNameOf: '',
-    birthdayDate: today,
-  }
-
-  const validationSchema = yup.object().shape({
-    fullName: yup.string().min(3).nullable(true),
-    fullNameOf: yup.string().min(3).nullable(true),
-    representiveLicenseNum: yup.number().min(5).required('Write min 5 numbers'),
-    city: yup.string().nullable(true),
-    driverLicenseNum: yup.number().min(5).required('Write min 5 numbers'),
-    regAddress: yup.string().min(5).nullable(true),
-    driverLicense: yup.number().min(8).required('Write min 8 numbers'),
-    idNumber: yup.number().min(8).required('Write min 8 numbers'),
-    phone: yup
-      .string()
-      .matches(
-        /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
-        'Invalid telephone format',
-      )
-      .nullable(true),
-    birthdayDate: yup.date().required('Date is required'),
-  })
-
-  const onSubmit = async (values, { resetForm }) => {
+  const onSubmit = useCallback(async (values, { resetForm }) => {
     dispatch({ type: sagaActions.USER_UPDATE_SAGA, payload: values })
     resetForm()
-  }
+  }, [])
 
   const showModal = useCallback(() => {
     dispatch(uiActions.toggleShowAddCar())

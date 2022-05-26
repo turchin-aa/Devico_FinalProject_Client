@@ -43,10 +43,11 @@ const AddCarModal: FC<IAddCarModal> = () => {
 
   const addCarIsShown = useAppSelector(state => state.ui.showAddCar)
 
-  const onSubmit = async (values, { resetForm }) => {
+  const onSubmit = useCallback(async (values, { resetForm }) => {
     console.log(values)
     resetForm()
-  }
+  },[])
+  
   const formik = useFormik({ initialValues, validationSchema, onSubmit })
 
   const toggleShowAddCar = useCallback(() => {

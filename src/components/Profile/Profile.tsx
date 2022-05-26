@@ -1,4 +1,4 @@
-import { FC, memo, useState } from 'react'
+import { FC, memo, useCallback, useState } from 'react'
 import { Tabs, Tab, Box, Stack, Typography } from '@mui/material'
 import ProfilePanel from './ProfilePanel'
 import PersonalData from './PersonalData'
@@ -24,9 +24,9 @@ const Profile: FC = () => {
   const isAuth = useAppSelector(state => state.user.isAuth)
   const dispatch = useAppDispatch()
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = useCallback((event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
-  }
+  }, [])
 
   return isAuth ? (
     <Box className={classes.profileContainer}>

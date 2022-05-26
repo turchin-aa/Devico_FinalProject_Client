@@ -40,10 +40,10 @@ const PassRecover: React.FC = () => {
 
   const dispatch = useAppDispatch()
 
-  const onSubmit = async (values, { resetForm }) => {
+  const onSubmit = useCallback(async (values, { resetForm }) => {
     dispatch({ type: sagaActions.USER_RESET_SAGA, payload: values })
     resetForm()
-  }
+  }, [])
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit })
 
@@ -53,6 +53,7 @@ const PassRecover: React.FC = () => {
     dispatch(uiActions.toggleForgetPassword())
     dispatch(userSliceActions.unToggleEmailSend())
     dispatch(uiActions.toggleLog())
+    formik.resetForm()
   }, [dispatch])
 
   const changeSignHandler = useCallback(() => {
@@ -89,15 +90,18 @@ const PassRecover: React.FC = () => {
               <MyTypography>EMAIL</MyTypography>
               <TextField
                 fullWidth
+                error={formik.errors.email && formik.touched.email ? true : false}
                 id="email"
                 name="email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
-              {formik.errors.email && formik.touched.email ? (
-                <div style={styledDiv}>{formik.errors.email}</div>
-              ) : null}
+              <div className={classes.errorMessege}>
+                {formik.errors.email && formik.touched.email ? (
+                  <div style={styledDiv}>{formik.errors.email}</div>
+                ) : null}
+              </div>
             </Grid>
             <RegisterButton id="recover" type="submit" fullWidth variant="contained">
               Submit

@@ -15,7 +15,7 @@ import {
   Grid,
 } from '@mui/material'
 import { MyTypography, RegisterButton, styledDiv } from '../Auth/AuthStyles'
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 
 const initialValues= {
   password: '',
@@ -35,13 +35,13 @@ const validationSchema = yup.object().shape({
 const CreateNewPass:React.FC = () => {
   const dispatch = useAppDispatch()
 
-  const onSubmit = async (values, { resetForm }) => {
+  const onSubmit = useCallback(async (values, { resetForm }) => {
     dispatch({
       type: sagaActions.USER_NEWPASS_SAGA,
       payload: { ...values, token, id },
     })
     resetForm()
-  }
+  },[])
 
   const formik = useFormik({initialValues, validationSchema, onSubmit})
 

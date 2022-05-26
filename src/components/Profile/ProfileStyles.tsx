@@ -1,6 +1,5 @@
 import { styled, Button, Typography, Select, Box, Theme } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { LoadingButton } from '@mui/lab'
 import { theme } from '../../theme/CustomTheme'
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -10,9 +9,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '4px 10px 10px 10px',
     border: '1px solid #E5E5E5',
     borderRadius: '2px',
-    display: 'flex',
-    alignItems: 'center',
-    height: 13,
   },
   errorContainer: {
     height: 14,
@@ -95,7 +91,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-export const ProfileSubmitButton = styled(LoadingButton)({
+export const ProfileSubmitButton = styled(Button)({
   width: '200px',
   background: theme.palette.primary.main,
   color: '#FFFFFF',

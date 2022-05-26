@@ -50,10 +50,10 @@ const SignIn = () => {
   const classes = useAuthStyles()
   const [showPassword, setShowPassword] = useState(false)
 
-  const onSubmit = async (values: object, { resetForm }) => {
+  const onSubmit = useCallback(async (values: object, { resetForm }) => {
     dispatch({ type: sagaActions.USER_LOGIN_SAGA, payload: values })
     resetForm()
-  }
+  }, [])
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit })
 
@@ -67,21 +67,21 @@ const SignIn = () => {
     setShowPassword(false)
   }, [dispatch, logCartIsShown])
 
-  const showRecoverPasHandler = () => {
+  const showRecoverPasHandler = useCallback(() => {
     if (logCartIsShown) {
       dispatch(uiActions.toggleLog())
     }
     dispatch(uiActions.toggleForgetPassword())
-  }
+  }, [])
 
   const handleClickShowPassword = useCallback(() => {
     return setShowPassword(!showPassword)
   }, [showPassword])
 
-  const changeSignHandler = () => {
+  const changeSignHandler = useCallback(() => {
     dispatch(uiActions.toggleLog())
     dispatch(uiActions.toggleReg())
-  }
+  }, [])
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
