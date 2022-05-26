@@ -24,11 +24,6 @@ const Calendar: React.FC = () => {
     setToday(next => next.clone().add(1, 'month'))
   }, [])
 
-  const events = [
-    { id: 1, title: 'Race 1', description: '', date: 6052022 },
-    { id: 2, title: 'Race 2', description: '', date: 8052022 },
-    { id: 3, title: 'Race 3', description: '', date: 9052022 },
-  ]
   return (
     <div>
       <Monitor prevHandler={prevHandler} nextHandler={nextHandler} today={today} />

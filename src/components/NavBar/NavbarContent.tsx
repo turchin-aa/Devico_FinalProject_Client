@@ -19,10 +19,11 @@ const NavbarContent: React.FC = () => {
     <div className={clsx(classes.userBar, classes.flexCenter)}>
       {isUserAuth ? <UserBarLoggedIn /> : null}
       <div className={clsx(classes.userBarInner, classes.flexCenter)}>
-        <Avatar sx={{ width: 30, height: 30 }} src={isUserAuth ? avatar : '/broken-image.jpg'} />
+        <Avatar src={isUserAuth ? avatar : '/broken-image.jpg'} />
       </div>
       <UserBarButtons
         menuClass={classes.userBarDropdown}
+        popperClassName={classes.popper}
         buttonClass={clsx(classes.userBarButton, classes.userBarInner, classes.flexCenter)}
       >
         <KeyboardArrowDownOutlined className={classes.userBarComponentW} fontSize="large" />

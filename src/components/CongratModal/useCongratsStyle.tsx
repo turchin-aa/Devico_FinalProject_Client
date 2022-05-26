@@ -18,6 +18,14 @@ export const useCongratsStyles = makeStyles((theme: Theme) => ({
   },
   dialogActionsContainer: {
     position: 'relative',
+    display: 'flex',
+    alignItem: 'center',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
+    },
+    [theme.breakpoints.up('sm')]: {
+      justifyContent: 'start',
+    },
   },
   dialogActions: {
     marginTop: 10,
@@ -43,6 +51,12 @@ export const useCongratsStyles = makeStyles((theme: Theme) => ({
     },
     '& > div#text': {
       fontSize: 16,
+    },
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center',
+    },
+    [theme.breakpoints.up('sm')]: {
+      textAlign: 'start',
     },
   },
 }))
