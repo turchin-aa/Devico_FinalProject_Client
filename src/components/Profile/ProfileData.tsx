@@ -18,31 +18,7 @@ import { sagaActions } from '../../store/saga-actions'
 import axios from 'axios'
 import api from '../../hooks'
 import { userSliceActions } from '../../store/user-slice'
-
-const initialValues = {
-  fullName: '',
-  email: '',
-  telephone: '',
-  password: '',
-  confirmPassword: '',
-}
-
-const validationSchema = yup.object().shape({
-  fullName: yup.string().min(3).nullable(true),
-  email: yup.string().email('Write correct email').nullable(true),
-  password: yup.string().min(6, 'The length must be at least 6').max(32).nullable(true),
-  telephone: yup
-    .string()
-    .matches(
-      /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
-      'Invalid telephone format',
-    )
-    .nullable(true),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match')
-    .nullable(true),
-})
+import { profileData } from './formikContent'
 
 const ProfileData: FC = () => {
   const [passShow, setShow] = useState(false)
@@ -82,7 +58,7 @@ const ProfileData: FC = () => {
   }, [dispatch, avatar])
 
   const onSubmit = async (values, { resetForm }) => {
-    dispatch({ type: sagaActions.USER_UPDATE_DATA_SAGA, payload: values })
+    dispatch({ type: profileData.onSubmitType, payload: values })
     resetForm({
       values: {
         fullName: values.fullName,
@@ -97,7 +73,11 @@ const ProfileData: FC = () => {
     }
   }
 
-  const formik = useFormik({ initialValues, validationSchema, onSubmit })
+  const formik = useFormik({
+    initialValues: profileData.initialValues,
+    validationSchema: profileData.validationSchema,
+    onSubmit,
+  })
 
   const handleClickpassShow = useCallback(() => {
     setShow(!passShow)

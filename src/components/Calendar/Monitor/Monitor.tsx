@@ -21,11 +21,12 @@ const Monitor: React.FC<Props> = ({ prevHandler, nextHandler, today }) => {
       <div className={clsx(classes.flexCenter)}>
         <span id="month">{today.format('MMMM')} </span>
         <span>{today.format('YYYY')}</span>
-        <div>
+        <div style={{ position: 'relative' }}>
           <UserBarButtons
             menuClass={classes.filterClass}
             popperClassName={classes.popper}
             buttonClass={classes.flexCenter}
+            popperPosition={true}
           >
             <div className={clsx(classes.filterButton, classes.flexCenter)}>
               <FilterAlt fontSize="small" />

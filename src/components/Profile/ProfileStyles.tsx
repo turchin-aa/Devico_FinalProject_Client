@@ -1,4 +1,4 @@
-import { styled, Button, Typography, Select, Box, Theme } from '@mui/material'
+import { styled, Button, Typography, Select, Box, Theme, TextField } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { theme } from '../../theme/CustomTheme'
 
@@ -10,14 +10,28 @@ const useStyles = makeStyles((theme: Theme) => ({
     border: '1px solid #E5E5E5',
     borderRadius: '2px',
   },
+
+  root: {
+    height: 25,
+  },
+
+  stack: {
+    width: 250,
+    marginRight: 40,
+    '&#right': {
+      marginRight: 20,
+    },
+  },
+
   errorContainer: {
     height: 14,
+    width: 320,
     marginBottom: 4,
     color: '#e53e3e',
     fontSize: 12,
     '&#add-car': {
-      fontSize: 10,
-      height: 30,
+      fontSize: 9,
+      height: 20,
       width: 200,
     },
   },
@@ -146,9 +160,8 @@ export const StyledTypographyHeader = styled(Typography)({
 })
 
 export const StyledSelectField = styled(Select)({
-  borderRadius: '0px',
-  maxHeight: '30px',
-  width: '106%',
+  maxHeight: '40px',
+  width: '100%',
 })
 
 export default useStyles

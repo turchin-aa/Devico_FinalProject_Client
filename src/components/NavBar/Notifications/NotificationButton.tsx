@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { Badge } from '@mui/material'
 import { NotificationsOutlined } from '@mui/icons-material'
-import useNavbarStyles from '../style/useNavbarStyles'
+import { useNavbarStyles } from '../style/useNavbarStyles'
 import UserBarButtons from '../dropdown/userBarButtons'
 import NotificationMenu from './NotificationDropDown'
 

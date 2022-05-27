@@ -7,6 +7,7 @@ type Props = {
   menuClass?: string
   buttonClass?: string
   popperClassName?: string
+  popperPosition?: boolean
 }
 
 const UserBarButtons: React.FC<Props> = props => {
@@ -32,6 +33,7 @@ const UserBarButtons: React.FC<Props> = props => {
         className={props.menuClass}
         popperClassName={props.popperClassName}
         handleClose={handleClose}
+        popperPosition={props.popperPosition}
       >
         {props.children[1]}
       </DropDownMenu>

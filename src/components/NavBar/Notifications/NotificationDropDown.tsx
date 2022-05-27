@@ -1,7 +1,7 @@
 import { Divider, MenuList } from '@mui/material'
 import ContentNull from './ContentNull'
 import { memo } from 'react'
-import useNavbarStyles from '../style/useNavbarStyles'
+import { useNavbarStyles } from '../style/useNavbarStyles'
 
 const NotificationMenu: React.FC = () => {
   const classes = useNavbarStyles()

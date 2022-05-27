@@ -1,9 +1,7 @@
-import * as yup from 'yup'
 import { useCallback, memo } from 'react'
 import { useFormik } from 'formik'
 import { uiActions } from '../../store/ui-slice'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
-import { sagaActions } from '../../store/saga-actions'
 import { userSliceActions } from '../../store/user-slice'
 import { theme } from '../../theme/CustomTheme'
 import {
@@ -26,30 +24,27 @@ import {
   MyTypography,
 } from '../Auth/AuthStyles'
 import { useAuthStyles } from '../Auth/useAuthStyles'
+import { recoverPassData } from '../Profile/formikContent'
 
-const initialValues = {
-  email: '',
-}
-const validationSchema = yup.object().shape({
-  email: yup.string().email('Invalid format').required('Invalid email'),
-})
-
-const PassRecover = () => {
+const PassRecover: React.FC = () => {
   const isSend = useAppSelector<boolean>(state => state.user.isEmailSend)
-
   const classes = useAuthStyles()
 
   const dispatch = useAppDispatch()
 
   const onSubmit = useCallback(
     async (values, { resetForm }) => {
-      dispatch({ type: sagaActions.USER_RESET_SAGA, payload: values })
+      dispatch({ type: recoverPassData.onSubmitType, payload: values })
       resetForm()
     },
     [dispatch],
   )
 
-  const formik = useFormik({ initialValues, validationSchema, onSubmit })
+  const formik = useFormik({
+    initialValues: recoverPassData.initialValues,
+    validationSchema: recoverPassData.validationSchema,
+    onSubmit,
+  })
 
   const recoverIsShown = useAppSelector<boolean>(state => state.ui.showForgetPassword)
 

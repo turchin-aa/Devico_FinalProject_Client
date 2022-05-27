@@ -1,4 +1,4 @@
-import useNavbarStyles from './style/useNavbarStyles'
+import { useNavbarStyles } from './style/useNavbarStyles'
 import UserBarLoggedIn from './UserBarLoggedIn'
 import clsx from 'clsx'
 import { memo, useEffect } from 'react'

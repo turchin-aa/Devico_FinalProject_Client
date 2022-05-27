@@ -1,7 +1,7 @@
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material'
 
-const useNavbarStyles = makeStyles((theme: Theme) => ({
+export const useNavbarStyles = makeStyles((theme: Theme) => ({
   navbar: {
     '&&': {
       '@media (min-width: 400px)': {
@@ -170,5 +170,3 @@ const useNavbarStyles = makeStyles((theme: Theme) => ({
     },
   },
 }))
-
-export default useNavbarStyles

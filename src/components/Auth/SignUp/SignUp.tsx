@@ -1,9 +1,7 @@
-import * as yup from 'yup'
 import { useFormik } from 'formik'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hook'
 import { memo, useCallback, useState } from 'react'
 import { uiActions } from '../../../store/ui-slice'
-import { sagaActions } from '../../../store/saga-actions'
 import {
   TextField,
   FormControlLabel,
@@ -29,36 +27,17 @@ import {
   Facebook,
   Google,
   styledDiv,
+  CloseButton,
 } from '../AuthStyles'
 import { useAuthStyles } from '../useAuthStyles'
 import clsx from 'clsx'
 import { theme } from '../../../theme/CustomTheme'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { Close, Visibility, VisibilityOff } from '@mui/icons-material'
+import { signUpData } from '../formikAuth'
 
-const initialValues = {
-  email: '',
-  password: '',
-  telephone: '',
-  confirmPassword: '',
-  terms: false,
-}
+const initialValues = signUpData.initialValues
 
-const validationSchema = yup.object().shape({
-  email: yup.string().email('Write correct email').required('The email is required'),
-  password: yup
-    .string()
-    .min(8, 'The length must be at least 8')
-    .max(32)
-    .required('The password is required'),
-  telephone: yup
-    .string()
-    .matches(
-      /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
-      'Invalid telephone format',
-    ),
-  confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
-  terms: yup.boolean().required().oneOf([true], 'Check the terms'),
-})
+const validationSchema = signUpData.validationSchema
 
 const SignUp: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -71,7 +50,7 @@ const SignUp: React.FC = () => {
 
   const onSubmit = useCallback(
     async (values: object, { resetForm }) => {
-      dispatch({ type: sagaActions.USER_SIGNUP_SAGA, payload: values })
+      dispatch({ type: signUpData.onSubmitType, payload: values })
       resetForm()
     },
     [dispatch],
@@ -100,6 +79,9 @@ const SignUp: React.FC = () => {
     <Dialog fullScreen={fullScreen} open={regCartIsShown} onClose={toggleHandler}>
       <Typography component="h1" variant="h5" className={classes.flexCenter}>
         <p className={classes.titleTypo}> Sign up </p>
+        <CloseButton onClick={toggleHandler}>
+          <Close />
+        </CloseButton>
       </Typography>
       <Divider />
       <DialogContent>
