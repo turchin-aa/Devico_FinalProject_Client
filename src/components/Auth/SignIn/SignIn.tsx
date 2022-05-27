@@ -1,8 +1,6 @@
-import * as yup from 'yup'
 import { memo, useCallback, useState } from 'react'
 import { useFormik } from 'formik'
 import { uiActions } from '../../../store/ui-slice'
-import { sagaActions } from '../../../store/saga-actions'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hook'
 import {
   Dialog,
@@ -33,17 +31,10 @@ import { useAuthStyles } from '../useAuthStyles'
 import { theme } from '../../../theme/CustomTheme'
 import clsx from 'clsx'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { signInData } from '../formikAuth'
 
-const initialValues = {
-  email: '',
-  password: '',
-  rememberMe: false,
-}
-
-const validationSchema = yup.object().shape({
-  email: yup.string().email('Invalid format').required('Invalid login or password'),
-  password: yup.string().min(8).max(32).required('Invalid login or password'),
-})
+const initialValues = signInData.initialValues
+const validationSchema = signInData.validationSchema
 
 const SignIn = () => {
   const dispatch = useAppDispatch()
@@ -51,7 +42,7 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false)
 
   const onSubmit = useCallback(async (values: object, { resetForm }) => {
-    dispatch({ type: sagaActions.USER_LOGIN_SAGA, payload: values })
+    dispatch({ type: signInData.onSubmitType, payload: values })
     resetForm()
   }, [])
 

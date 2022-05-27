@@ -26,9 +26,8 @@ export const useCalendarStyles = makeStyles((theme: Theme) => ({
     width: 174,
   },
   popper: {
-    backgroundColor: 'red',
     width: '100%',
-    zIndex: 69,
+    zIndex: 4,
   },
   calendarEventWrapper: {
     width: '100%',

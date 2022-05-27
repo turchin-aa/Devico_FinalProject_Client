@@ -1,7 +1,7 @@
 import { Toolbar, Typography, AppBar, Slide, useScrollTrigger } from '@mui/material'
 import { memo } from 'react'
 import NavbarContent from './NavbarContent'
-import useNavbarStyles from './style/useNavbarStyles'
+import { useNavbarStyles } from './style/useNavbarStyles'
 
 interface Props {
   children: React.ReactElement

@@ -18,31 +18,10 @@ import { sagaActions } from '../../store/saga-actions'
 import axios from 'axios'
 import api from '../../hooks'
 import { userSliceActions } from '../../store/user-slice'
+import { profileData } from './formikContent'
 
-const initialValues = {
-  fullName: '',
-  email: '',
-  telephone: '',
-  password: '',
-  confirmPassword: '',
-}
-
-const validationSchema = yup.object().shape({
-  fullName: yup.string().min(3).nullable(true),
-  email: yup.string().email('Write correct email').nullable(true),
-  password: yup.string().min(6, 'The length must be at least 6').max(32).nullable(true),
-  telephone: yup
-    .string()
-    .matches(
-      /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
-      'Invalid telephone format',
-    )
-    .nullable(true),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match')
-    .nullable(true),
-})
+const initialValues = profileData.initialValues
+const validationSchema = profileData.validationSchema
 
 const img = ''
 
@@ -91,7 +70,7 @@ const ProfileData: FC = () => {
   }, [getUserInfoHandler, avatar])
 
   const onSubmit = async (values, { resetForm }) => {
-    dispatch({ type: sagaActions.USER_UPDATE_DATA_SAGA, payload: values })
+    dispatch({ type: profileData.onSubmitType, payload: values })
     resetForm({
       values: {
         fullName: values.fullName,
@@ -117,7 +96,7 @@ const ProfileData: FC = () => {
       <Stack direction="row" sx={{ mt: '2%' }}>
         <Box flex={1} m={2}>
           <div className={classes.profileAvatarContainer}>
-            <Avatar sx={{ height: '100%', width: '100%' }} alt="Remy Sharp" src={img} />
+            <Avatar sx={{ height: '100%', width: '100%' }} alt="Remy Sharp" src={previewPicture} />
             <div className={classes.profileEditAvatar}>
               <label className={classes.label} htmlFor="icon-button-file">
                 <input

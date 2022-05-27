@@ -7,6 +7,7 @@ interface Props {
   isOpen: boolean
   className?: string
   popperClassName?: string
+  popperPosition?: boolean
   handleClose: (event: Event) => void
 }
 
@@ -16,6 +17,7 @@ const DropDownMenu: React.FC<Props> = ({
   anchorRef,
   isOpen,
   className,
+  popperPosition,
   handleClose,
 }) => {
   return (
@@ -23,6 +25,8 @@ const DropDownMenu: React.FC<Props> = ({
       open={isOpen}
       anchorEl={anchorRef.current}
       className={popperClassName}
+      role={undefined}
+      style={{ position: popperPosition ? 'absolute' : 'fixed', top: popperPosition ? 35 : 0 }}
       disablePortal={true}
     >
       <ClickAwayListener onClickAway={handleClose}>

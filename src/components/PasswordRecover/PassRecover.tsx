@@ -34,14 +34,9 @@ const validationSchema = yup.object().shape({
   email: yup.string().email('Invalid format').required('Invalid email'),
 })
 
-<<<<<<< HEAD
-const PassRecover = () => {
-  const isSend = useAppSelector<boolean>(state => state.user.isEmailSend)
-=======
 const PassRecover: React.FC = () => {
-  const isSend = useAppSelector(state => state.user.isEmailSend)
+  const isSend = useAppSelector<boolean>(state => state.user.isEmailSend)
   const classes = useAuthStyles()
->>>>>>> fix/modal_styles
 
   const dispatch = useAppDispatch()
 
