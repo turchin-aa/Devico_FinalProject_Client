@@ -13,9 +13,6 @@ import { useAppDispatch } from '../../hooks/redux.hook'
 import { uiActions } from '../../store/ui-slice'
 import { personalData } from './formikContent'
 
-const validationSchema = personalData.validationSchema
-const initialValues = personalData.initialValues
-
 const PersonalData: FC = () => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
@@ -38,7 +35,11 @@ const PersonalData: FC = () => {
     [setCity],
   )
 
-  const formik = useFormik({ initialValues, validationSchema, onSubmit })
+  const formik = useFormik({
+    initialValues: personalData.initialValues,
+    validationSchema: personalData.validationSchema,
+    onSubmit,
+  })
 
   return (
     <Box component="form" onSubmit={formik.handleSubmit}>

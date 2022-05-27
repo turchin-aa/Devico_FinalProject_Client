@@ -20,9 +20,6 @@ import api from '../../hooks'
 import { userSliceActions } from '../../store/user-slice'
 import { profileData } from './formikContent'
 
-const initialValues = profileData.initialValues
-const validationSchema = profileData.validationSchema
-
 const img = ''
 
 const ProfileData: FC = () => {
@@ -85,7 +82,11 @@ const ProfileData: FC = () => {
     }
   }
 
-  const formik = useFormik({ initialValues, validationSchema, onSubmit })
+  const formik = useFormik({
+    initialValues: profileData.initialValues,
+    validationSchema: profileData.validationSchema,
+    onSubmit,
+  })
 
   const handleClickpassShow = useCallback(() => {
     setShow(!passShow)

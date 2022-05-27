@@ -11,9 +11,6 @@ import { addCarsData } from '../formikContent'
 
 interface IAddCarModal {}
 
-const initialValues = addCarsData.initialValues
-const validationSchema = addCarsData.validationSchema
-
 const AddCarModal: FC<IAddCarModal> = () => {
   const classes = useStyles()
 
@@ -25,7 +22,11 @@ const AddCarModal: FC<IAddCarModal> = () => {
     resetForm()
   }, [])
 
-  const formik = useFormik({ initialValues, validationSchema, onSubmit })
+  const formik = useFormik({
+    initialValues: addCarsData.initialValues,
+    validationSchema: addCarsData.validationSchema,
+    onSubmit,
+  })
 
   const toggleShowAddCar = useCallback(() => {
     dispatch(uiActions.toggleShowAddCar())

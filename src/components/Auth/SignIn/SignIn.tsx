@@ -16,6 +16,7 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  Button,
 } from '@mui/material'
 import {
   SideButton,
@@ -26,11 +27,12 @@ import {
   Facebook,
   Google,
   styledDiv,
+  CloseButton,
 } from '../AuthStyles'
 import { useAuthStyles } from '../useAuthStyles'
 import { theme } from '../../../theme/CustomTheme'
 import clsx from 'clsx'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { Visibility, VisibilityOff, Close } from '@mui/icons-material'
 import { signInData } from '../formikAuth'
 
 const initialValues = signInData.initialValues
@@ -80,6 +82,9 @@ const SignIn = () => {
     <Dialog fullScreen={fullScreen} fullWidth open={logCartIsShown} onClose={toggleHandler}>
       <Typography component="h1" variant="h5" className={classes.flexCenter}>
         <p className={classes.titleTypo}> Sign in </p>
+        <CloseButton onClick={toggleHandler}>
+          <Close />
+        </CloseButton>
       </Typography>
       <Divider />
       <DialogContent>

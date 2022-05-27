@@ -106,3 +106,15 @@ export const StyledDialogTitle = styled(DialogTitle)({
   fontSize: '20px',
   lineHeight: '30px',
 })
+
+export const CloseButton = styled(Button)({
+  [theme.breakpoints.down('sm')]: {
+    display: 'initial',
+  },
+  [theme.breakpoints.up('sm')]: {
+    display: 'none',
+  },
+  position: 'absolute',
+  right: 0,
+  color: '#000',
+})

@@ -1,49 +1,30 @@
-import * as yup from 'yup'
 import { useFormik } from 'formik'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
-import { sagaActions } from '../../store/saga-actions'
 import useQuery from '../../hooks/query.hook'
 import { theme } from '../../theme/CustomTheme'
-import {
-  Dialog,
-  DialogContent,
-  TextField,
-  Box,
-  Typography,
-  useMediaQuery,
-  Divider,
-  Grid,
-} from '@mui/material'
+import { Dialog, DialogContent, TextField, Box, useMediaQuery, Divider, Grid } from '@mui/material'
 import { MyTypography, RegisterButton, styledDiv } from '../Auth/AuthStyles'
 import { memo, useCallback } from 'react'
+import { createNewPassData } from '../Profile/formikContent'
+import { useStyles } from './PasswordStyles'
 
-const initialValues= {
-  password: '',
-  confirmPassword: '',
-}
-
-const validationSchema = yup.object().shape({
-  password: yup
-    .string()
-    .min(6, 'The length must be at least 6')
-    .max(32)
-    .required('The password is required'),
-  confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
-})
-
-
-const CreateNewPass:React.FC = () => {
+const CreateNewPass: React.FC = () => {
   const dispatch = useAppDispatch()
+  const classes = useStyles()
 
   const onSubmit = useCallback(async (values, { resetForm }) => {
     dispatch({
-      type: sagaActions.USER_NEWPASS_SAGA,
+      type: createNewPassData.onSubmitType,
       payload: { ...values, token, id },
     })
     resetForm()
-  },[])
+  }, [])
 
-  const formik = useFormik({initialValues, validationSchema, onSubmit})
+  const formik = useFormik({
+    initialValues: createNewPassData.initialValues,
+    validationSchema: createNewPassData.validationSchema,
+    onSubmit,
+  })
 
   const createNewPassIsShown = useAppSelector<boolean>(state => state.ui.showCreateNewPassword)
 
@@ -56,16 +37,10 @@ const CreateNewPass:React.FC = () => {
 
   return (
     <Dialog fullScreen={fullScreen} fullWidth open={createNewPassIsShown}>
-      <Typography
-        component="h1"
-        variant="h5"
-        sx={{ fontWeight: 'bold', fontSize: 26, mt: 1, mb: 1, textAlign: 'center' }}
-      >
-        Password Recover
-      </Typography>
+      <div className={classes.typography}>Password Recover</div>
       <Divider />
       <DialogContent>
-        <Box component="form" sx={{ mt: 3 }} onSubmit={formik.handleSubmit}>
+        <Box component="form" onSubmit={formik.handleSubmit}>
           <Grid item xs={12}>
             <MyTypography>NEW PASSWORD</MyTypography>
             <TextField
@@ -73,14 +48,17 @@ const CreateNewPass:React.FC = () => {
               id="password"
               type="password"
               name="password"
+              size="small"
+              error={formik.errors.password && formik.touched.password ? true : false}
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              sx={{ mb: 1 }}
             />
-            {formik.errors.password && formik.touched.password ? (
-              <div style={styledDiv}>{formik.errors.password}</div>
-            ) : null}
+            <div className={classes.errorContainer}>
+              {formik.errors.password && formik.touched.password ? (
+                <div style={styledDiv}>{formik.errors.password}</div>
+              ) : null}
+            </div>
           </Grid>
           <Grid>
             <MyTypography>CONFIRM PASSWORD</MyTypography>
@@ -89,14 +67,17 @@ const CreateNewPass:React.FC = () => {
               id="confirmPassword"
               type="password"
               name="confirmPassword"
+              size="small"
+              error={formik.errors.confirmPassword && formik.touched.confirmPassword ? true : false}
               value={formik.values.confirmPassword}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              sx={{ mb: 1 }}
             />
-            {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
-              <div style={styledDiv}>{formik.errors.confirmPassword}</div>
-            ) : null}
+            <div className={classes.errorContainer}>
+              {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
+                <div style={styledDiv}>{formik.errors.confirmPassword}</div>
+              ) : null}
+            </div>
           </Grid>
           <RegisterButton type="submit" fullWidth variant="contained">
             Change password

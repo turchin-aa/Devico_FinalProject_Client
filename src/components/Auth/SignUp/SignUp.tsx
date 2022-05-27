@@ -27,11 +27,12 @@ import {
   Facebook,
   Google,
   styledDiv,
+  CloseButton,
 } from '../AuthStyles'
 import { useAuthStyles } from '../useAuthStyles'
 import clsx from 'clsx'
 import { theme } from '../../../theme/CustomTheme'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { Close, Visibility, VisibilityOff } from '@mui/icons-material'
 import { signUpData } from '../formikAuth'
 
 const initialValues = signUpData.initialValues
@@ -75,6 +76,9 @@ const SignUp: React.FC = () => {
     <Dialog fullScreen={fullScreen} open={regCartIsShown} onClose={toggleHandler}>
       <Typography component="h1" variant="h5" className={classes.flexCenter}>
         <p className={classes.titleTypo}> Sign up </p>
+        <CloseButton onClick={toggleHandler}>
+          <Close />
+        </CloseButton>
       </Typography>
       <Divider />
       <DialogContent>

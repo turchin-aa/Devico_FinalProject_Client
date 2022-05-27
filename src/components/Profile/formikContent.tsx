@@ -9,7 +9,6 @@ export const profileData = {
     password: '',
     confirmPassword: '',
   },
-
   validationSchema: yup.object().shape({
     fullName: yup.string().min(3).nullable(true),
     email: yup.string().email('Write correct email').nullable(true),
@@ -89,4 +88,31 @@ export const addCarsData = {
     driveTrain: yup.string().min(4).required('Drive train must contain at least 4 number'),
   }),
   onSubmitType: '',
+}
+
+export const recoverPassData = {
+  initialValues: {
+    email: '',
+  },
+  validationSchema: yup.object().shape({
+    email: yup.string().email('Invalid format').required('Invalid email'),
+  }),
+  onSubmitType: sagaActions.USER_RESET_SAGA,
+}
+
+export const createNewPassData = {
+  initialValues: {
+    password: '',
+    confirmPassword: '',
+  },
+
+  validationSchema: yup.object().shape({
+    password: yup
+      .string()
+      .min(6, 'The length must be at least 6')
+      .max(32)
+      .required('The password is required'),
+    confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
+  }),
+  onSubmitType: sagaActions.USER_NEWPASS_SAGA,
 }
