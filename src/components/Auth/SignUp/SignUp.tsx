@@ -69,10 +69,13 @@ const SignUp: React.FC = () => {
     return setShowPassword(!showPassword)
   }, [showPassword])
 
-  const onSubmit = useCallback(async (values: object, { resetForm }) => {
-    dispatch({ type: sagaActions.USER_SIGNUP_SAGA, payload: values })
-    resetForm()
-  },[])
+  const onSubmit = useCallback(
+    async (values: object, { resetForm }) => {
+      dispatch({ type: sagaActions.USER_SIGNUP_SAGA, payload: values })
+      resetForm()
+    },
+    [dispatch],
+  )
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit })
 

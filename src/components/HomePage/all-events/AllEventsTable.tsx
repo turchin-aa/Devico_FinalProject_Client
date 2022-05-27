@@ -68,7 +68,7 @@ const rowsEmpty = rows => {
 
 const AllEventsTable: React.FC = () => {
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(6)
+  const rowsPerPage = 6
   const classes = useStyles()
 
   const events = useAppSelector<EventData>(state => state.event.events)
@@ -89,11 +89,11 @@ const AllEventsTable: React.FC = () => {
     (event: ChangeEvent<unknown>, newPage: number) => {
       setPage(newPage - 1)
     },
-    [page],
+    [setPage],
   )
 
   const pageCount = useCallback(() => {
-    if (rows.length % rowsPerPage != 0) {
+    if (rows.length % rowsPerPage !== 0) {
       return Math.floor(1 + rows.length / 6)
     }
     return Math.floor(rows.length / 6)

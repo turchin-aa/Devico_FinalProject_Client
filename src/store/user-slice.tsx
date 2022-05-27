@@ -23,6 +23,8 @@ const userSlice = createSlice({
     setUser(state, action) {
       state.email = action.payload.email
       state.id = action.payload.id
+    },
+    setAvatar(state, action) {
       state.avatar = action.payload.avatar
     },
     removeUser(state) {

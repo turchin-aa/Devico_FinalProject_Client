@@ -14,7 +14,8 @@ type RefreshServerType = SagaReturnType<typeof AuthService.checkAuth>
 type GetServiceType = SagaReturnType<typeof EventService.getEvent>
 
 const { setEvent } = eventSliceActions
-const { setUser, toggleAuth, removeUser, unToggleAuth, toggleEmailSend } = userSliceActions
+const { setUser, setAvatar, toggleAuth, removeUser, unToggleAuth, toggleEmailSend } =
+  userSliceActions
 
 const { toggleLog, toggleReg, toggleCongratAuth, toggleCreateNewPassword } = uiActions
 
@@ -107,6 +108,17 @@ export function* updateUserDataSaga(action: Effect) {
   }
 }
 
+export function* userGetAvatarSaga(action: Effect) {
+  try {
+    const data = yield call(async () => {
+      return await api.get('/getAvatar')
+    })
+    yield put(setAvatar({ avatar: data.data.imageUrl }))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export function* eventGetSaga(action: Effect) {
   try {
     const data: GetServiceType = yield call(EventService.getEvent)
@@ -126,4 +138,5 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_RESET_SAGA, userResetPassSaga)
   yield takeEvery(eventActions.EVENT_GET_SAGA, eventGetSaga)
   yield takeEvery(sagaActions.USER_UPDATE_DATA_SAGA, updateUserDataSaga)
+  yield takeEvery(sagaActions.USER_GET_AVATAR_SAGA, userGetAvatarSaga)
 }

@@ -8,7 +8,6 @@ const AllEvents: React.FC = () => {
       <div id="eventHeader">
         <h3>All Events</h3>
       </div>
-
       <AllEventsTable />
     </div>
   )

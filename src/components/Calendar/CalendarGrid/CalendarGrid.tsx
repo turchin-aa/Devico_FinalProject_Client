@@ -18,7 +18,7 @@ const setDaysArray = (day: Moment) => {
 }
 
 const filterEvents = (result, events: EventData, day: string) => {
-  result = events.filter(event => event.date == day)
+  result = events.filter(event => event.date === day)
   return result.length <= 2 ? <EventsBlocks result={result} /> : <EventsList result={result} />
 }
 
@@ -36,7 +36,7 @@ const CalendarGrid: React.FC<Props> = ({ startMonthDay, today }) => {
     day => {
       return moment(today).isSame(day, 'month')
     },
-    [day],
+    [today],
   )
 
   return (

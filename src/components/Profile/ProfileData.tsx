@@ -9,7 +9,7 @@ import {
   OutlinedInput,
 } from '@mui/material'
 import useStyles, { ProfileSubmitButton } from './ProfileStyles'
-import { Field, Form, Formik, ErrorMessage, useFormik } from 'formik'
+import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { FC, memo, useCallback, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
@@ -44,21 +44,18 @@ const validationSchema = yup.object().shape({
     .nullable(true),
 })
 
-const img = ''
-
 const ProfileData: FC = () => {
   const [passShow, setShow] = useState(false)
   const [formDataPicture, setFormDataPicture] = useState('')
 
   const dispatch = useAppDispatch()
-  const email = useAppSelector<string | undefined>(state => state.user.email)
   const avatar = useAppSelector<string | undefined>(state => state.user.avatar)
 
   const classes = useStyles()
 
   const handleChangeAvatar = e => {
     setFormDataPicture(e.target.files[0])
-    dispatch(userSliceActions.setUser({ avatar: URL.createObjectURL(e.target.files[0]), email }))
+    dispatch(userSliceActions.setAvatar({ avatar: URL.createObjectURL(e.target.files[0]) }))
   }
 
   const onUploadAvatar = useCallback(async () => {
@@ -72,23 +69,17 @@ const ProfileData: FC = () => {
       const imageUrl = url.split('?')[0]
 
       await api.patch('/updateAvatar', { imageUrl })
-      dispatch(userSliceActions.setUser({ avatar: imageUrl, email }))
+      dispatch(userSliceActions.setAvatar({ avatar: imageUrl }))
     } catch (error) {
       console.log(error)
     }
   }, [formDataPicture, dispatch])
 
-  const getUserInfoHandler = useCallback(async () => {
-    const req = await api.get('/getAvatar')
-
-    dispatch(userSliceActions.setUser({ avatar: req.data.imageUrl, email }))
-  }, [dispatch])
-
   useEffect(() => {
     if (!avatar) {
-      getUserInfoHandler()
+      dispatch({ type: sagaActions.USER_GET_AVATAR_SAGA })
     }
-  }, [getUserInfoHandler, avatar])
+  }, [dispatch, avatar])
 
   const onSubmit = async (values, { resetForm }) => {
     dispatch({ type: sagaActions.USER_UPDATE_DATA_SAGA, payload: values })
@@ -117,7 +108,11 @@ const ProfileData: FC = () => {
       <Stack direction="row" sx={{ mt: '2%' }}>
         <Box flex={1} m={2}>
           <div className={classes.profileAvatarContainer}>
-            <Avatar sx={{ height: '100%', width: '100%' }} alt="Remy Sharp" src={img} />
+            <Avatar
+              sx={{ height: '100%', width: '100%' }}
+              alt="Remy Sharp"
+              src={avatar ? avatar : ''}
+            />
             <div className={classes.profileEditAvatar}>
               <label className={classes.label} htmlFor="icon-button-file">
                 <input

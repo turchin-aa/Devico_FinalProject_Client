@@ -30,5 +30,5 @@ export const profileData = {
       .oneOf([yup.ref('password'), null], 'Passwords must match')
       .nullable(true),
   }),
-  onSubmitType: sagaActions.USER_UPDATE_SAGA,
+  onSubmitType: sagaActions.USER_UPDATE_DATA_SAGA,
 }

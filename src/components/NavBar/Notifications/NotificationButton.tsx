@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { memo } from 'react'
 import { Badge } from '@mui/material'
 import { NotificationsOutlined } from '@mui/icons-material'
 import useNavbarStyles from '../style/useNavbarStyles'
@@ -7,12 +7,11 @@ import NotificationMenu from './NotificationDropDown'
 
 const NotificationButton: React.FC = () => {
   const classes = useNavbarStyles()
-  const [invisible, setInvisible] = useState(false)
 
   return (
     <div>
       <UserBarButtons menuClass={classes.userBarNotif} popperClassName={classes.popper}>
-        <Badge color="primary" variant="dot" invisible={invisible}>
+        <Badge color="primary" variant="dot" invisible={false}>
           <NotificationsOutlined className={classes.userBarComponentW} />
         </Badge>
         <NotificationMenu />

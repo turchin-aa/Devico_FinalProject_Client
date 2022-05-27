@@ -27,14 +27,9 @@ function fixIconNames(string: string) {
 }
 
 export default class DynamicIcon extends React.Component<DynamicIconProps> {
-  constructor(props: DynamicIconProps) {
-    super(props)
-  }
-
   render() {
-    return React.createElement(
-      Icons[fixIconNames(this.props.iconName)! as keyof IconType],
-      { className: this.props.className }
-    )
+    return React.createElement(Icons[fixIconNames(this.props.iconName)! as keyof IconType], {
+      className: this.props.className,
+    })
   }
 }

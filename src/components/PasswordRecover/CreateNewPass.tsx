@@ -17,7 +17,7 @@ import {
 import { MyTypography, RegisterButton, styledDiv } from '../Auth/AuthStyles'
 import { memo, useCallback } from 'react'
 
-const initialValues= {
+const initialValues = {
   password: '',
   confirmPassword: '',
 }
@@ -31,19 +31,21 @@ const validationSchema = yup.object().shape({
   confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
 })
 
-
-const CreateNewPass:React.FC = () => {
+const CreateNewPass: React.FC = () => {
   const dispatch = useAppDispatch()
 
-  const onSubmit = useCallback(async (values, { resetForm }) => {
-    dispatch({
-      type: sagaActions.USER_NEWPASS_SAGA,
-      payload: { ...values, token, id },
-    })
-    resetForm()
-  },[])
+  const onSubmit = useCallback(
+    async (values, { resetForm }) => {
+      dispatch({
+        type: sagaActions.USER_NEWPASS_SAGA,
+        payload: { ...values, token, id },
+      })
+      resetForm()
+    },
+    [dispatch],
+  )
 
-  const formik = useFormik({initialValues, validationSchema, onSubmit})
+  const formik = useFormik({ initialValues, validationSchema, onSubmit })
 
   const createNewPassIsShown = useAppSelector<boolean>(state => state.ui.showCreateNewPassword)
 

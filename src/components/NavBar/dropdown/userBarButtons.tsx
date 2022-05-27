@@ -15,14 +15,11 @@ const UserBarButtons: React.FC<Props> = props => {
 
   const handleOpen = useCallback(() => {
     return setOpen(true)
-  }, [isOpen])
+  }, [setOpen])
 
-  const handleClose = useCallback(
-    (event: Event) => {
-      return setOpen(false)
-    },
-    [isOpen],
-  )
+  const handleClose = useCallback(() => {
+    return setOpen(false)
+  }, [setOpen])
 
   return (
     <div>

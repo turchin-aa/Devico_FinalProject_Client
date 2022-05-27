@@ -46,10 +46,13 @@ const PersonalData: FC = () => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
 
-  const onSubmit = useCallback(async (values, { resetForm }) => {
-    dispatch({ type: sagaActions.USER_UPDATE_DATA_SAGA, payload: { ...values, city } })
-    resetForm()
-  }, [])
+  const onSubmit = useCallback(
+    async (values, { resetForm }) => {
+      dispatch({ type: sagaActions.USER_UPDATE_DATA_SAGA, payload: { ...values, city } })
+      resetForm()
+    },
+    [dispatch],
+  )
 
   const showModal = useCallback(() => {
     dispatch(uiActions.toggleShowAddCar())
@@ -59,7 +62,7 @@ const PersonalData: FC = () => {
 
   const handleChange = useCallback(
     e => {
-      setCity(e.target.value as string)
+      setCity(e.target.value)
     },
     [setCity],
   )

@@ -34,21 +34,20 @@ const validationSchema = yup.object().shape({
   email: yup.string().email('Invalid format').required('Invalid email'),
 })
 
-<<<<<<< HEAD
 const PassRecover = () => {
   const isSend = useAppSelector<boolean>(state => state.user.isEmailSend)
-=======
-const PassRecover: React.FC = () => {
-  const isSend = useAppSelector(state => state.user.isEmailSend)
+
   const classes = useAuthStyles()
->>>>>>> fix/modal_styles
 
   const dispatch = useAppDispatch()
 
-  const onSubmit = useCallback(async (values, { resetForm }) => {
-    dispatch({ type: sagaActions.USER_RESET_SAGA, payload: values })
-    resetForm()
-  }, [])
+  const onSubmit = useCallback(
+    async (values, { resetForm }) => {
+      dispatch({ type: sagaActions.USER_RESET_SAGA, payload: values })
+      resetForm()
+    },
+    [dispatch],
+  )
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit })
 

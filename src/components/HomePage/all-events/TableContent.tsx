@@ -1,6 +1,7 @@
 import { TableBody, TableCell, TableRow } from '@mui/material'
 import { memo } from 'react'
 import { Column, Data } from './TableTypes'
+
 interface Props {
   columns: Column[]
   rows: Data[]

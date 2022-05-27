@@ -20,7 +20,7 @@ const EventsForLastYears: React.FC = () => {
       </div>
 
       <Divider />
-      <ScrollableItems eventData={eventData} resent={true} />
+      <ScrollableItems eventData={eventData} resent />
     </div>
   )
 }

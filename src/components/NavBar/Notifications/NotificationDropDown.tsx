@@ -1,11 +1,10 @@
 import { Divider, MenuList } from '@mui/material'
 import ContentNull from './ContentNull'
-import { memo, useState } from 'react'
+import { memo } from 'react'
 import useNavbarStyles from '../style/useNavbarStyles'
 
 const NotificationMenu: React.FC = () => {
   const classes = useNavbarStyles()
-  const [content, setContent] = useState(null)
 
   return (
     <div>
@@ -17,9 +16,7 @@ const NotificationMenu: React.FC = () => {
           </div>
         </div>
         <Divider variant="middle" />
-        <div className={classes.notifContentContainer}>
-          {content === null ? <ContentNull /> : null}
-        </div>
+        <div className={classes.notifContentContainer}>{<ContentNull />}</div>
       </MenuList>
     </div>
   )
