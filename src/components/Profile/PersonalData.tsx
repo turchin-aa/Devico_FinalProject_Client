@@ -33,7 +33,7 @@ const PersonalData: FC = () => {
 
   const handleChange = useCallback(
     e => {
-      setCity(e.target.value)
+      setCity(e.target.value as string)
     },
     [setCity],
   )
