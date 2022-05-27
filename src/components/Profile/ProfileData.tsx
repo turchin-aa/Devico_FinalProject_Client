@@ -96,7 +96,7 @@ const ProfileData: FC = () => {
       <Stack direction="row" sx={{ mt: '2%' }}>
         <Box flex={1} m={2}>
           <div className={classes.profileAvatarContainer}>
-            <Avatar sx={{ height: '100%', width: '100%' }} alt="Remy Sharp" src={previewPicture} />
+            <Avatar sx={{ height: '100%', width: '100%' }} alt="Remy Sharp" src={img} />
             <div className={classes.profileEditAvatar}>
               <label className={classes.label} htmlFor="icon-button-file">
                 <input
