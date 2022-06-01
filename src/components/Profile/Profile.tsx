@@ -1,14 +1,13 @@
 import { FC, memo, useCallback, useState } from 'react'
-import { Tabs, Tab, Box, Stack, Typography } from '@mui/material'
+import { Tabs, Tab, Box } from '@mui/material'
 import ProfilePanel from './ProfilePanel'
 import PersonalData from './PersonalData'
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import ProfileData from './ProfileData'
 import AddCarModal from './AddCarModal/AddCarModal'
-import { Link } from 'react-router-dom'
 import { useAppSelector, useAppDispatch } from '../../hooks/redux.hook'
 import { uiActions } from '../../store/ui-slice'
 import useStyles from './ProfileStyles'
+import BackButton from '../BackArrowButton/BackButton'
 
 const allyProps = (index: number) => {
   return {
@@ -31,15 +30,9 @@ const Profile: FC = () => {
   return isAuth ? (
     <Box className={classes.profileContainer}>
       <AddCarModal />
-      <Box className={classes.navBack}>
-        <Stack direction="row">
-          <Link to="/" className={classes.navLinkBack}>
-            <ArrowBackIosIcon fontSize="small" />
-            <Typography>Back</Typography>
-          </Link>
-        </Stack>
-        <div className={classes.profileTitle}>My Profile</div>
-      </Box>
+      <BackButton>
+        <span>My Profile</span>
+      </BackButton>
       <Box className={classes.profileTabs}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="PROFILE DATA" {...allyProps(0)} />

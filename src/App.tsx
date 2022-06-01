@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import PageNotFound from './pages/404'
@@ -10,6 +10,9 @@ import CreateNewPass from './components/PasswordRecover/CreateNewPass'
 import Auth from './components/Auth'
 import { useAppDispatch, useAppSelector } from './hooks/redux.hook'
 import Profile from './components/Profile/Profile'
+import AllEvents from './pages/AllEvents'
+import EventPage from './components/EventPage/EventPage'
+import ApplyCancelModals from './components/RegisterForEvent/index'
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -24,23 +27,24 @@ const App: React.FC = () => {
   }, [])
 
   return (
-    <>
-      <Router>
-        <SideBar />
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="*" element={<PageNotFound />} />
-          <Route
-            path="resetPass"
-            element={isAuth ? <Navigate to="/" replace /> : <CreateNewPass />}
-          />
-          <Route path="profile" element={isAuth ? <Profile /> : <Navigate to="/" replace />} />
-        </Routes>
-        <Auth />
-      </Router>
-    </>
+    <Router>
+      <SideBar />
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="allEvents" element={<AllEvents />} />
+        <Route path="faq" element={<FAQ />} />
+        <Route path="/event/:id" element={<EventPage />} />
+        <Route
+          path="resetPass"
+          element={isAuth ? <Navigate to="/" replace /> : <CreateNewPass />}
+        />
+        <Route path="profile" element={isAuth ? <Profile /> : <Navigate to="/" replace />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+      <Auth />
+      <ApplyCancelModals />
+    </Router>
   )
 }
 

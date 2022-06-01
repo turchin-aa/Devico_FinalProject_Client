@@ -174,7 +174,6 @@ const PersonalData: FC = () => {
                   <MenuItem value={'Kharkiv'}>Kharkiv</MenuItem>
                   <MenuItem value={'Kyiv'}>Kyiv</MenuItem>
                 </StyledSelectField>
-                <div className={classes.errorContainer}> </div>
               </FormControl>
 
               <label className={classes.label} htmlFor="address">
@@ -266,8 +265,7 @@ const PersonalData: FC = () => {
                 onBlur={formik.handleBlur}
               />
               <div className={classes.errorContainer}>
-                {formik.errors.sportDriverLicenseNum ? (
-                  // && formik.touched.sportDriverLicenseNum
+                {formik.errors.sportDriverLicenseNum && formik.touched.sportDriverLicenseNum ? (
                   <div>{formik.errors.sportDriverLicenseNum}</div>
                 ) : null}
               </div>

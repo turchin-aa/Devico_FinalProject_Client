@@ -21,49 +21,31 @@ const useSideBarStyles = makeStyles((theme: Theme) => ({
     '&&': {
       color: '#fff',
       backgroundColor: theme.palette.primary.main,
-      '@media (min-width: 400px)': {
+      [theme.breakpoints.up('xs')]: {
         width: 50,
       },
-      '@media (min-width: 600px)': {
+      [theme.breakpoints.up('sm')]: {
         width: 90,
       },
-      '@media (min-width: 1280px)': {
+      [theme.breakpoints.up('lg')]: {
         width: 110,
-        backgroundColor: theme.palette.primary.main,
         fontSize: 11,
       },
     },
   },
 
   container: {
-    '@media (min-width: 400px)': {
-      width: 55,
+    [theme.breakpoints.up('xs')]: {
+      width: 50,
       zIndex: 1,
     },
-    '@media (min-width: 500px)': {
-      width: 60,
-    },
-    '@media (min-width: 600px)': {
-      width: 93,
+    [theme.breakpoints.up('sm')]: {
+      width: 90,
       zIndex: 2,
     },
-
-    '@media (min-width: 800px)': {
-      width: '12%',
-    },
-    '@media (min-width: 930px)': {
-      width: '10%',
-    },
-    '@media (min-width:1024px)': {
+    [theme.breakpoints.up('lg')]: {
       width: 110,
-    },
-    '@media (min-width: 1240px)': {
-      width: '10%',
-      top: 0,
-    },
-    '@media (min-width: 1280px)': {
-      width: '11%',
-      top: 0,
+      zIndex: 2,
     },
     position: 'sticky',
   },

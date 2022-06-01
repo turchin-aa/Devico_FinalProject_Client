@@ -7,6 +7,8 @@ interface SliceState {
   showCreateNewPassword: boolean
   congratAuth: boolean
   showAddCar: boolean
+  showEventReg: boolean
+  showCancelParticipation: boolean
 }
 
 const initialState: SliceState = {
@@ -16,6 +18,8 @@ const initialState: SliceState = {
   showCreateNewPassword: true,
   congratAuth: false,
   showAddCar: false,
+  showEventReg: false,
+  showCancelParticipation: false,
 }
 
 const uiSlice = createSlice({
@@ -39,6 +43,12 @@ const uiSlice = createSlice({
     },
     toggleShowAddCar(state) {
       state.showAddCar = !state.showAddCar
+    },
+    toggleShowEventReg(state) {
+      state.showEventReg = !state.showEventReg
+    },
+    toggleShowCancelParticipation(state) {
+      state.showCancelParticipation = !state.showCancelParticipation
     },
   },
 })

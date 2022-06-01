@@ -1,23 +1,26 @@
 import { call, takeEvery, put, Effect, SagaReturnType } from 'redux-saga/effects'
 import { userSliceActions } from './user-slice'
-import { sagaActions, eventActions } from './saga-actions'
+import { sagaActions } from './saga-actions'
 import AuthService from '../services/AuthService'
 import PasswordService from '../services/PasswordService'
-import { eventSliceActions } from './event-slice'
-import EventService from '../services/EventService'
 import { uiActions } from '../store/ui-slice'
 import api from '../hooks'
 
 type RegisterServiceType = SagaReturnType<typeof AuthService.register>
 type LoginServiceType = SagaReturnType<typeof AuthService.login>
 type RefreshServerType = SagaReturnType<typeof AuthService.checkAuth>
-type GetServiceType = SagaReturnType<typeof EventService.getEvent>
 
-const { setEvent } = eventSliceActions
 const { setUser, setAvatar, toggleAuth, removeUser, unToggleAuth, toggleEmailSend } =
   userSliceActions
 
-const { toggleLog, toggleReg, toggleCongratAuth, toggleCreateNewPassword } = uiActions
+const {
+  toggleLog,
+  toggleReg,
+  toggleCongratAuth,
+  toggleCreateNewPassword,
+  toggleShowEventReg,
+  toggleShowCancelParticipation,
+} = uiActions
 
 export function* userSignUpSaga(action: Effect) {
   try {
@@ -119,16 +122,6 @@ export function* userGetAvatarSaga(action: Effect) {
   }
 }
 
-export function* eventGetSaga(action: Effect) {
-  try {
-    const data: GetServiceType = yield call(EventService.getEvent)
-    const { events } = data.data
-    yield put(setEvent({ events }))
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_SIGNUP_SAGA, userSignUpSaga)
   yield takeEvery(sagaActions.USER_LOGIN_SAGA, userLoginSaga)
@@ -136,7 +129,6 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_REFRESH_SAGA, userRefreshSaga)
   yield takeEvery(sagaActions.USER_NEWPASS_SAGA, userNewPassSaga)
   yield takeEvery(sagaActions.USER_RESET_SAGA, userResetPassSaga)
-  yield takeEvery(eventActions.EVENT_GET_SAGA, eventGetSaga)
   yield takeEvery(sagaActions.USER_UPDATE_DATA_SAGA, updateUserDataSaga)
   yield takeEvery(sagaActions.USER_GET_AVATAR_SAGA, userGetAvatarSaga)
 }

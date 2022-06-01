@@ -5,8 +5,8 @@ const Partners: React.FC = () => {
   const classes = useStyles()
   return (
     <div id="partners" className={classes.homeBlocks}>
-      <div id="partners-title">
-        <h2>Partners</h2>
+      <div className={classes.blockTitle}>
+        <div id="partners-title">Partners</div>
       </div>
       <div>
         <PartnersList />

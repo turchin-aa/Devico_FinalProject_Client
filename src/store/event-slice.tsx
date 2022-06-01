@@ -12,6 +12,7 @@ interface SliceState {
       status: string
       series: string
       costOfParticipation: string
+      registration: number
       eventInfo: string
       createdAt: string
       updatedAt: string
@@ -31,6 +32,7 @@ const initialState: SliceState = {
       status: '',
       series: '',
       costOfParticipation: '',
+      registration: 0,
       eventInfo: '',
       createdAt: '',
       updatedAt: '',
