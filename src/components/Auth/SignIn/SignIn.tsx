@@ -33,7 +33,6 @@ import { theme } from '../../../theme/CustomTheme'
 import clsx from 'clsx'
 import { Visibility, VisibilityOff, Close } from '@mui/icons-material'
 import { signInData } from '../formikAuth'
-import { sagaActions } from '../../../store/saga-actions'
 
 const initialValues = signInData.initialValues
 const validationSchema = signInData.validationSchema
@@ -47,9 +46,6 @@ const SignIn = () => {
     async (values: object, { resetForm }) => {
       dispatch({ type: signInData.onSubmitType, payload: values })
       resetForm()
-      setTimeout(() => {
-        dispatch({ type: sagaActions.USER_GET_AVATAR_SAGA })
-      }, 2000)
     },
     [dispatch],
   )

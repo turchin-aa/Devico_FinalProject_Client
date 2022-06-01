@@ -63,6 +63,7 @@ export const personalData = {
 
 export const addCarsData = {
   initialValues: {
+    id: 1,
     model: '',
     year: 1960,
     capacityEngine: '',
@@ -74,6 +75,7 @@ export const addCarsData = {
   },
 
   validationSchema: yup.object().shape({
+    id: yup.number(),
     fullName: yup.string().min(3),
     model: yup.string().min(4).required('Write model, min 4 characters'),
     year: yup

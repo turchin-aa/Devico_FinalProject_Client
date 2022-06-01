@@ -14,10 +14,20 @@ type RefreshServerType = SagaReturnType<typeof AuthService.checkAuth>
 type GetServiceType = SagaReturnType<typeof EventService.getEvent>
 
 const { setEvent } = eventSliceActions
-const { setUser, setAvatar, toggleAuth, removeUser, unToggleAuth, toggleEmailSend } =
-  userSliceActions
+const {
+  setUser,
+  setAvatar,
+  toggleAuth,
+  removeUser,
+  unToggleAuth,
+  toggleEmailSend,
+  addCar,
+  removeCar,
+  setCar,
+} = userSliceActions
 
-const { toggleLog, toggleReg, toggleCongratAuth, toggleCreateNewPassword } = uiActions
+const { toggleLog, toggleReg, toggleCongratAuth, toggleCreateNewPassword, toggleShowAddCar } =
+  uiActions
 
 export function* userSignUpSaga(action: Effect) {
   try {
@@ -43,6 +53,10 @@ export function* userLoginSaga(action: Effect) {
     yield put(toggleCongratAuth())
     yield put(toggleAuth())
     localStorage.setItem('token', accessToken)
+    const avatar = yield call(async () => {
+      return await api.get('/getAvatar')
+    })
+    yield put(setAvatar({ avatar: avatar.data.imageUrl }))
   } catch (error) {
     console.log(error)
   }
@@ -129,6 +143,40 @@ export function* eventGetSaga(action: Effect) {
   }
 }
 
+export function* userAddCarSaga(action: Effect) {
+  try {
+    yield call(async () => {
+      return await api.post('/addCar', { ...action.payload })
+    })
+    yield put(addCar({ newCar: { ...action.payload } }))
+    yield put(toggleShowAddCar())
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export function* userDeleteCarSaga(action: Effect) {
+  try {
+    yield call(async () => {
+      return await api.post('/deleteCar', { ...action.payload })
+    })
+    yield put(removeCar({ ...action.payload }))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export function* userGetCarsSaga(action: Effect) {
+  try {
+    const data = yield call(async () => {
+      return await api.get('/getCars')
+    })
+    yield put(setCar({ cars: data.data }))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_SIGNUP_SAGA, userSignUpSaga)
   yield takeEvery(sagaActions.USER_LOGIN_SAGA, userLoginSaga)
@@ -139,4 +187,7 @@ export default function* rootSaga() {
   yield takeEvery(eventActions.EVENT_GET_SAGA, eventGetSaga)
   yield takeEvery(sagaActions.USER_UPDATE_DATA_SAGA, updateUserDataSaga)
   yield takeEvery(sagaActions.USER_GET_AVATAR_SAGA, userGetAvatarSaga)
+  yield takeEvery(sagaActions.USER_ADD_CAR_SAGA, userAddCarSaga)
+  yield takeEvery(sagaActions.USER_DELETE_CAR_SAGA, userDeleteCarSaga)
+  yield takeEvery(sagaActions.USER_GET_CARS_SAGA, userGetCarsSaga)
 }

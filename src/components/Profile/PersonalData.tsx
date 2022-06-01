@@ -12,6 +12,9 @@ import { FC, memo, useCallback, useState } from 'react'
 import { useAppDispatch } from '../../hooks/redux.hook'
 import { uiActions } from '../../store/ui-slice'
 import { personalData } from './formikContent'
+import Container from './DragAndDropCars/Container'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 const PersonalData: FC = () => {
   const classes = useStyles()
@@ -48,6 +51,9 @@ const PersonalData: FC = () => {
     <Box component="form" onSubmit={formik.handleSubmit}>
       <Box>
         <StyledTypographyProfile variant="h5">MY CARS</StyledTypographyProfile>
+        <DndProvider backend={HTML5Backend}>
+          <Container />
+        </DndProvider>
         <PersonalModalButton onClick={showModal}>Add Car</PersonalModalButton>
       </Box>
       <Box>
