@@ -41,7 +41,7 @@ const EventCard: React.FC<Props> = ({ eventItem, idType, resent }) => {
   const handleButtonClick = useCallback(() => {
     if (isUserAuth) {
       if (registrated) {
-        alert('Canceling REg')
+        dispatch(uiActions.toggleShowCancelParticipation())
       } else {
         dispatch(uiActions.toggleShowEventReg())
       }
@@ -55,7 +55,14 @@ const EventCard: React.FC<Props> = ({ eventItem, idType, resent }) => {
   }, [navigate])
 
   return (
-    <div id={idType} className={clsx(classes.filterGreyScale, classes.event, classes.flexCenter)}>
+    <div
+      id={idType}
+      className={clsx(
+        idType == 'page' ? null : classes.filterGreyScale,
+        classes.event,
+        classes.flexCenter,
+      )}
+    >
       <div id="img">
         <img src={img} alt="event img" />
         <div id={idType} className={classes.eventContent}>

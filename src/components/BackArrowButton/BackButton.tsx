@@ -6,9 +6,10 @@ import { Link, useNavigate } from 'react-router-dom'
 
 interface Props {
   children: React.ReactElement
+  idType?: string
 }
 
-const BackButton: React.FC<Props> = ({ children }) => {
+const BackButton: React.FC<Props> = ({ children, idType }) => {
   const classes = useBackStyles()
   const navigate = useNavigate()
 
@@ -24,7 +25,9 @@ const BackButton: React.FC<Props> = ({ children }) => {
           <Typography>Back</Typography>
         </div>
       </Stack>
-      <div className={classes.profileTitle}>{children}</div>
+      <div id={idType} className={classes.profileTitle}>
+        {children}
+      </div>
     </Box>
   )
 }

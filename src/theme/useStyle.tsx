@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   filterGreyScale: {
     transform: 'scale(1)',
     filter: 'grayscale(100%)',
@@ -500,6 +501,115 @@ const useStyles = makeStyles((theme: Theme) => ({
           '&:hover': {
             textDecoration: 'underline',
           },
+        },
+      },
+      '& > p#event-title': {
+        '@media (min-width: 400px)': {
+          width: 100,
+        },
+        '@media (min-width: 600px)': {
+          width: 120,
+        },
+        '@media (min-width: 1100px)': {
+          width: 148,
+        },
+        textAlign: 'center',
+        backgroundColor: theme.palette.primary.light,
+      },
+    },
+    // for event page
+    '&#page': {
+      '@media (min-width: 400px)': {
+        fontSize: 16,
+      },
+      '@media (min-width: 600px)': {
+        fontSize: 18,
+      },
+
+      '& > p#event-name': {
+        fontWeight: 700,
+
+        marginTop: -15,
+        '@media (min-width: 400px)': {
+          fontSize: 28,
+        },
+        '@media (min-width: 750px)': {
+          fontSize: 32,
+        },
+        '@media (min-width: 1100px)': {
+          fontSize: 34,
+        },
+      },
+
+      '& > div#event-date': {
+        display: 'flex',
+        alignItems: 'center',
+        '@media (min-width: 400px)': {
+          fontSize: 20,
+          marginTop: -50,
+        },
+        '@media (min-width: 750px)': {
+          fontSize: 18,
+          marginTop: -55,
+        },
+        '@media (min-width: 1100px)': {
+          fontSize: 24,
+          marginTop: -60,
+        },
+
+        fontWeight: 600,
+
+        '& > p#event-place': {
+          '@media (min-width: 400px)': {
+            fontSize: 16,
+          },
+          '@media (min-width: 1100px)': {
+            fontSize: 20,
+          },
+          fontWeight: 150,
+        },
+      },
+      '& > div#event-info': {
+        '@media (min-width: 400px)': {
+          fontSize: 14,
+          marginTop: 10,
+        },
+        '@media (min-width: 600px)': {
+          fontSize: 14,
+          marginTop: 50,
+        },
+        '@media (min-width: 900px)': {
+          fontSize: 20,
+          marginTop: 120,
+        },
+        '@media (min-width: 1100px)': {
+          fontSize: 20,
+          marginTop: 90,
+        },
+        '& > p': {
+          marginTop: -15,
+        },
+      },
+      '& > div#event-footer': {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'end',
+        '@media (min-width: 400px)': {
+          marginTop: 10,
+        },
+        '@media (min-width: 541px)': {
+          marginTop: 20,
+        },
+        '@media (min-width: 750x)': {
+          marginTop: 15,
+        },
+        '@media (min-width: 1024px)': {
+          marginTop: 30,
+        },
+        '& > #event-button': {
+          fontSize: 14,
+          width: 162,
+          height: 48,
         },
       },
       '& > p#event-title': {

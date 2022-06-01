@@ -31,42 +31,12 @@ const CancelPArticipation: React.FC = () => {
 
   return (
     <ModalContainer
-      modalType="Apply for event"
+      modalType="Cancel Event Participation"
       dispatchAction={uiActions.toggleShowCancelParticipation()}
       cartIsShown={cancelParticipationIsShown}
       resetForm={formik.resetForm}
     >
       <Box component="form" onSubmit={formik.handleSubmit}>
-        <div>
-          <label className={classes.label} id="drivers-data" htmlFor="Drivers data">
-            DRIVERS DATA
-          </label>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <div className={classes.regTitle}>
-                <p>
-                  Full name: <span id="info">info</span>
-                </p>
-                <p>DOB:</p>
-                <p>Driver license number:</p>
-                <p>Cell number:</p>
-                <p>ID number:</p>
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <div className={classes.regTitle}>
-                <p>City:</p>
-                <p>Reg. adress:</p>
-                <p>Full name of your representative:</p>
-                <p>Representative license nubmer:</p>
-                <p>Sport driver license number:</p>
-              </div>
-            </Grid>
-          </Grid>
-        </div>
-        <div className={classes.divider}>
-          <Divider variant="middle" />
-        </div>
         <Grid item xs={12}>
           <label className={classes.label} htmlFor="reson">
             RESON INPUT
@@ -76,7 +46,8 @@ const CancelPArticipation: React.FC = () => {
             error={formik.errors.reson && formik.touched.reson ? true : false}
             id="reson"
             name="reson"
-            required
+            multiline
+            maxRows={10}
             fullWidth
             value={formik.values.reson}
             onChange={formik.handleChange}

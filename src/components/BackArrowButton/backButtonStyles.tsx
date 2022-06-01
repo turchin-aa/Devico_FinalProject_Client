@@ -23,5 +23,8 @@ export const useBackStyles = makeStyles((theme: Theme) => ({
   profileTitle: {
     fontWeight: 700,
     fontSize: 35,
+    '&#page': {
+      position: 'absolute',
+    },
   },
 }))
