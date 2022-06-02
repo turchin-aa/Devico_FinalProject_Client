@@ -10,7 +10,7 @@ type RegisterServiceType = SagaReturnType<typeof AuthService.register>
 type LoginServiceType = SagaReturnType<typeof AuthService.login>
 type RefreshServerType = SagaReturnType<typeof AuthService.checkAuth>
 
-const { setUser, setAvatar, toggleAuth, removeUser, unToggleAuth, toggleEmailSend } =
+const { setUser, setAvatar, toggleAuth, removeUser, unToggleAuth, toggleEmailSend, getUser } =
   userSliceActions
 
 const {
@@ -121,6 +121,17 @@ export function* userGetAvatarSaga(action: Effect) {
     console.log(error)
   }
 }
+export function* userGetDataSaga(action: Effect) {
+  try {
+    const data = yield call(async () => {
+      return await api.get('/')
+    })
+    const { user } = data.data
+    yield put(getUser({ user }))
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_SIGNUP_SAGA, userSignUpSaga)
@@ -131,4 +142,5 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_RESET_SAGA, userResetPassSaga)
   yield takeEvery(sagaActions.USER_UPDATE_DATA_SAGA, updateUserDataSaga)
   yield takeEvery(sagaActions.USER_GET_AVATAR_SAGA, userGetAvatarSaga)
+  yield takeEvery(sagaActions.USER_GET_DATA_SAGA, userGetDataSaga)
 }

@@ -1,7 +1,7 @@
 import { Button, Divider } from '@mui/material'
 import clsx from 'clsx'
 import moment from 'moment'
-import { memo, useCallback } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import useStyles from '../../theme/useStyle'
@@ -11,23 +11,32 @@ import { uiActions } from '../../store/ui-slice'
 interface Props {
   eventItem: EventItem
   idType: string
-  resent?: boolean
+  isResentEvent?: boolean
+}
+
+enum eventCardEnum {
+  scrollable = 'scrollable',
+  grid = 'grid',
+  page = 'page',
+  registrationIsOn = 1,
+  registrationIsOff = 0,
 }
 
 const img =
   'https://64.media.tumblr.com/1438f240f252cd35c61717e909bc39e6/2c2b030ebff2d9fa-50/s1280x1920/547f2c3c3513e545f202c513496de1c58db54c9d.png'
 
-const EventCard: React.FC<Props> = ({ eventItem, idType, resent }) => {
+const EventCard: React.FC<Props> = ({ eventItem, idType, isResentEvent }) => {
   const classes = useStyles()
   const navigate = useNavigate()
   const registrated = false
   const isUserAuth = useAppSelector<boolean>(state => state.user.isAuth)
   const dispatch = useAppDispatch()
 
-  const checkIdType = useCallback(() => {
-    if (idType == 'scrollable') {
+  const eventCardID = useMemo(() => {
+    if (idType === eventCardEnum.scrollable) {
       return 'Register'
-    } else if (idType == 'grid' || idType == 'page') {
+    }
+    if (idType === eventCardEnum.grid || idType === eventCardEnum.page) {
       if (isUserAuth) {
         if (registrated) {
           return 'Cancel'
@@ -36,7 +45,7 @@ const EventCard: React.FC<Props> = ({ eventItem, idType, resent }) => {
       }
       return 'Sign in to apply'
     }
-  }, [])
+  }, [idType, isUserAuth, registrated])
 
   const handleButtonClick = useCallback(() => {
     if (isUserAuth) {
@@ -48,17 +57,17 @@ const EventCard: React.FC<Props> = ({ eventItem, idType, resent }) => {
     } else {
       dispatch(uiActions.toggleLog())
     }
-  }, [dispatch])
+  }, [dispatch, isUserAuth, registrated])
 
   const handleHrefClick = useCallback(() => {
     navigate(`/event/${eventItem.id}`)
-  }, [navigate])
+  }, [])
 
   return (
     <div
       id={idType}
       className={clsx(
-        idType == 'page' ? null : classes.filterGreyScale,
+        idType === eventCardEnum.page ? null : classes.filterGreyScale,
         classes.event,
         classes.flexCenter,
       )}
@@ -67,7 +76,7 @@ const EventCard: React.FC<Props> = ({ eventItem, idType, resent }) => {
         <img src={img} alt="event img" />
         <div id={idType} className={classes.eventContent}>
           <p id="event-title">
-            {resent ? 'resent event'.toUpperCase() : 'next event'.toUpperCase()}
+            {isResentEvent ? 'resent event'.toUpperCase() : 'next event'.toUpperCase()}
           </p>
           <p id="event-name">{eventItem.title}</p>
           <div id="event-date">
@@ -75,24 +84,24 @@ const EventCard: React.FC<Props> = ({ eventItem, idType, resent }) => {
             <p id="event-place">{eventItem.place}</p>
           </div>
           <div id="event-info">
-            <p id="event-discipline">Discipline: {eventItem.discipline}</p>
-            <p id="event-status">Status: {eventItem.status}</p>
-            <p id="event-series">Series: {eventItem.series}</p>
+            <p>Discipline: {eventItem.discipline}</p>
+            <p>Status: {eventItem.status}</p>
+            <p>Series: {eventItem.series}</p>
           </div>
           <Divider variant="middle" />
           <div id="event-footer">
-            {idType == 'page' ? null : (
+            {idType === eventCardEnum.page ? null : (
               <span className={classes.viewDetails} onClick={handleHrefClick}>
                 View details
               </span>
             )}
             <Button
               id="event-button"
-              disabled={resent || eventItem.registration == 0}
+              disabled={isResentEvent || eventItem.registration === eventCardEnum.registrationIsOff}
               onClick={handleButtonClick}
               variant="contained"
             >
-              {checkIdType()}
+              {eventCardID}
             </Button>
           </div>
         </div>

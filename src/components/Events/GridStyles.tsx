@@ -1,5 +1,5 @@
-import styled from '@emotion/styled'
 import { theme } from '../../theme/CustomTheme'
+import { styled, Button } from '@mui/material'
 
 export const GridContainer = styled('div')({
   position: 'relative',
@@ -41,4 +41,13 @@ export const EventContent = styled('div')({
     width: 345,
     height: 410,
   },
+})
+
+export const GridButton = styled(Button)({
+  marginTop: 3,
+  marginBottom: 5,
+  height: 20,
+  width: 10,
+  fontSize: 11,
+  color: '#000',
 })

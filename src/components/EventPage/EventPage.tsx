@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import BackButton from '../BackArrowButton/BackButton'
 import { useParams } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/redux.hook'
@@ -11,23 +11,26 @@ import {
   ParticipantsButton,
   useStyles,
 } from './EventPageStyles'
+import { CheckCircleOutline } from '@mui/icons-material'
+import moment from 'moment'
 
 const EventPage: React.FC = () => {
   const { id } = useParams()
   const classes = useStyles()
+  const today = useMemo(() => moment().format('YYYY-MM-DD'), [])
   const events = useAppSelector<EventData>(state => state.event.events)
-  const eventItem = events.filter(event => {
-    return event.id == id
-  })
+  const eventItem = events.filter(event => event.id == id)
 
   return (
     <div className={classes.eventPageContainer}>
-      <BackButton idType="page">
-        <></>
-      </BackButton>
+      <BackButton idType="page" />
       <div className={classes.eventPageCardContainer}>
         <div className={classes.eventPageCard}>
-          <EventCard eventItem={eventItem[0]} idType={'page'} />
+          <EventCard
+            eventItem={eventItem[0]}
+            isResentEvent={eventItem[0]?.date < today.toString()}
+            idType={'page'}
+          />
         </div>
       </div>
 
@@ -36,7 +39,7 @@ const EventPage: React.FC = () => {
           <EventInfoContainer>
             <div id="title-wrapper">
               <div id="title">Event info</div>
-              <div>pending</div>
+              <div id="status">pending</div>
             </div>
 
             <div className={classes.eventInfo}>{eventItem[0]?.eventInfo}</div>
@@ -47,7 +50,24 @@ const EventPage: React.FC = () => {
 
           <EventDetailsContainer>
             <div id="title"> Event details</div>
-            <div className={classes.eventInfo}>details</div>
+            <div className={classes.eventInfoContainer}>
+              <div className={classes.eventInfo}>
+                <CheckCircleOutline color="primary" className={classes.checkMark} />
+                <span>Cost of participation: {eventItem[0]?.costOfParticipation}</span>
+              </div>
+              <div className={classes.eventInfo}>
+                <CheckCircleOutline color="primary" className={classes.checkMark} />
+                <span>Discipline: {eventItem[0]?.discipline}</span>
+              </div>
+              <div className={classes.eventInfo}>
+                <CheckCircleOutline color="primary" className={classes.checkMark} />
+                <span>Status: {eventItem[0]?.status}</span>
+              </div>
+              <div className={classes.eventInfo}>
+                <CheckCircleOutline color="primary" className={classes.checkMark} />
+                <span>Series: {eventItem[0]?.series}</span>
+              </div>
+            </div>
           </EventDetailsContainer>
         </EventPageContainer>
       </div>

@@ -27,7 +27,7 @@ import { useAuthStyles } from '../useAuthStyles'
 import clsx from 'clsx'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { signInData } from '../formikAuth'
-import ModalContainer from '../../ModalHeader/ModalContainer'
+import ModalContainer from '../../Modal/ModalContainer'
 
 const SignIn = () => {
   const dispatch = useAppDispatch()

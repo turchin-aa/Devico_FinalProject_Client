@@ -253,6 +253,44 @@ const useStyles = makeStyles((theme: Theme) => ({
       },
     },
   },
+  gridHeaderContainer: {
+    display: 'flex',
+    alignItems: 'end',
+    justifyContent: 'space-between',
+  },
+  gridButtons: {
+    position: 'relative',
+    display: 'flex',
+    marginRight: 30,
+  },
+  filterButton: {
+    color: '#000',
+    textTransform: 'capitalize',
+  },
+  filterClass: {
+    position: 'absolute',
+    top: -8,
+    right: 0,
+    color: '#8F8F8F',
+    width: 174,
+  },
+  filterClassSort: {
+    position: 'absolute',
+    top: -8,
+    right: 70,
+    color: '#8F8F8F',
+    width: 174,
+  },
+  popper: {
+    width: '100%',
+    zIndex: 4,
+  },
+  flexCenterButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 20,
+  },
   eventContent: {
     position: 'absolute',
     textAlign: 'start',

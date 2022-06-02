@@ -27,9 +27,17 @@ export const useStyles = makeStyles((theme: Theme) => ({
       height: 480,
     },
   },
-  eventInfo: {
+  eventInfoContainer: {
     marginTop: 10,
     marginBottom: 20,
+  },
+  eventInfo: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  checkMark: {
+    marginRight: 10,
   },
   eventDetailsContainer: {
     marginTop: 15,
@@ -62,7 +70,6 @@ export const EventDetailsContainer = styled(Box)({
     height: 40,
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: 'red',
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'center',
     },
@@ -75,6 +82,13 @@ export const EventDetailsContainer = styled(Box)({
 })
 
 export const EventInfoContainer = styled(Box)({
+  [theme.breakpoints.down('sm')]: {
+    paddingRight: 0,
+  },
+  [theme.breakpoints.up('sm')]: {
+    paddingRight: 60,
+  },
+
   '& > div#title-wrapper': {
     [theme.breakpoints.down('sm')]: {
       display: 'block',
@@ -83,21 +97,22 @@ export const EventInfoContainer = styled(Box)({
       display: 'flex',
       alignItems: 'center',
     },
+    '& > div#title, & > div#status': {
+      display: 'flex',
+      alignItems: 'center',
+      [theme.breakpoints.down('sm')]: {
+        justifyContent: 'center',
+      },
+      [theme.breakpoints.up('sm')]: {
+        justifyContent: 'start',
+      },
+    },
   },
+
   '& > div div#title': {
     height: 40,
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: 'red',
     fontSize: 30,
     fontWeight: 700,
-    [theme.breakpoints.down('sm')]: {
-      justifyContent: 'center',
-    },
-    [theme.breakpoints.up('sm')]: {
-      justifyContent: 'start',
-      paddingRight: 60,
-    },
   },
 })
 
@@ -109,4 +124,7 @@ export const ParticipantsButton = styled(Button)({
   fontSize: 13,
   width: '50%',
   color: '#fff',
+  '&:hover': {
+    backgroundColor: theme.palette.primary.main,
+  },
 })

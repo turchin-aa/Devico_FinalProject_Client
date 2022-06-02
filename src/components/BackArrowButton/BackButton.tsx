@@ -2,10 +2,10 @@ import { Box, Stack, Typography } from '@mui/material'
 import { ArrowBackIos } from '@mui/icons-material'
 import { useBackStyles } from './backButtonStyles'
 import { memo, useCallback } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
-  children: React.ReactElement
+  children?: React.ReactElement
   idType?: string
 }
 

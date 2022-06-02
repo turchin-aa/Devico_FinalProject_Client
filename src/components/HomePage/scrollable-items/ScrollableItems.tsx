@@ -8,7 +8,7 @@ import EventCard from '../../EventCard/EventCard'
 
 interface Props {
   eventData: EventData
-  resent: boolean
+  isResentEvent: boolean
 }
 
 const settings = {
@@ -48,7 +48,7 @@ const settings = {
   ],
 }
 
-const ScrollableItems: React.FC<Props> = ({ eventData, resent }) => {
+const ScrollableItems: React.FC<Props> = ({ eventData, isResentEvent }) => {
   const classesScrollable = useScrollableStyles()
 
   const sRef = useRef<typeof Slider>(null)
@@ -59,7 +59,7 @@ const ScrollableItems: React.FC<Props> = ({ eventData, resent }) => {
         {eventData.map((item, index) => {
           return (
             <div key={index} className={classesScrollable.scrollContainer}>
-              <EventCard eventItem={item} idType="scrollable" resent={resent} />
+              <EventCard eventItem={item} idType="scrollable" isResentEvent={isResentEvent} />
             </div>
           )
         })}

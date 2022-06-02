@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import { memo, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import PageNotFound from './pages/404'
@@ -24,6 +24,7 @@ const App: React.FC = () => {
       dispatch({ type: sagaActions.USER_REFRESH_SAGA })
     }
     dispatch({ type: eventActions.EVENT_GET_SAGA })
+    dispatch({ type: sagaActions.USER_GET_DATA_SAGA })
   }, [])
 
   return (

@@ -17,6 +17,11 @@ interface Props {
   setPass?: Function
 }
 
+enum modalEnum {
+  signIn = 'Sign In',
+  signUp = 'Sign Up',
+}
+
 const ModalContainer: React.FC<Props> = ({
   modalType,
   children,
@@ -56,14 +61,14 @@ const ModalContainer: React.FC<Props> = ({
       <Divider />
       <DialogContent>
         {children}
-        {modalType == 'Sign In' || modalType == 'Sign up' ? (
+        {modalType === modalEnum.signIn || modalType === modalEnum.signUp ? (
           <Grid container justifyContent="center">
             <Grid item>
               <LinkTypography>
-                {modalType == 'Sign up' ? 'Already a member?' : 'No account?'}
+                {modalType === modalEnum.signUp ? 'Already a member?' : 'No account?'}
                 &nbsp;
                 <SignLink onClick={changeHandler}>
-                  {modalType == 'Sign up' ? 'Sign in' : 'Sign up'}
+                  {modalType === modalEnum.signUp ? modalEnum.signIn : modalEnum.signUp}
                 </SignLink>
               </LinkTypography>
             </Grid>

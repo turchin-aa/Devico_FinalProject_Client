@@ -1,11 +1,11 @@
-import { Box, Divider, FormControl, Grid, MenuItem, TextField, Typography } from '@mui/material'
+import { Box, Grid, TextField } from '@mui/material'
 import { useFormik } from 'formik'
-import { memo, useCallback, useState } from 'react'
+import { memo, useCallback } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import { uiActions } from '../../store/ui-slice'
 import { RegisterButton, styledDiv } from '../Auth/AuthStyles'
 import { useAuthStyles } from '../Auth/useAuthStyles'
-import ModalContainer from '../ModalHeader/ModalContainer'
+import ModalContainer from '../Modal/ModalContainer'
 import { cancelParticipationData } from './formikRegForEvent'
 
 const CancelPArticipation: React.FC = () => {

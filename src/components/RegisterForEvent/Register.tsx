@@ -1,12 +1,14 @@
 import { Box, Divider, FormControl, Grid, MenuItem, TextField, Typography } from '@mui/material'
 import clsx from 'clsx'
 import { useFormik } from 'formik'
-import { memo, useCallback, useState } from 'react'
+import moment from 'moment'
+import { memo, useCallback, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import { uiActions } from '../../store/ui-slice'
+import { UserData } from '../../types/globalTypes'
 import { RegisterButton, styledDiv } from '../Auth/AuthStyles'
 import { useAuthStyles } from '../Auth/useAuthStyles'
-import ModalContainer from '../ModalHeader/ModalContainer'
+import ModalContainer from '../Modal/ModalContainer'
 import { StyledSelectField } from '../Profile/ProfileStyles'
 import { regForEventData } from './formikRegForEvent'
 
@@ -15,7 +17,9 @@ const Register: React.FC = () => {
   const [vehicleClass, setVehicleClass] = useState('')
   const classes = useAuthStyles()
   const regEventCartIsShown = useAppSelector<boolean>(state => state.ui.showEventReg)
+  const userData = useAppSelector<UserData>(state => state.user.user)
   const dispatch = useAppDispatch()
+  const dateOfBirth = useMemo(() => moment(userData.birthday).format('DD.MM.YYYY'), [])
 
   const onSubmit = useCallback(
     async (values: object, { resetForm }) => {
@@ -94,21 +98,43 @@ const Register: React.FC = () => {
             <Grid item xs={12} sm={6}>
               <div className={classes.regTitle}>
                 <p>
-                  Full name: <span id="info">info</span>
+                  Full name: <span className={classes.regInfo}>{userData.fullName}</span>
                 </p>
-                <p>DOB:</p>
-                <p>Driver license number:</p>
-                <p>Cell number:</p>
-                <p>ID number:</p>
+                <p>
+                  DOB: <span className={classes.regInfo}>{dateOfBirth}</span>
+                </p>
+                <p>
+                  Driver license number:{' '}
+                  <span className={classes.regInfo}>{userData.driverLicenseNum}</span>
+                </p>
+                <p>
+                  Cell number: <span className={classes.regInfo}>{userData.cellNumber}</span>
+                </p>
+                <p>
+                  ID number: <span className={classes.regInfo}>{userData.idNumber}</span>
+                </p>
               </div>
             </Grid>
             <Grid item xs={12} sm={6}>
               <div className={classes.regTitle}>
-                <p>City:</p>
-                <p>Reg. adress:</p>
-                <p>Full name of your representative:</p>
-                <p>Representative license nubmer:</p>
-                <p>Sport driver license number:</p>
+                <p>
+                  City: <span className={classes.regInfo}>{userData.city}</span>
+                </p>
+                <p>
+                  Reg. adress: <span className={classes.regInfo}>{userData.address}</span>
+                </p>
+                <p>
+                  Full name of your representative:{' '}
+                  <span className={classes.regInfo}>{userData.representiveFullName}</span>
+                </p>
+                <p>
+                  Representative license nubmer:{' '}
+                  <span className={classes.regInfo}>{userData.representiveLicenseNum}</span>
+                </p>
+                <p>
+                  Sport driver license number:{' '}
+                  <span className={classes.regInfo}>{userData.sportDriverLicenseNum}</span>
+                </p>
               </div>
             </Grid>
           </Grid>

@@ -6,6 +6,18 @@ interface SliceState {
   id?: string
   isEmailSend: boolean
   avatar?: string
+  user: {
+    fullName: string
+    birthday: string
+    city: string
+    address: string
+    driverLicenseNum: string
+    representiveFullName: string
+    cellNumber: string
+    representiveLicenseNum: string
+    idNumber: string
+    sportDriverLicenseNum: string
+  }
 }
 
 const initialState: SliceState = {
@@ -14,6 +26,18 @@ const initialState: SliceState = {
   id: '',
   isEmailSend: false,
   avatar: '',
+  user: {
+    fullName: '',
+    birthday: '',
+    city: '',
+    address: '',
+    driverLicenseNum: '',
+    representiveFullName: '',
+    cellNumber: '',
+    representiveLicenseNum: '',
+    idNumber: '',
+    sportDriverLicenseNum: '',
+  },
 }
 
 const userSlice = createSlice({
@@ -26,6 +50,9 @@ const userSlice = createSlice({
     },
     setAvatar(state, action) {
       state.avatar = action.payload.avatar
+    },
+    getUser(state, action) {
+      state.user = action.payload.user
     },
     removeUser(state) {
       state.email = ''

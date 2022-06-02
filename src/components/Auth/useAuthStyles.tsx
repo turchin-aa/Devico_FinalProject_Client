@@ -19,10 +19,8 @@ export const useAuthStyles = makeStyles((theme: Theme) => ({
   regTitle: {
     fontWeight: 700,
     fontSize: 12,
-    '& > p #info': {
-      fontWeight: 150,
-    },
   },
+  regInfo: { fontWeight: 150 },
   dialog: {
     position: 'relative',
   },

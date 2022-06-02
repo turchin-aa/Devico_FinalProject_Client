@@ -27,7 +27,7 @@ import { useAuthStyles } from '../useAuthStyles'
 import clsx from 'clsx'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { signUpData } from '../formikAuth'
-import ModalContainer from '../../ModalHeader/ModalContainer'
+import ModalContainer from '../../Modal/ModalContainer'
 
 const SignUp: React.FC = () => {
   const dispatch = useAppDispatch()
