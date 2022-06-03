@@ -8,6 +8,19 @@ interface SliceState {
   isEmailSend: boolean
   avatar?: string
   user: UserData
+  cars: ICar[]
+}
+
+export interface ICar {
+  id: number
+  model: string
+  year: string
+  capacityEngine: string
+  regVehNumber: string
+  techPassNumber: string
+  vinNumber: string
+  driveTrain: string
+  fullNameOwner: string
 }
 
 const initialState: SliceState = {
@@ -28,6 +41,7 @@ const initialState: SliceState = {
     idNumber: '',
     sportDriverLicenseNum: '',
   },
+  cars: [],
 }
 
 const userSlice = createSlice({
@@ -38,7 +52,21 @@ const userSlice = createSlice({
       state.email = action.payload.email
       state.id = action.payload.id
     },
-
+    addCar(state, action) {
+      return {
+        ...state,
+        cars: [...state.cars, action.payload.newCar],
+      }
+    },
+    setCar(state, action) {
+      return { ...state, cars: [...action.payload.cars] }
+    },
+    removeCar(state, action) {
+      return {
+        ...state,
+        cars: state.cars.filter(car => car.id !== action.payload.id),
+      }
+    },
     setAvatar(state, action) {
       state.avatar = action.payload.avatar
     },
