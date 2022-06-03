@@ -10,6 +10,7 @@ const DropDownOptions: React.FC<Props> = ({ menu }) => {
 
   const handleClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget as HTMLButtonElement
+
     switch (target.name) {
       default:
         break

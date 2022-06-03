@@ -12,6 +12,10 @@ import ModalContainer from '../Modal/ModalContainer'
 import { StyledSelectField } from '../Profile/ProfileStyles'
 import { regForEventData } from './formikRegForEvent'
 
+// interface Props {
+//   eventId: number
+// }
+
 const Register: React.FC = () => {
   const [car, setCar] = useState('')
   const [vehicleClass, setVehicleClass] = useState('')
@@ -23,7 +27,10 @@ const Register: React.FC = () => {
 
   const onSubmit = useCallback(
     async (values: object, { resetForm }) => {
-      dispatch({ type: regForEventData.onSubmitType, payload: { ...values, car, vehicleClass } })
+      dispatch({
+        type: regForEventData.onSubmitType,
+        payload: { ...values, car, vehicleClass },
+      })
       resetForm()
     },
     [dispatch],

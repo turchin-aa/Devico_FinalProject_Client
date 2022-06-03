@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { UserData } from '../types/globalTypes'
 
 interface SliceState {
   isAuth: boolean
@@ -6,18 +7,7 @@ interface SliceState {
   id?: string
   isEmailSend: boolean
   avatar?: string
-  user: {
-    fullName: string
-    birthday: string
-    city: string
-    address: string
-    driverLicenseNum: string
-    representiveFullName: string
-    cellNumber: string
-    representiveLicenseNum: string
-    idNumber: string
-    sportDriverLicenseNum: string
-  }
+  user: UserData
 }
 
 const initialState: SliceState = {
@@ -48,6 +38,7 @@ const userSlice = createSlice({
       state.email = action.payload.email
       state.id = action.payload.id
     },
+
     setAvatar(state, action) {
       state.avatar = action.payload.avatar
     },
