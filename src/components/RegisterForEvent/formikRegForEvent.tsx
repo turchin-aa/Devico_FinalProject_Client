@@ -24,5 +24,5 @@ export const cancelParticipationData = {
   validationSchema: yup.object().shape({
     reson: yup.string().max(255),
   }),
-  onSubmitType: sagaActions.USER_REGISTER_FOR_EVENT_SAGA,
+  onSubmitType: sagaActions.CANCEL_USER_REGISTRATION_SAGA,
 }

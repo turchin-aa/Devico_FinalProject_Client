@@ -9,7 +9,7 @@ interface SliceState {
   avatar?: string
   user: UserData
   cars: ICar[]
-  eventParticipation: IEventParticipation[]
+  eventParticipationList: IEventParticipation[]
 }
 
 export interface ICar {
@@ -50,7 +50,15 @@ const initialState: SliceState = {
     sportDriverLicenseNum: '',
   },
   cars: [],
-  eventParticipation: [],
+  eventParticipationList: [
+    {
+      id: '',
+      eventId: '',
+      carId: '',
+      vehicleType: '',
+      desiredParticipantNumber: '',
+    },
+  ],
 }
 
 const userSlice = createSlice({
@@ -79,11 +87,22 @@ const userSlice = createSlice({
     addRegEvent(state, action) {
       return {
         ...state,
-        eventParticipation: [...state.eventParticipation, action.payload.newEventParticipation],
+        eventParticipationList: [
+          ...state.eventParticipationList,
+          action.payload.newEventParticipation,
+        ],
       }
     },
     setRegEvent(state, action) {
-      return { ...state, eventParticipation: [...action.payload.eventParticipation] }
+      state.eventParticipationList = action.payload.eventParticipation
+    },
+    removeRegEvent(state, action) {
+      return {
+        ...state,
+        eventParticipationList: state.eventParticipationList.filter(
+          eventParticipation => eventParticipation.eventId !== action.payload.id,
+        ),
+      }
     },
     setAvatar(state, action) {
       state.avatar = action.payload.avatar

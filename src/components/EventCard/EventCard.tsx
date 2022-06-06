@@ -30,34 +30,39 @@ const img =
 const EventCard: React.FC<Props> = ({ eventItem, idType, isResentEvent }) => {
   const classes = useStyles()
   const navigate = useNavigate()
-  const registrated = false
   const isUserAuth = useAppSelector<boolean>(state => state.user.isAuth)
   const registratedEvents = useAppSelector<IEventParticipation[]>(
-    state => state.user.eventParticipation,
+    state => state.user.eventParticipationList,
   )
-  const currentEvent = registratedEvents.filter(event => event.eventId.toString() == eventItem.id)
-  console.log(currentEvent)
+  const currentEvent = useMemo(
+    () => registratedEvents?.filter(event => event.eventId.toString() == eventItem.id),
+    [eventItem.id, registratedEvents],
+  )
   const dispatch = useAppDispatch()
-
   const eventCardID = useMemo(() => {
     if (idType === eventCardEnum.scrollable) {
+      if (isUserAuth) {
+        if (currentEvent.length > 0) {
+          return 'Cancel'
+        }
+      }
       return 'Register'
     }
     if (idType === eventCardEnum.grid || idType === eventCardEnum.page) {
       if (isUserAuth) {
-        if (registrated) {
+        if (currentEvent.length > 0) {
           return 'Cancel'
         }
         return 'Apply Event'
       }
       return 'Sign in to apply'
     }
-  }, [idType, isUserAuth, registrated])
+  }, [idType, isUserAuth, currentEvent])
 
   const handleButtonClick = useCallback(() => {
     if (isUserAuth) {
       dispatch({ type: eventActions.EVENT_SET_ID_SAGA, payload: { eventItem } })
-      if (registrated) {
+      if (currentEvent.length > 0) {
         dispatch(uiActions.toggleShowCancelParticipation())
       } else {
         dispatch(uiActions.toggleShowEventReg())
@@ -65,7 +70,7 @@ const EventCard: React.FC<Props> = ({ eventItem, idType, isResentEvent }) => {
     } else {
       dispatch(uiActions.toggleLog())
     }
-  }, [dispatch, isUserAuth, registrated])
+  }, [isUserAuth, dispatch, eventItem, currentEvent.length])
 
   const handleHrefClick = useCallback(() => {
     navigate(`/event/${eventItem.id}`)

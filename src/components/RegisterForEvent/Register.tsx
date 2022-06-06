@@ -15,10 +15,6 @@ import { StyledSelectField } from '../Profile/ProfileStyles'
 import { regForEventData } from './formikRegForEvent'
 import { vehicleClasses } from './VehicleClass'
 
-// interface Props {
-//   eventId: number
-// }
-
 const Register: React.FC = () => {
   const [car, setCar] = useState('')
   const [vehicleClass, setVehicleClass] = useState('')
@@ -28,7 +24,10 @@ const Register: React.FC = () => {
   const userCars = useAppSelector<ICar[]>(state => state.user.cars)
   const eventId = useAppSelector<string>(state => state.event.id)
   const dispatch = useAppDispatch()
-  const dateOfBirth = useMemo(() => moment(userData.birthday).format('DD.MM.YYYY'), [])
+  const dateOfBirth = useMemo(
+    () => moment(userData.birthday).format('DD.MM.YYYY'),
+    [userData.birthday],
+  )
 
   const onSubmit = useCallback(
     async (values: object, { resetForm }) => {

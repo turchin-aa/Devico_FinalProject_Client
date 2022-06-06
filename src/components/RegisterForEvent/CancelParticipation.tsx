@@ -10,6 +10,8 @@ import { cancelParticipationData } from './formikRegForEvent'
 
 const CancelPArticipation: React.FC = () => {
   const classes = useAuthStyles()
+  const eventId = useAppSelector<string>(state => state.event.id)
+
   const cancelParticipationIsShown = useAppSelector<boolean>(
     state => state.ui.showCancelParticipation,
   )
@@ -17,10 +19,10 @@ const CancelPArticipation: React.FC = () => {
 
   const onSubmit = useCallback(
     async (values: object, { resetForm }) => {
-      dispatch({ type: cancelParticipationData.onSubmitType, payload: { ...values } })
+      dispatch({ type: cancelParticipationData.onSubmitType, payload: { ...values, eventId } })
       resetForm()
     },
-    [dispatch],
+    [dispatch, eventId],
   )
 
   const formik = useFormik({

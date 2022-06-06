@@ -46,7 +46,6 @@ const eventSlice = createSlice({
   reducers: {
     setEvent(state, action) {
       state.id = action.payload.id
-      console.log(state.id)
     },
     getEvent(state, action) {
       state.events = action.payload.events

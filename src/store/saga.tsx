@@ -22,6 +22,8 @@ const {
   removeCar,
   setCar,
   addRegEvent,
+  setRegEvent,
+  removeRegEvent,
 } = userSliceActions
 
 const {
@@ -31,6 +33,7 @@ const {
   toggleCreateNewPassword,
   toggleShowEventReg,
   toggleShowCancelParticipation,
+  toggleShowFormSubmited,
   toggleShowAddCar,
 } = uiActions
 
@@ -186,15 +189,25 @@ export function* userRegForEvent(action: Effect) {
     yield call(api.post, '/events/registerToEvent', { ...action.payload })
     yield put(addRegEvent({ newEventParticipation: { ...action.payload } }))
     yield put(toggleShowEventReg())
+    yield put(toggleShowFormSubmited())
   } catch (error) {
     console.error(error)
   }
 }
 
-export function* userGetEventsData(action: Effect) {
+export function* getUsersEventsData(action: Effect) {
   try {
-    const data = yield call(api.post, '/events/getParticipationEvents', { ...action.payload })
-    yield put(addRegEvent({ eventParticipation: data.data }))
+    const data = yield call(api.get, '/events/getUsersEvents', {})
+    yield put(setRegEvent({ eventParticipation: data.data }))
+  } catch (error) {
+    console.error(error)
+  }
+}
+export function* cancelRegistrationForEvent(action: Effect) {
+  try {
+    yield call(api.post, '/events/cancelUsersRegistration', { ...action.payload })
+    yield put(removeRegEvent({ ...action.payload }))
+    yield put(toggleShowCancelParticipation())
   } catch (error) {
     console.error(error)
   }
@@ -214,5 +227,6 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_DELETE_CAR_SAGA, userDeleteCarSaga)
   yield takeEvery(sagaActions.USER_GET_CARS_SAGA, userGetCarsSaga)
   yield takeEvery(sagaActions.USER_REGISTER_FOR_EVENT_SAGA, userRegForEvent)
-  yield takeEvery(sagaActions.USER_EVENTS_DATA_SAGA, userGetEventsData)
+  yield takeEvery(sagaActions.USER_EVENTS_DATA_SAGA, getUsersEventsData)
+  yield takeEvery(sagaActions.CANCEL_USER_REGISTRATION_SAGA, cancelRegistrationForEvent)
 }

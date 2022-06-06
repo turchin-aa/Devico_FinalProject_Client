@@ -10,10 +10,10 @@ import { uiActions } from '../../store/ui-slice'
 
 interface Props {
   children: React.ReactElement
-  modalType: string
+  modalType?: string
   dispatchAction: AnyAction
   cartIsShown: boolean
-  resetForm: Function
+  resetForm?: Function
   setPass?: Function
 }
 
@@ -37,7 +37,9 @@ const ModalContainer: React.FC<Props> = ({
     if (cartIsShown) {
       dispatch(dispatchAction)
     }
-    resetForm()
+    if (resetForm) {
+      resetForm()
+    }
     if (setPass) {
       setPass(false)
     }
@@ -52,13 +54,17 @@ const ModalContainer: React.FC<Props> = ({
 
   return (
     <Dialog fullScreen={fullScreen} fullWidth open={cartIsShown} onClose={toggleHandler}>
-      <Typography component="h1" variant="h5" className={classes.flexCenter}>
-        <p className={classes.titleTypo}> {modalType} </p>
-        <CloseButton onClick={toggleHandler}>
-          <Close />
-        </CloseButton>
-      </Typography>
-      <Divider />
+      {modalType ? (
+        <>
+          <Typography component="h1" variant="h5" className={classes.flexCenter}>
+            <p className={classes.titleTypo}> {modalType} </p>
+            <CloseButton onClick={toggleHandler}>
+              <Close />
+            </CloseButton>
+          </Typography>
+          <Divider />
+        </>
+      ) : null}
       <DialogContent>
         {children}
         {modalType === modalEnum.signIn || modalType === modalEnum.signUp ? (

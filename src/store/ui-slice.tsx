@@ -9,6 +9,7 @@ interface SliceState {
   showAddCar: boolean
   showEventReg: boolean
   showCancelParticipation: boolean
+  showFormSubmited: boolean
 }
 
 const initialState: SliceState = {
@@ -20,6 +21,7 @@ const initialState: SliceState = {
   showAddCar: false,
   showEventReg: false,
   showCancelParticipation: false,
+  showFormSubmited: false,
 }
 
 const uiSlice = createSlice({
@@ -46,6 +48,9 @@ const uiSlice = createSlice({
     },
     toggleShowEventReg(state) {
       state.showEventReg = !state.showEventReg
+    },
+    toggleShowFormSubmited(state) {
+      state.showFormSubmited = !state.showFormSubmited
     },
     toggleShowCancelParticipation(state) {
       state.showCancelParticipation = !state.showCancelParticipation
