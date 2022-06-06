@@ -8,19 +8,22 @@ import useStyles from '../ProfileStyles'
 import { AddCarCancelButton, AddCarConfirmButton, DialogActionsStyled } from './StylesAddCarModal'
 import { useFormik } from 'formik'
 import { addCarsData } from '../formikContent'
+import { sagaActions } from '../../../store/saga-actions'
 
-interface IAddCarModal {}
-
-const AddCarModal: FC<IAddCarModal> = () => {
+const AddCarModal: FC = () => {
   const classes = useStyles()
 
   const dispatch = useAppDispatch()
 
   const addCarIsShown = useAppSelector<boolean>(state => state.ui.showAddCar)
 
-  const onSubmit = useCallback(async (values, { resetForm }) => {
-    resetForm()
-  }, [])
+  const onSubmit = useCallback(
+    async (values: object, { resetForm }) => {
+      dispatch({ type: sagaActions.USER_ADD_CAR_SAGA, payload: { ...values } })
+      resetForm()
+    },
+    [dispatch],
+  )
 
   const formik = useFormik({
     initialValues: addCarsData.initialValues,

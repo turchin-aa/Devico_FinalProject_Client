@@ -6,8 +6,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import ProfileData from './ProfileData'
 import AddCarModal from './AddCarModal/AddCarModal'
 import { Link } from 'react-router-dom'
-import { useAppSelector, useAppDispatch } from '../../hooks/redux.hook'
-import { uiActions } from '../../store/ui-slice'
+import { useAppSelector } from '../../hooks/redux.hook'
 import useStyles from './ProfileStyles'
 
 const allyProps = (index: number) => {
@@ -22,7 +21,6 @@ const Profile: FC = () => {
   const classes = useStyles()
 
   const isAuth = useAppSelector<boolean>(state => state.user.isAuth)
-  const dispatch = useAppDispatch()
 
   const handleChange = useCallback((event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
