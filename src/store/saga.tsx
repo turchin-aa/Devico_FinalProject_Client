@@ -1,17 +1,9 @@
-import { call, takeEvery, put, Effect, SagaReturnType } from 'redux-saga/effects'
+import { call, takeEvery, put, Effect } from 'redux-saga/effects'
 import { userSliceActions } from './user-slice'
 import { sagaActions, eventActions } from './saga-actions'
-import AuthService from '../services/AuthService'
-import PasswordService from '../services/PasswordService'
 import { eventSliceActions } from './event-slice'
-import EventService from '../services/EventService'
 import { uiActions } from '../store/ui-slice'
 import api from '../hooks'
-
-type RegisterServiceType = SagaReturnType<typeof AuthService.register>
-type LoginServiceType = SagaReturnType<typeof AuthService.login>
-type RefreshServerType = SagaReturnType<typeof AuthService.checkAuth>
-type GetServiceType = SagaReturnType<typeof EventService.getEvent>
 
 const { setEvent } = eventSliceActions
 const {
@@ -32,7 +24,7 @@ const { toggleLog, toggleReg, toggleCongratAuth, toggleCreateNewPassword, toggle
 export function* userSignUpSaga(action: Effect) {
   try {
     const { email, password } = action.payload
-    const data: RegisterServiceType = yield call(AuthService.register, email, password)
+    const data = yield call(api.post, '/auth/register', { email, password })
     const { accessToken, id } = data.data
     yield put(toggleReg())
     yield put(setUser({ id, email }))
@@ -46,7 +38,7 @@ export function* userSignUpSaga(action: Effect) {
 export function* userLoginSaga(action: Effect) {
   try {
     const { email, password } = action.payload
-    const data: LoginServiceType = yield call(AuthService.login, email, password)
+    const data = yield call(api.post, '/auth/login', { email, password })
     const { accessToken, id } = data.data
     yield put(setUser({ id, email }))
     yield put(toggleLog())
@@ -64,9 +56,7 @@ export function* userLoginSaga(action: Effect) {
 
 export function* userLogoutSaga() {
   try {
-    yield call(async () => {
-      return await api.post('/auth/logout')
-    })
+    yield call(api.post, '/auth/logout')
     localStorage.removeItem('token')
     yield put(unToggleAuth())
     yield put(removeUser())
@@ -77,7 +67,7 @@ export function* userLogoutSaga() {
 
 export function* userRefreshSaga() {
   try {
-    const data: RefreshServerType = yield call(AuthService.checkAuth)
+    const data = yield call(api.post, '/auth/refresh')
     const { accessToken, id, email } = data.data
     yield put(setUser({ id, email }))
     localStorage.setItem('token', accessToken)
@@ -90,7 +80,7 @@ export function* userRefreshSaga() {
 export function* userResetPassSaga(action: Effect) {
   try {
     const { email } = action.payload
-    yield call(PasswordService.resetPass, email)
+    yield call(api.post, '/forgotPassword', { email })
     yield put(toggleEmailSend())
   } catch (error) {
     console.log(error)
@@ -100,7 +90,7 @@ export function* userResetPassSaga(action: Effect) {
 export function* userNewPassSaga(action: Effect) {
   try {
     const { password, token, id } = action.payload
-    yield call(PasswordService.createNewPass, password, token, id)
+    yield call(api.post, '/createNewPassword', { password, token, id })
     yield put(toggleCreateNewPassword())
     yield put(toggleLog())
   } catch (error) {
@@ -111,9 +101,7 @@ export function* userNewPassSaga(action: Effect) {
 export function* updateUserDataSaga(action: Effect) {
   try {
     const { email } = action.payload
-    yield call(async () => {
-      return await api.patch('/updateUser', { ...action.payload })
-    })
+    yield call(api.patch, '/updateUser', { ...action.payload })
     if (email) {
       yield put(setUser({ email }))
     }
@@ -124,9 +112,7 @@ export function* updateUserDataSaga(action: Effect) {
 
 export function* userGetAvatarSaga(action: Effect) {
   try {
-    const data = yield call(async () => {
-      return await api.get('/getAvatar')
-    })
+    const data = yield call(api.get, '/getAvatar')
     yield put(setAvatar({ avatar: data.data.imageUrl }))
   } catch (error) {
     console.log(error)
@@ -135,7 +121,7 @@ export function* userGetAvatarSaga(action: Effect) {
 
 export function* eventGetSaga(action: Effect) {
   try {
-    const data: GetServiceType = yield call(EventService.getEvent)
+    const data = yield call(api.get, '/events')
     const { events } = data.data
     yield put(setEvent({ events }))
   } catch (error) {
@@ -145,10 +131,8 @@ export function* eventGetSaga(action: Effect) {
 
 export function* userAddCarSaga(action: Effect) {
   try {
-    yield call(async () => {
-      return await api.post('/addCar', { ...action.payload })
-    })
-    yield put(addCar({ newCar: { ...action.payload } }))
+    const data = yield call(api.post, '/addCar', { ...action.payload })
+    yield put(addCar({ newCar: { ...data.data } }))
     yield put(toggleShowAddCar())
   } catch (error) {
     console.error(error)
@@ -157,9 +141,7 @@ export function* userAddCarSaga(action: Effect) {
 
 export function* userDeleteCarSaga(action: Effect) {
   try {
-    yield call(async () => {
-      return await api.post('/deleteCar', { ...action.payload })
-    })
+    yield call(api.delete, '/deleteCar', { data: { id: action.payload.id } })
     yield put(removeCar({ ...action.payload }))
   } catch (error) {
     console.error(error)
@@ -168,9 +150,7 @@ export function* userDeleteCarSaga(action: Effect) {
 
 export function* userGetCarsSaga(action: Effect) {
   try {
-    const data = yield call(async () => {
-      return await api.get('/getCars')
-    })
+    const data = yield call(api.get, '/getCars')
     yield put(setCar({ cars: data.data }))
   } catch (error) {
     console.error(error)

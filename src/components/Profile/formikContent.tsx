@@ -63,7 +63,6 @@ export const personalData = {
 
 export const addCarsData = {
   initialValues: {
-    id: 1,
     model: '',
     year: 1960,
     capacityEngine: '',
@@ -86,8 +85,14 @@ export const addCarsData = {
     capacityEngine: yup.string().min(2).required('Write capicicty engine'),
     regVehNumber: yup.string().min(4).required('Vehicle humber must contain at least 4 number'),
     techPassNumber: yup.number().min(1000).required('Tech pass must contain at least 4 number'),
-    vinNumber: yup.number().min(1000).required('Vin number must contain at least 4 number'),
-    driveTrain: yup.string().min(4).required('Drive train must contain at least 4 number'),
+    vinNumber: yup
+      .number()
+      .min(1000, 'Invalid vin number format')
+      .required('Vin number must contain at least 4 number'),
+    driveTrain: yup
+      .string()
+      .min(4, 'Invalid name')
+      .required('Drive train must contain at least 4 number'),
   }),
   onSubmitType: '',
 }
@@ -97,7 +102,7 @@ export const recoverPassData = {
     email: '',
   },
   validationSchema: yup.object().shape({
-    email: yup.string().email('Invalid format').required('Invalid email'),
+    email: yup.string().email('Invalid email format').required('Invalid email'),
   }),
   onSubmitType: sagaActions.USER_RESET_SAGA,
 }
@@ -111,8 +116,8 @@ export const createNewPassData = {
   validationSchema: yup.object().shape({
     password: yup
       .string()
-      .min(6, 'The length must be at least 6')
-      .max(32)
+      .min(6, 'The length must be at least 6 characters')
+      .max(32, 'Password must be 32 characters maximum')
       .required('The password is required'),
     confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
   }),

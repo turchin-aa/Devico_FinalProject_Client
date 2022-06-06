@@ -17,18 +17,12 @@ const AddCarModal: FC = () => {
 
   const addCarIsShown = useAppSelector<boolean>(state => state.ui.showAddCar)
 
-  let { id } = addCarsData.initialValues
-
-  id = useAppSelector(state =>
-    state.user.cars.length > 0 ? state.user.cars[state.user.cars.length - 1].id + 1 : 1,
-  )
-
   const onSubmit = useCallback(
-    async (values, { resetForm }) => {
-      dispatch({ type: sagaActions.USER_ADD_CAR_SAGA, payload: { ...values, id } })
-      //  resetForm()
+    async (values: object, { resetForm }) => {
+      dispatch({ type: sagaActions.USER_ADD_CAR_SAGA, payload: { ...values } })
+      resetForm()
     },
-    [dispatch, id],
+    [dispatch],
   )
 
   const formik = useFormik({

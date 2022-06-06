@@ -1,6 +1,11 @@
 import axios from 'axios'
-import { AuthResponse } from '../services/AuthService'
 import createAuthRefreshInterceptor from 'axios-auth-refresh'
+
+interface AuthResponse {
+  accessToken: string
+  id: string
+  email?: string
+}
 
 const host = 'http://localhost:8000/api'
 

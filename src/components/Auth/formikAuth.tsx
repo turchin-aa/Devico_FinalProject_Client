@@ -8,8 +8,12 @@ export const signInData = {
     rememberMe: false,
   },
   validationSchema: yup.object().shape({
-    email: yup.string().email('Invalid format').required('Invalid login or password'),
-    password: yup.string().min(8).max(32).required('Invalid login or password'),
+    email: yup.string().email('Invalid email format').required('Invalid login or password'),
+    password: yup
+      .string()
+      .min(8, 'Password must be at least 8 characters')
+      .max(32, 'Password must be 32 characters maximum')
+      .required('Invalid login or password'),
   }),
   onSubmitType: sagaActions.USER_LOGIN_SAGA,
 }
@@ -26,8 +30,8 @@ export const signUpData = {
     email: yup.string().email('Write correct email').required('The email is required'),
     password: yup
       .string()
-      .min(8, 'The length must be at least 8')
-      .max(32)
+      .min(8, 'Password must be at least 8 characters')
+      .max(32, 'Password must be 32 characters maximum')
       .required('The password is required'),
     telephone: yup
       .string()

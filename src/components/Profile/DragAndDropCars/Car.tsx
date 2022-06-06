@@ -8,6 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import { useAppDispatch } from '../../../hooks/redux.hook'
 import { sagaActions } from '../../../store/saga-actions'
+import { uiActions } from '../../../store/ui-slice'
 
 export const ItemTypes = {
   CAR: 'car',
@@ -99,8 +100,13 @@ export const Car: FC<CarProps> = ({
     dispatch({ type: sagaActions.USER_DELETE_CAR_SAGA, payload: { id } })
   }, [dispatch, id])
 
+  const editCar = useCallback(() => {
+    dispatch(uiActions.toggleShowAddCar())
+  }, [])
+
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
+
   return (
     <div ref={ref} className={classes.main} style={{ opacity }} data-handler-id={handlerId}>
       <div className={classes.container}>
@@ -120,7 +126,7 @@ export const Car: FC<CarProps> = ({
           <div className={classes.regNumber}>{'Vin number: ' + vinNumber}</div>
         </div>
         <div className={classes.buttons}>
-          <ModeEditIcon className={classes.mode} />
+          <ModeEditIcon className={classes.mode} onClick={editCar} />
           <DeleteIcon onClick={deleteCar} />
         </div>
       </div>
