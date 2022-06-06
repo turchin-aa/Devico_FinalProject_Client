@@ -1,16 +1,19 @@
-import { Box, Divider, FormControl, Grid, MenuItem, TextField, Typography } from '@mui/material'
+import { Box, Divider, FormControl, Grid, MenuItem, TextField } from '@mui/material'
 import clsx from 'clsx'
 import { useFormik } from 'formik'
 import moment from 'moment'
 import { memo, useCallback, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
+import { sagaActions } from '../../store/saga-actions'
 import { uiActions } from '../../store/ui-slice'
+import { ICar } from '../../store/user-slice'
 import { UserData } from '../../types/globalTypes'
 import { RegisterButton, styledDiv } from '../Auth/AuthStyles'
 import { useAuthStyles } from '../Auth/useAuthStyles'
 import ModalContainer from '../Modal/ModalContainer'
 import { StyledSelectField } from '../Profile/ProfileStyles'
 import { regForEventData } from './formikRegForEvent'
+import { vehicleClasses } from './VehicleClass'
 
 // interface Props {
 //   eventId: number
@@ -22,6 +25,8 @@ const Register: React.FC = () => {
   const classes = useAuthStyles()
   const regEventCartIsShown = useAppSelector<boolean>(state => state.ui.showEventReg)
   const userData = useAppSelector<UserData>(state => state.user.user)
+  const userCars = useAppSelector<ICar[]>(state => state.user.cars)
+  const eventId = useAppSelector<string>(state => state.event.id)
   const dispatch = useAppDispatch()
   const dateOfBirth = useMemo(() => moment(userData.birthday).format('DD.MM.YYYY'), [])
 
@@ -29,11 +34,11 @@ const Register: React.FC = () => {
     async (values: object, { resetForm }) => {
       dispatch({
         type: regForEventData.onSubmitType,
-        payload: { ...values, car, vehicleClass },
+        payload: { ...values, eventId, car, vehicleClass },
       })
       resetForm()
     },
-    [dispatch],
+    [car, dispatch, eventId, vehicleClass],
   )
 
   const formik = useFormik({
@@ -44,15 +49,15 @@ const Register: React.FC = () => {
 
   const handleCarChange = useCallback(
     e => {
-      setCar(e.target.value as string)
+      setCar(e.target.value)
     },
-    [setCar],
+    [car],
   )
   const handleVehicleClassChange = useCallback(
     e => {
       setVehicleClass(e.target.value as string)
     },
-    [setVehicleClass],
+    [vehicleClass],
   )
 
   return (
@@ -71,8 +76,11 @@ const Register: React.FC = () => {
                   SELECT CAR*
                 </label>
                 <StyledSelectField value={car} name="car" required onChange={handleCarChange}>
-                  <MenuItem value={'Kharkiv'}>Kharkiv</MenuItem>
-                  <MenuItem value={'Kyiv'}>Kyiv</MenuItem>
+                  {userCars.map(item => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.model}
+                    </MenuItem>
+                  ))}
                 </StyledSelectField>
               </FormControl>
             </Grid>
@@ -87,8 +95,9 @@ const Register: React.FC = () => {
                   name="vehicle class"
                   onChange={handleVehicleClassChange}
                 >
-                  <MenuItem value={'Kharkiv'}>Kharkiv</MenuItem>
-                  <MenuItem value={'Kyiv'}>Kyiv</MenuItem>
+                  {vehicleClasses.map(vehicle => (
+                    <MenuItem value={vehicle.name}>{vehicle.name}</MenuItem>
+                  ))}
                 </StyledSelectField>
               </FormControl>
             </Grid>

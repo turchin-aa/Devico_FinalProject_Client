@@ -12,9 +12,9 @@ const EventsGrid: React.FC<Props> = ({ events }) => {
   const today = useMemo(() => moment().format('YYYY-MM-DD'), [])
   return (
     <GridContainer>
-      {events.map((item, index) => {
+      {events.map(item => {
         return (
-          <EventContainer key={index}>
+          <EventContainer key={item.id}>
             <EventContent>
               <EventCard
                 eventItem={item}

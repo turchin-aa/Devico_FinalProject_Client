@@ -21,6 +21,7 @@ const {
   addCar,
   removeCar,
   setCar,
+  addRegEvent,
 } = userSliceActions
 
 const {
@@ -138,9 +139,7 @@ export function* userGetAvatarSaga(action: Effect) {
 }
 export function* userGetDataSaga(action: Effect) {
   try {
-    const data = yield call(async () => {
-      return await api.get('/')
-    })
+    const data = yield call(api.get, '/')
     const { user } = data.data
     yield put(getUser({ user }))
   } catch (error) {
@@ -182,6 +181,25 @@ export function* userGetCarsSaga(action: Effect) {
   }
 }
 
+export function* userRegForEvent(action: Effect) {
+  try {
+    yield call(api.post, '/events/registerToEvent', { ...action.payload })
+    yield put(addRegEvent({ newEventParticipation: { ...action.payload } }))
+    yield put(toggleShowEventReg())
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export function* userGetEventsData(action: Effect) {
+  try {
+    const data = yield call(api.post, '/events/getParticipationEvents', { ...action.payload })
+    yield put(addRegEvent({ eventParticipation: data.data }))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_SIGNUP_SAGA, userSignUpSaga)
   yield takeEvery(sagaActions.USER_LOGIN_SAGA, userLoginSaga)
@@ -195,4 +213,6 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_ADD_CAR_SAGA, userAddCarSaga)
   yield takeEvery(sagaActions.USER_DELETE_CAR_SAGA, userDeleteCarSaga)
   yield takeEvery(sagaActions.USER_GET_CARS_SAGA, userGetCarsSaga)
+  yield takeEvery(sagaActions.USER_REGISTER_FOR_EVENT_SAGA, userRegForEvent)
+  yield takeEvery(sagaActions.USER_EVENTS_DATA_SAGA, userGetEventsData)
 }

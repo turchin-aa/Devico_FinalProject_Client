@@ -8,12 +8,12 @@ export const regForEventData = {
 
   validationSchema: yup.object().shape({
     desiredParticipantNumber: yup
-      .string()
+      .number()
       .max(32)
       .required('Desired participant number is required')
       .nullable(false),
   }),
-  onSubmitType: sagaActions.USER_NEWPASS_SAGA,
+  onSubmitType: sagaActions.USER_REGISTER_FOR_EVENT_SAGA,
 }
 
 export const cancelParticipationData = {
@@ -24,5 +24,5 @@ export const cancelParticipationData = {
   validationSchema: yup.object().shape({
     reson: yup.string().max(255),
   }),
-  onSubmitType: sagaActions.USER_NEWPASS_SAGA,
+  onSubmitType: sagaActions.USER_REGISTER_FOR_EVENT_SAGA,
 }

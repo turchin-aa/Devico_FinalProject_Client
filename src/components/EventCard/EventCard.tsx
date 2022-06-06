@@ -7,6 +7,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import useStyles from '../../theme/useStyle'
 import { EventItem } from '../../types/globalTypes'
 import { uiActions } from '../../store/ui-slice'
+import { eventActions } from '../../store/saga-actions'
+import { IEventParticipation } from '../../store/user-slice'
 
 interface Props {
   eventItem: EventItem
@@ -30,6 +32,11 @@ const EventCard: React.FC<Props> = ({ eventItem, idType, isResentEvent }) => {
   const navigate = useNavigate()
   const registrated = false
   const isUserAuth = useAppSelector<boolean>(state => state.user.isAuth)
+  const registratedEvents = useAppSelector<IEventParticipation[]>(
+    state => state.user.eventParticipation,
+  )
+  const currentEvent = registratedEvents.filter(event => event.eventId.toString() == eventItem.id)
+  console.log(currentEvent)
   const dispatch = useAppDispatch()
 
   const eventCardID = useMemo(() => {
@@ -49,6 +56,7 @@ const EventCard: React.FC<Props> = ({ eventItem, idType, isResentEvent }) => {
 
   const handleButtonClick = useCallback(() => {
     if (isUserAuth) {
+      dispatch({ type: eventActions.EVENT_SET_ID_SAGA, payload: { eventItem } })
       if (registrated) {
         dispatch(uiActions.toggleShowCancelParticipation())
       } else {

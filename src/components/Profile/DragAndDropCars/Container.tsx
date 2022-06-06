@@ -20,10 +20,6 @@ export const Container: FC = () => {
     setCars([...car])
   }, [car])
 
-  useEffect(() => {
-    dispatch({ type: sagaActions.USER_GET_CARS_SAGA })
-  }, [dispatch])
-
   const moveCar = useCallback((dragIndex: number, hoverIndex: number) => {
     setCars((prevCars: ICar[]) =>
       update(prevCars, {

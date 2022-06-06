@@ -4,8 +4,8 @@ import ProfilePanel from './ProfilePanel'
 import PersonalData from './PersonalData'
 import ProfileData from './ProfileData'
 import AddCarModal from './AddCarModal/AddCarModal'
-import { useAppSelector, useAppDispatch } from '../../hooks/redux.hook'
-import { uiActions } from '../../store/ui-slice'
+import { useAppSelector } from '../../hooks/redux.hook'
+
 import useStyles from './ProfileStyles'
 import BackButton from '../BackArrowButton/BackButton'
 
@@ -21,7 +21,6 @@ const Profile: FC = () => {
   const classes = useStyles()
 
   const isAuth = useAppSelector<boolean>(state => state.user.isAuth)
-  const dispatch = useAppDispatch()
 
   const handleChange = useCallback((event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
