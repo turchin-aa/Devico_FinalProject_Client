@@ -7,7 +7,7 @@ const { getEvent, setEvent } = eventSliceActions
 
 export function* eventGetSaga(action: Effect) {
   try {
-    const data = yield call(api.get, '/')
+    const data = yield call(api.get, '/events/')
     const { events } = data.data
     yield put(getEvent({ events }))
   } catch (error) {
