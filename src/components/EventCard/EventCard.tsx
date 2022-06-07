@@ -35,7 +35,7 @@ const EventCard: React.FC<Props> = ({ eventItem, idType, isResentEvent }) => {
     state => state.user.eventParticipationList,
   )
   const currentEvent = useMemo(
-    () => registratedEvents?.filter(event => event.eventId.toString() == eventItem.id),
+    () => registratedEvents?.filter(event => event.eventId.toString() === eventItem.id),
     [eventItem.id, registratedEvents],
   )
   const dispatch = useAppDispatch()
