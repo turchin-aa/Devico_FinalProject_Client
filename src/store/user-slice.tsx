@@ -50,15 +50,7 @@ const initialState: SliceState = {
     sportDriverLicenseNum: '',
   },
   cars: [],
-  eventParticipationList: [
-    {
-      id: '',
-      eventId: '',
-      carId: '',
-      vehicleType: '',
-      desiredParticipantNumber: '',
-    },
-  ],
+  eventParticipationList: [],
 }
 
 const userSlice = createSlice({
@@ -97,12 +89,12 @@ const userSlice = createSlice({
       state.eventParticipationList = action.payload.eventParticipation
     },
     removeRegEvent(state, action) {
-      return {
-        ...state,
-        eventParticipationList: state.eventParticipationList.filter(
-          eventParticipation => eventParticipation.eventId !== action.payload.id,
+      state.eventParticipationList.splice(
+        state.eventParticipationList.findIndex(
+          eventParticipation => eventParticipation.eventId == action.payload.id,
         ),
-      }
+        1,
+      )
     },
     setAvatar(state, action) {
       state.avatar = action.payload.avatar
