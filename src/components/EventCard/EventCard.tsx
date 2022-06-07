@@ -59,7 +59,12 @@ const EventCard: React.FC<Props> = ({ eventItem, idType, isResentEvent }) => {
     }
   }, [idType, isUserAuth, currentEvent])
 
+  const handleHrefClick = useCallback(() => {
+    navigate(`/event/${eventItem.id}`)
+  }, [eventItem.id, navigate])
+
   const handleButtonClick = useCallback(() => {
+    handleHrefClick()
     if (isUserAuth) {
       dispatch({ type: eventActions.EVENT_SET_ID_SAGA, payload: { eventItem } })
       if (currentEvent.length > 0) {
@@ -70,11 +75,7 @@ const EventCard: React.FC<Props> = ({ eventItem, idType, isResentEvent }) => {
     } else {
       dispatch(uiActions.toggleLog())
     }
-  }, [isUserAuth, dispatch, eventItem, currentEvent.length])
-
-  const handleHrefClick = useCallback(() => {
-    navigate(`/event/${eventItem.id}`)
-  }, [])
+  }, [isUserAuth, dispatch, eventItem, currentEvent.length, handleHrefClick])
 
   return (
     <div
