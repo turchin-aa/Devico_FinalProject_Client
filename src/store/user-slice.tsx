@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { UserData } from '../types/globalTypes'
 
 interface SliceState {
   isAuth: boolean
@@ -6,7 +7,9 @@ interface SliceState {
   id?: string
   isEmailSend: boolean
   avatar?: string
+  user: UserData
   cars: ICar[]
+  eventParticipationList: IEventParticipation[]
 }
 
 export interface ICar {
@@ -20,6 +23,13 @@ export interface ICar {
   driveTrain: string
   fullNameOwner: string
 }
+export interface IEventParticipation {
+  id: string
+  eventId: string
+  carId: string
+  vehicleType: string
+  desiredParticipantNumber: string
+}
 
 const initialState: SliceState = {
   isAuth: false,
@@ -27,7 +37,20 @@ const initialState: SliceState = {
   id: '',
   isEmailSend: false,
   avatar: '',
+  user: {
+    fullName: '',
+    birthday: '',
+    city: '',
+    address: '',
+    driverLicenseNum: '',
+    representiveFullName: '',
+    cellNumber: '',
+    representiveLicenseNum: '',
+    idNumber: '',
+    sportDriverLicenseNum: '',
+  },
   cars: [],
+  eventParticipationList: [],
 }
 
 const userSlice = createSlice({
@@ -53,8 +76,31 @@ const userSlice = createSlice({
         cars: state.cars.filter(car => car.id !== action.payload.id),
       }
     },
+    addRegEvent(state, action) {
+      return {
+        ...state,
+        eventParticipationList: [
+          ...state.eventParticipationList,
+          action.payload.newEventParticipation,
+        ],
+      }
+    },
+    setRegEvent(state, action) {
+      state.eventParticipationList = action.payload.eventParticipation
+    },
+    removeRegEvent(state, action) {
+      state.eventParticipationList.splice(
+        state.eventParticipationList.findIndex(
+          eventParticipation => eventParticipation.eventId == action.payload.id,
+        ),
+        1,
+      )
+    },
     setAvatar(state, action) {
       state.avatar = action.payload.avatar
+    },
+    getUser(state, action) {
+      state.user = action.payload.user
     },
     removeUser(state) {
       state.email = ''

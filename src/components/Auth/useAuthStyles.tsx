@@ -6,6 +6,21 @@ export const useAuthStyles = makeStyles((theme: Theme) => ({
     fontWeight: 700,
     fontSize: 26,
   },
+  label: {
+    paddingLeft: 2,
+    letterSpacing: 2,
+    fontSize: 12,
+    marginBottom: 5,
+    '&#drivers-data': {
+      marginTop: 5,
+      fontWeight: 700,
+    },
+  },
+  regTitle: {
+    fontWeight: 700,
+    fontSize: 12,
+  },
+  regInfo: { fontWeight: 150 },
   dialog: {
     position: 'relative',
   },
@@ -27,6 +42,7 @@ export const useAuthStyles = makeStyles((theme: Theme) => ({
       marginTop: 50,
     },
     marginTop: 12,
+    marginBottom: 5,
   },
   leftTextField: {
     [theme.breakpoints.down('sm')]: { marginLeft: 0 },

@@ -5,8 +5,9 @@ import clsx from 'clsx'
 import { Moment } from 'moment'
 import { useCalendarStyles } from '../useCalenadrStyles'
 import UserBarButtons from '../../NavBar/dropdown/userBarButtons'
-import FilterOptions from './FilterOptions'
+import DropDownOptions from '../../FilterSort/DropDownOptions'
 import { memo } from 'react'
+import { filterMenu } from '../../FilterSort/menuOptions'
 
 interface Props {
   prevHandler: () => void
@@ -32,7 +33,7 @@ const Monitor: React.FC<Props> = ({ prevHandler, nextHandler, today }) => {
               <FilterAlt fontSize="small" />
               <span>Filter</span>
             </div>
-            <FilterOptions />
+            <DropDownOptions menu={filterMenu} />
           </UserBarButtons>
         </div>
       </div>

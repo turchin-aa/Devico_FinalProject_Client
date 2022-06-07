@@ -12,6 +12,7 @@ interface SliceState {
       status: string
       series: string
       costOfParticipation: string
+      registration: number
       eventInfo: string
       createdAt: string
       updatedAt: string
@@ -31,6 +32,7 @@ const initialState: SliceState = {
       status: '',
       series: '',
       costOfParticipation: '',
+      registration: 0,
       eventInfo: '',
       createdAt: '',
       updatedAt: '',
@@ -43,11 +45,12 @@ const eventSlice = createSlice({
   initialState,
   reducers: {
     setEvent(state, action) {
+      state.id = action.payload.id
+    },
+    getEvent(state, action) {
       state.events = action.payload.events
     },
-    removeEvent(state) {
-      state.id = ''
-    },
+    removeEvent(state) {},
   },
 })
 

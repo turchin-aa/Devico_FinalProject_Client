@@ -1,31 +1,16 @@
 import { MenuItem } from '@mui/material'
 import { MouseEvent, useCallback } from 'react'
 import { memo } from 'react'
-import useStyles from '../../../theme/useStyle'
-
-const menu = [
-  {
-    name: 'Category',
-  },
-  {
-    name: 'All events',
-  },
-  {
-    name: 'Competition type',
-  },
-  {
-    name: 'Discipline',
-  },
-  {
-    name: 'Event date',
-  },
-]
-
-const FilterOptions = () => {
+import useStyles from '../../theme/useStyle'
+interface Props {
+  menu: { name: string }[]
+}
+const DropDownOptions: React.FC<Props> = ({ menu }) => {
   const classes = useStyles()
 
   const handleClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget as HTMLButtonElement
+
     switch (target.name) {
       default:
         break
@@ -49,4 +34,4 @@ const FilterOptions = () => {
   )
 }
 
-export default memo(FilterOptions)
+export default memo(DropDownOptions)

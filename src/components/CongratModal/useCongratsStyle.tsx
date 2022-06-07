@@ -13,6 +13,15 @@ export const useCongratsStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
   },
+  infoMessege: {
+    fontWeight: 700,
+    fontSize: 18,
+  },
+  forSubmitedInfo: {
+    marginTop: 10,
+    marginBottom: 10,
+    fontSize: 16,
+  },
   dialogTitle: {
     height: '20%',
   },

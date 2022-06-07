@@ -1,4 +1,4 @@
-import { styled, Button, Typography, Select, Box, Theme, TextField } from '@mui/material'
+import { styled, Button, Typography, Select, Box, Theme } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { theme } from '../../theme/CustomTheme'
 
@@ -52,6 +52,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   profileContainer: {
+    marginLeft: 5,
+    marginRight: 5,
     width: '100%',
   },
   profileTabs: {
@@ -60,24 +62,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderColor: 'divider',
     width: '95%',
   },
-  navBack: {
-    paddingLeft: 10,
-    marginTop: 70,
-    height: 70,
-  },
-  navLinkBack: {
-    display: 'flex',
-    alignItems: 'center',
-    textDecoration: 'none',
-    '&:active': {
-      color: theme.palette.primary.dark,
-    },
-  },
 
-  profileTitle: {
-    fontWeight: 700,
-    fontSize: 35,
-  },
   profileAvatar: {
     height: '100%',
     width: '100%',

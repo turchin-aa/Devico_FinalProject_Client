@@ -10,7 +10,6 @@ import {
 } from '@mui/material'
 import useStyles, { ProfileSubmitButton } from './ProfileStyles'
 import { useFormik } from 'formik'
-import * as yup from 'yup'
 import { FC, memo, useCallback, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import { Visibility, VisibilityOff, ModeEdit } from '@mui/icons-material'
