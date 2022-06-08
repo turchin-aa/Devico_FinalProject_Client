@@ -1,6 +1,5 @@
 import { Theme } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { theme } from '../../theme/CustomTheme'
 
 export const useStyles = makeStyles((theme: Theme) => ({
   typography: {

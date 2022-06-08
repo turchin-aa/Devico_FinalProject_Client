@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { UserData } from '../types/globalTypes'
+import { socketType } from './saga'
 
 interface SliceState {
   isAuth: boolean
@@ -10,6 +11,7 @@ interface SliceState {
   user: UserData
   cars: ICar[]
   eventParticipationList: IEventParticipation[]
+  socket: socketType | null
 }
 
 export interface ICar {
@@ -51,12 +53,16 @@ const initialState: SliceState = {
   },
   cars: [],
   eventParticipationList: [],
+  socket: null,
 }
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    setSocket(state, action) {
+      state.socket = action.payload.socket
+    },
     setUser(state, action) {
       state.email = action.payload.email
       state.id = action.payload.id

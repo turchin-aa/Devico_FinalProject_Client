@@ -1,24 +1,21 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import HomePage from './pages/HomePage'
-import PageNotFound from './pages/404'
-import FAQ from './pages/FAQ'
 import { sagaActions, eventActions } from './store/saga-actions'
 import SideBar from './components/Sidebar/SideBar'
 import NavBar from './components/NavBar/NavBar'
-import CreateNewPass from './components/PasswordRecover/CreateNewPass'
 import Auth from './components/Auth'
 import { useAppDispatch, useAppSelector } from './hooks/redux.hook'
-import AllEvents from './pages/AllEvents'
-import EventPage from './components/EventPage/EventPage'
 import ApplyCancelModals from './components/RegisterForEvent/index'
-import Profile from './components/Profile/Profile'
 import LicensePage from './pages/LicensePage/LicensePage'
+import Loader from './components/LazyLoad/Loader'
+import { socketType } from './store/saga'
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch()
 
   const isAuth = useAppSelector<boolean>(state => state.user.isAuth)
+  const socket = useAppSelector<socketType | null>(state => state.user.socket)
+  const email = useAppSelector<string | undefined>(state => state.user.email)
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -28,28 +25,39 @@ const App: React.FC = () => {
     dispatch({ type: sagaActions.USER_GET_DATA_SAGA })
     dispatch({ type: sagaActions.USER_GET_CARS_SAGA })
     dispatch({ type: sagaActions.USER_EVENTS_DATA_SAGA })
+    dispatch({ type: sagaActions.USER_SOCKET_SAGA })
   }, [])
+
+  useEffect(() => {
+    socket?.emit('newUser', email)
+  }, [socket, email])
+
+  const HomePage = lazy(() => import('./pages/HomePage'))
+  const AllEvents = lazy(() => import('./pages/AllEvents'))
+  const FAQ = lazy(() => import('./pages/FAQ'))
+  const EventPage = lazy(() => import('./components/EventPage/EventPage'))
+  const CreateNewPass = lazy(() => import('./components/PasswordRecover/CreateNewPass'))
+  const Profile = lazy(() => import('./components/Profile/Profile'))
+  const PageNotFound = lazy(() => import('./pages/404'))
 
   return (
     <Router>
       <SideBar />
       <NavBar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="allEvents" element={<AllEvents />} />
-        <Route path="faq" element={<FAQ />} />
-        <Route path="/event/:id" element={<EventPage />} />
-        <Route
-          path="resetPass"
-          element={isAuth ? <Navigate to="/" replace /> : <CreateNewPass />}
-        />
-        <Route path="profile" element={isAuth ? <Profile /> : <Navigate to="/" replace />} />
-        <Route path="*" element={<PageNotFound />} />
-        <Route
-          path="profile/license"
-          element={isAuth ? <LicensePage /> : <Navigate to="/" replace />}
-        />
-      </Routes>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="allEvents" element={<AllEvents />} />
+          <Route path="faq" element={<FAQ />} />
+          <Route path="/event/:id" element={<EventPage />} />
+          <Route
+            path="resetPass"
+            element={isAuth ? <Navigate to="/" replace /> : <CreateNewPass />}
+          />
+          <Route path="profile" element={isAuth ? <Profile /> : <Navigate to="/" replace />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </Suspense>
       <Auth />
       <ApplyCancelModals />
     </Router>
