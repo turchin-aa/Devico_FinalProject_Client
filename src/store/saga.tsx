@@ -33,11 +33,11 @@ const {
 
 export function* userSignUpSaga(action: Effect) {
   try {
-    const { email, password } = action.payload
-    const data = yield call(api.post, '/auth/register', { email, password })
+    const { email, password, userRole } = action.payload
+    const data = yield call(api.post, '/auth/register', { email, password, userRole })
     const { accessToken, id } = data.data
     yield put(toggleReg())
-    yield put(setUser({ id, email }))
+    yield put(setUser({ id, email, userRole }))
     yield put(toggleCongratAuth())
     yield put(toggleAuth())
     localStorage.setItem('token', accessToken)
@@ -47,8 +47,8 @@ export function* userSignUpSaga(action: Effect) {
 }
 export function* userLoginSaga(action: Effect) {
   try {
-    const { email, password } = action.payload
-    const data = yield call(api.post, '/auth/login', { email, password })
+    const { email, password, userRole } = action.payload
+    const data = yield call(api.post, '/auth/login', { email, password, userRole })
     const { accessToken, id } = data.data
     yield put(setUser({ id, email }))
     yield put(toggleLog())

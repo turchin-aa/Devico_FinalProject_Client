@@ -10,7 +10,7 @@ import CreateNewPass from './components/PasswordRecover/CreateNewPass'
 import Auth from './components/Auth'
 import { useAppDispatch, useAppSelector } from './hooks/redux.hook'
 import AllEvents from './pages/AllEvents'
-import EventPage from './components/EventPage/EventPage'
+import EventPage from './pages/EventPage/EventPage'
 import ApplyCancelModals from './components/RegisterForEvent/index'
 import Profile from './components/Profile/Profile'
 
