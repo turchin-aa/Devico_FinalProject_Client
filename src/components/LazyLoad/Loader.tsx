@@ -1,4 +1,3 @@
-import { CircularProgress } from '@mui/material'
 import clsx from 'clsx'
 import { memo } from 'react'
 import useStyles from '../../theme/useStyle'

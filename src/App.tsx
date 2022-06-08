@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import PageNotFound from './pages/404'
@@ -9,10 +9,10 @@ import NavBar from './components/NavBar/NavBar'
 import CreateNewPass from './components/PasswordRecover/CreateNewPass'
 import Auth from './components/Auth'
 import { useAppDispatch, useAppSelector } from './hooks/redux.hook'
-import Profile from './components/Profile/Profile'
 import AllEvents from './pages/AllEvents'
 import EventPage from './components/EventPage/EventPage'
 import ApplyCancelModals from './components/RegisterForEvent/index'
+import Profile from './components/Profile/Profile'
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch()

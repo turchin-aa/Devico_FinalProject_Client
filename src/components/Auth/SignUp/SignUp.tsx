@@ -15,19 +15,14 @@ import {
   InputAdornment,
   IconButton,
 } from '@mui/material'
-import {
-  SideButton,
-  MyTypography,
-  RegisterButton,
-  Facebook,
-  Google,
-  styledDiv,
-} from '../AuthStyles'
+import { Facebook, MyTypography, RegisterButton, SideButton, styledDiv } from '../AuthStyles'
 import { useAuthStyles } from '../useAuthStyles'
 import clsx from 'clsx'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { signUpData } from '../formikAuth'
 import ModalContainer from '../../Modal/ModalContainer'
+import GoogleLogin from 'react-google-login'
+import { sagaActions } from '../../../store/saga-actions'
 
 const SignUp: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -54,6 +49,13 @@ const SignUp: React.FC = () => {
 
   const regCartIsShown = useAppSelector<boolean>(state => state.ui.showReg)
 
+  const handleLogin = useCallback(
+    values => {
+      dispatch({ type: sagaActions.USER_GOOGLE_AUTH_SAGA, payload: values })
+    },
+    [dispatch],
+  )
+
   return (
     <ModalContainer
       modalType="Sign up"
@@ -76,14 +78,13 @@ const SignUp: React.FC = () => {
               </SideButton>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <SideButton id="google" type="button" variant="contained" fullWidth>
-                <Grid item xs={2}>
-                  <Google />
-                </Grid>
-                <Grid item xs={12}>
-                  CONNECT WITH GOOGLE
-                </Grid>
-              </SideButton>
+              <GoogleLogin
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID!}
+                buttonText="Sign up with Google"
+                onSuccess={handleLogin}
+                onFailure={err => console.error(err)}
+                cookiePolicy="single_host_origin"
+              ></GoogleLogin>
             </Grid>
           </Grid>
         </div>

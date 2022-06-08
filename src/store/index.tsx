@@ -15,7 +15,10 @@ let eventSagaMiddleware = createSagaMiddleware()
 const store = configureStore({
   reducer: { ui: uiSlice.reducer, user: userSlice.reducer, event: eventSlice.reducer },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware, eventSagaMiddleware),
+    getDefaultMiddleware({ thunk: false, serializableCheck: false }).concat(
+      sagaMiddleware,
+      eventSagaMiddleware,
+    ),
   devTools: true,
 })
 
