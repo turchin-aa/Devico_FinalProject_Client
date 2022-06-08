@@ -35,7 +35,7 @@ const SignUp: React.FC = () => {
 
   const onSubmit = useCallback(
     async (values: object, { resetForm }) => {
-      dispatch({ type: signUpData.onSubmitType, payload: values })
+      dispatch({ type: signUpData.onSubmitType, payload: { ...values, userRole: 'user' } })
       resetForm()
     },
     [dispatch],
@@ -80,7 +80,7 @@ const SignUp: React.FC = () => {
             <Grid item xs={12} sm={6}>
               <GoogleLogin
                 clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID!}
-                buttonText="Sign up with Google"
+                buttonText="CONNECT WITH GOOGLE"
                 onSuccess={handleLogin}
                 onFailure={err => console.error(err)}
                 cookiePolicy="single_host_origin"

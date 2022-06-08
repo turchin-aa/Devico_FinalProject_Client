@@ -5,6 +5,7 @@ interface SliceState {
   isAuth: boolean
   email?: string
   id?: string
+  userRole: string
   isEmailSend: boolean
   avatar?: string
   user: UserData
@@ -35,6 +36,7 @@ const initialState: SliceState = {
   isAuth: false,
   email: '',
   id: '',
+  userRole: '',
   isEmailSend: false,
   avatar: '',
   user: {
@@ -60,6 +62,7 @@ const userSlice = createSlice({
     setUser(state, action) {
       state.email = action.payload.email
       state.id = action.payload.id
+      state.userRole = action.payload.userRole
     },
     addCar(state, action) {
       return {

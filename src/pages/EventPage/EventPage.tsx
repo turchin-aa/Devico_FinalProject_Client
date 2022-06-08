@@ -1,9 +1,9 @@
 import { memo, useMemo } from 'react'
-import BackButton from '../BackArrowButton/BackButton'
+import BackButton from '../../components/BackArrowButton/BackButton'
 import { useParams } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/redux.hook'
 import { EventData } from '../../types/globalTypes'
-import EventCard from '../EventCard/EventCard'
+import EventCard from '../../components/EventCard/EventCard'
 import {
   EventDetailsContainer,
   EventInfoContainer,

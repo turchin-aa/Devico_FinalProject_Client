@@ -92,7 +92,7 @@ const SignIn = () => {
             <Grid item xs={12} sm={6}>
               <GoogleLogin
                 clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID!}
-                buttonText="Sign up with Google"
+                buttonText="CONNECT WITH GOOGLE"
                 onSuccess={handleLogin}
                 onFailure={err => console.error(err)}
                 cookiePolicy="single_host_origin"
