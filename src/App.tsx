@@ -13,6 +13,7 @@ import AllEvents from './pages/AllEvents'
 import EventPage from './components/EventPage/EventPage'
 import ApplyCancelModals from './components/RegisterForEvent/index'
 import Profile from './components/Profile/Profile'
+import LicensePage from './pages/LicensePage/LicensePage'
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -44,6 +45,10 @@ const App: React.FC = () => {
         />
         <Route path="profile" element={isAuth ? <Profile /> : <Navigate to="/" replace />} />
         <Route path="*" element={<PageNotFound />} />
+        <Route
+          path="profile/license"
+          element={isAuth ? <LicensePage /> : <Navigate to="/" replace />}
+        />
       </Routes>
       <Auth />
       <ApplyCancelModals />
