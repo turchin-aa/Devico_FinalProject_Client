@@ -216,6 +216,11 @@ export function* userAddLicenseSaga(action: Effect) {
   try {
     yield call(api.post, '/addLicense', { ...action.payload })
     yield put(toggleShowFormSubmited())
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 export function* userSocketSaga(action: Effect) {
   try {
     const socket = yield io('http://localhost:5000')

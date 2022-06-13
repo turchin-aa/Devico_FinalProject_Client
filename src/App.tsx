@@ -6,7 +6,6 @@ import NavBar from './components/NavBar/NavBar'
 import Auth from './components/Auth'
 import { useAppDispatch, useAppSelector } from './hooks/redux.hook'
 import ApplyCancelModals from './components/RegisterForEvent/index'
-import LicensePage from './pages/LicensePage/LicensePage'
 import Loader from './components/LazyLoad/Loader'
 import { socketType } from './store/saga'
 
@@ -39,6 +38,7 @@ const App: React.FC = () => {
   const CreateNewPass = lazy(() => import('./components/PasswordRecover/CreateNewPass'))
   const Profile = lazy(() => import('./components/Profile/Profile'))
   const PageNotFound = lazy(() => import('./pages/404'))
+  const LicensePage = lazy(() => import('./pages/LicensePage/LicensePage'))
 
   return (
     <Router>
@@ -56,6 +56,10 @@ const App: React.FC = () => {
           />
           <Route path="profile" element={isAuth ? <Profile /> : <Navigate to="/" replace />} />
           <Route path="*" element={<PageNotFound />} />
+          <Route
+            path="profile/license"
+            element={isAuth ? <LicensePage /> : <Navigate to="/" replace />}
+          />
         </Routes>
       </Suspense>
       <Auth />
