@@ -211,6 +211,7 @@ export function* userGoogleAuthSaga(action: Effect) {
 export function* userAddLicenseSaga(action: Effect) {
   try {
     yield call(api.post, '/addLicense', { ...action.payload })
+    yield put(toggleShowFormSubmited())
   } catch (e) {
     console.error(e)
   }
