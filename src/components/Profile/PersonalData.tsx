@@ -23,7 +23,7 @@ const PersonalData: FC = () => {
 
   const onSubmit = useCallback(
     async (values, { resetForm }) => {
-      dispatch({ type: personalData.onSubmitType, payload: { ...values, city } })
+      dispatch({ type: personalData.onSubmitType, payload: { ...values, city, role: 'user' } })
       resetForm()
     },
     [dispatch],
