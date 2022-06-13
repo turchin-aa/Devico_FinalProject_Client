@@ -208,6 +208,15 @@ export function* userGoogleAuthSaga(action: Effect) {
   }
 }
 
+export function* userAddLicenseSaga(action: Effect) {
+  try {
+    yield call(api.post, '/addLicense', { ...action.payload })
+    yield put(toggleShowFormSubmited())
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_SIGNUP_SAGA, userSignUpSaga)
   yield takeEvery(sagaActions.USER_LOGIN_SAGA, userLoginSaga)
@@ -225,4 +234,5 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_EVENTS_DATA_SAGA, getUsersEventsData)
   yield takeEvery(sagaActions.CANCEL_USER_REGISTRATION_SAGA, cancelRegistrationForEvent)
   yield takeEvery(sagaActions.USER_GOOGLE_AUTH_SAGA, userGoogleAuthSaga)
+  yield takeEvery(sagaActions.USER_ADD_LICENSE_SAGA, userAddLicenseSaga)
 }

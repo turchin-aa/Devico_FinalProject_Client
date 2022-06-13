@@ -15,6 +15,7 @@ import { personalData } from './formikContent'
 import Container from './DragAndDropCars/Container'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import { Link } from 'react-router-dom'
 
 const PersonalData: FC = () => {
   const classes = useStyles()
@@ -280,7 +281,10 @@ const PersonalData: FC = () => {
           <ProfileConfirmBox>
             <PersonalSubmitButton type="submit">Save</PersonalSubmitButton>
             <Typography>
-              No License Number? Click <span className={classes.forgot}>here</span>{' '}
+              No License Number? Click{' '}
+              <Link to="license" className={classes.forgot}>
+                here
+              </Link>{' '}
             </Typography>
           </ProfileConfirmBox>
         </Stack>
