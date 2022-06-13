@@ -57,7 +57,7 @@ const ProfileData: FC = () => {
   }, [dispatch, avatar])
 
   const onSubmit = async (values, { resetForm }) => {
-    dispatch({ type: profileData.onSubmitType, payload: values })
+    dispatch({ type: profileData.onSubmitType, payload: { ...values, role: 'user' } })
     resetForm({
       values: {
         fullName: values.fullName,
