@@ -1,10 +1,8 @@
-import { FC, memo, useCallback, useState } from 'react'
+import { FC, memo, useCallback, useState, lazy, Suspense } from 'react'
 import { Tabs, Tab, Box } from '@mui/material'
 import ProfilePanel from './ProfilePanel'
-import PersonalData from './PersonalData'
-import ProfileData from './ProfileData'
-import AddCarModal from './AddCarModal/AddCarModal'
 import { useAppSelector } from '../../hooks/redux.hook'
+import Loader from '../LazyLoad/Loader'
 
 import useStyles from './ProfileStyles'
 import BackButton from '../BackArrowButton/BackButton'
@@ -15,6 +13,10 @@ const allyProps = (index: number) => {
     'aria-controls': `simple-tabpanel-${index}`,
   }
 }
+
+const AddCarModal = lazy(() => import('./AddCarModal/AddCarModal'))
+const ProfileData = lazy(() => import('./ProfileData'))
+const PersonalData = lazy(() => import('./PersonalData'))
 
 const Profile: FC = () => {
   const [value, setValue] = useState(0)
@@ -28,7 +30,9 @@ const Profile: FC = () => {
 
   return isAuth ? (
     <Box className={classes.profileContainer}>
-      <AddCarModal />
+      <Suspense fallback={<Loader />}>
+        <AddCarModal />
+      </Suspense>
       <BackButton>
         <span>My Profile</span>
       </BackButton>
@@ -39,10 +43,14 @@ const Profile: FC = () => {
         </Tabs>
       </Box>
       <ProfilePanel value={value} index={0}>
-        <ProfileData />
+        <Suspense fallback={<Loader />}>
+          <ProfileData />
+        </Suspense>
       </ProfilePanel>
       <ProfilePanel value={value} index={1}>
-        <PersonalData />
+        <Suspense fallback={<Loader />}>
+          <PersonalData />
+        </Suspense>
       </ProfilePanel>
     </Box>
   ) : null
