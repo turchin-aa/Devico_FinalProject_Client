@@ -88,13 +88,13 @@ export const useNavbarStyles = makeStyles((theme: Theme) => ({
     top: 60,
 
     [theme.breakpoints.down('sm')]: {
-      width: 350,
+      width: 450,
       height: 300,
       right: '10%',
     },
     [theme.breakpoints.up('sm')]: {
-      width: 450,
-      height: 350,
+      width: 550,
+      height: 450,
       right: '15%',
     },
   },
@@ -168,5 +168,30 @@ export const useNavbarStyles = makeStyles((theme: Theme) => ({
         cursor: 'pointer',
       },
     },
+  },
+  wrapper: {
+    marginTop: 20,
+    marginLeft: 20,
+    justifyContent: 'space-between',
+    display: 'flex',
+    width: '80%',
+    border: '1px solid #6A6968',
+    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.06)',
+    borderRadius: '3px',
+  },
+  text: {
+    alignSelf: 'center',
+    fontSize: 13,
+    flexBasis: 300,
+  },
+  info: {
+    height: 24,
+    width: 24,
+    alignSelf: 'center',
+    marginLeft: 30,
+  },
+  cross: {
+    marginTop: 10,
+    marginRight: 10,
   },
 }))

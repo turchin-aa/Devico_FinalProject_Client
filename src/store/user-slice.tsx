@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { socketType } from '../App'
 import { UserData } from '../types/globalTypes'
-import { socketType } from './saga'
 
 interface SliceState {
   isAuth: boolean
@@ -12,6 +12,12 @@ interface SliceState {
   cars: ICar[]
   eventParticipationList: IEventParticipation[]
   socket: socketType | null
+  notifications: INotification[]
+}
+
+export interface INotification {
+  color: object
+  text: string
 }
 
 export interface ICar {
@@ -54,6 +60,7 @@ const initialState: SliceState = {
   cars: [],
   eventParticipationList: [],
   socket: null,
+  notifications: [],
 }
 
 const userSlice = createSlice({
@@ -124,6 +131,18 @@ const userSlice = createSlice({
     },
     unToggleEmailSend(state) {
       state.isEmailSend = false
+    },
+    addNotification(state, action) {
+      return {
+        ...state,
+        notifications: [...state.notifications, action.payload.newNotification],
+      }
+    },
+    deleteNotifications(state) {
+      return {
+        ...state,
+        notifications: [],
+      }
     },
   },
 })

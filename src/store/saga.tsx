@@ -1,11 +1,8 @@
-import { call, takeEvery, put, Effect, SagaReturnType } from 'redux-saga/effects'
+import { call, takeEvery, put, Effect } from 'redux-saga/effects'
 import { userSliceActions } from './user-slice'
 import { sagaActions } from './saga-actions'
 import { uiActions } from '../store/ui-slice'
 import api from '../hooks'
-import { io } from 'socket.io-client'
-
-export type socketType = SagaReturnType<typeof io>
 
 const {
   setUser,
@@ -21,7 +18,6 @@ const {
   addRegEvent,
   setRegEvent,
   removeRegEvent,
-  setSocket,
 } = userSliceActions
 
 const {
@@ -221,15 +217,6 @@ export function* userAddLicenseSaga(action: Effect) {
   }
 }
 
-export function* userSocketSaga(action: Effect) {
-  try {
-    const socket = yield io('http://localhost:5000')
-    yield put(setSocket({ socket }))
-  } catch (e) {
-    console.error(e)
-  }
-}
-
 export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_SIGNUP_SAGA, userSignUpSaga)
   yield takeEvery(sagaActions.USER_LOGIN_SAGA, userLoginSaga)
@@ -248,5 +235,4 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.CANCEL_USER_REGISTRATION_SAGA, cancelRegistrationForEvent)
   yield takeEvery(sagaActions.USER_GOOGLE_AUTH_SAGA, userGoogleAuthSaga)
   yield takeEvery(sagaActions.USER_ADD_LICENSE_SAGA, userAddLicenseSaga)
-  yield takeEvery(sagaActions.USER_SOCKET_SAGA, userSocketSaga)
 }

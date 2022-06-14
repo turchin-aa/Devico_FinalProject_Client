@@ -7,7 +7,10 @@ import Auth from './components/Auth'
 import { useAppDispatch, useAppSelector } from './hooks/redux.hook'
 import ApplyCancelModals from './components/RegisterForEvent/index'
 import Loader from './components/LazyLoad/Loader'
-import { socketType } from './store/saga'
+import { io } from 'socket.io-client'
+import { userSliceActions } from './store/user-slice'
+
+export type socketType = ReturnType<typeof io>
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -24,7 +27,11 @@ const App: React.FC = () => {
     dispatch({ type: sagaActions.USER_GET_DATA_SAGA })
     dispatch({ type: sagaActions.USER_GET_CARS_SAGA })
     dispatch({ type: sagaActions.USER_EVENTS_DATA_SAGA })
-    dispatch({ type: sagaActions.USER_SOCKET_SAGA })
+  }, [])
+
+  useEffect(() => {
+    const socket = io('http://localhost:5000')
+    dispatch(userSliceActions.setSocket({ socket }))
   }, [])
 
   useEffect(() => {
