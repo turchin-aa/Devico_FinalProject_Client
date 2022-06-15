@@ -3,14 +3,14 @@ import ContentNull from './ContentNull'
 import { memo, useCallback } from 'react'
 import { useNavbarStyles } from '../style/useNavbarStyles'
 import { useAppDispatch } from '../../../hooks/redux.hook'
-import userSlice from '../../../store/user-slice'
+import { sagaActions } from '../../../store/saga-actions'
 
 const NotificationMenu: React.FC = () => {
   const classes = useNavbarStyles()
   const dispatch = useAppDispatch()
 
   const handleRead = useCallback(() => {
-    dispatch(userSlice.actions.deleteNotifications())
+    dispatch({ type: sagaActions.USER_CLEAR_NOTIFICATIONS_SAGA })
   }, [dispatch])
 
   return (
