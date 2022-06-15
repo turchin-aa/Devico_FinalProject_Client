@@ -17,6 +17,7 @@ interface SliceState {
 }
 
 export interface INotification {
+  id: number
   color: object
   text: string
 }
@@ -62,7 +63,88 @@ const initialState: SliceState = {
   cars: [],
   eventParticipationList: [],
   socket: null,
-  notifications: [],
+  notifications: [
+    {
+      id: 1,
+      color: {
+        backgroundColor: 'red',
+        height: 150,
+      },
+      text: 'wwerwerwerwerwerwerw',
+    },
+    {
+      id: 2,
+      color: {
+        backgroundColor: 'lime',
+        height: 50,
+      },
+      text: 'wwerwerwerwerwerwerw',
+    },
+    {
+      id: 3,
+      color: {
+        backgroundColor: 'red',
+        height: 150,
+      },
+      text: 'wwerwerwerwerwerwerw',
+    },
+    {
+      id: 4,
+      color: {
+        backgroundColor: 'lime',
+        height: 50,
+      },
+      text: 'wwerwerwerwerwerwerw',
+    },
+    {
+      id: 5,
+      color: {
+        backgroundColor: 'red',
+        height: 150,
+      },
+      text: 'wwerwerwerwerwerwerw',
+    },
+    {
+      id: 6,
+      color: {
+        backgroundColor: 'lime',
+        height: 50,
+      },
+      text: 'wwerwerwerwerwerwerw',
+    },
+    {
+      id: 7,
+      color: {
+        backgroundColor: 'red',
+        height: 150,
+      },
+      text: 'wwerwerwerwerwerwerw',
+    },
+    {
+      id: 8,
+      color: {
+        backgroundColor: 'lime',
+        height: 50,
+      },
+      text: 'wwerwerwerwerwerwerw',
+    },
+    {
+      id: 9,
+      color: {
+        backgroundColor: 'red',
+        height: 150,
+      },
+      text: 'wwerwerwerwerwerwerw',
+    },
+    {
+      id: 10,
+      color: {
+        backgroundColor: 'lime',
+        height: 50,
+      },
+      text: 'wwerwerwerwerwerwerw',
+    },
+  ],
 }
 
 const userSlice = createSlice({
@@ -140,6 +222,13 @@ const userSlice = createSlice({
         ...state,
         notifications: [...state.notifications, action.payload.newNotification],
       }
+    },
+    deleteNotificationById(state, action) {
+      console.log('action.payload.id', action.payload.id)
+      state.notifications.splice(
+        state.notifications.findIndex(notification => notification.id === action.payload.id),
+        1,
+      )
     },
     deleteNotifications(state) {
       return {
