@@ -19,6 +19,7 @@ const {
   setRegEvent,
   removeRegEvent,
   deleteNotificationById,
+  setNotifications,
 } = userSliceActions
 
 const {
@@ -169,7 +170,7 @@ export function* userGetCarsSaga(action: Effect) {
 
 export function* userRegForEvent(action: Effect) {
   try {
-    yield call(api.post, '/events/registerToEvent', { ...action.payload })
+    yield call(api.post, `/events/registerToEvent`, { ...action.payload })
     yield put(addRegEvent({ newEventParticipation: { ...action.payload } }))
     yield put(toggleShowEventReg())
     yield put(toggleShowFormSubmited())
@@ -220,7 +221,16 @@ export function* userAddLicenseSaga(action: Effect) {
 export function* deleteNotificationByIdSaga(action: Effect) {
   try {
     const { id } = action.payload
+    yield call(api.delete, `/notifications/${id}`)
     yield put(deleteNotificationById({ id }))
+  } catch (e) {
+    console.error(e)
+  }
+}
+export function* getUserNotificationsSaga(action: Effect) {
+  try {
+    const data = yield call(api.get, '/notifications/')
+    yield put(setNotifications({ notifications: data.data }))
   } catch (e) {
     console.error(e)
   }
@@ -245,4 +255,5 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_GOOGLE_AUTH_SAGA, userGoogleAuthSaga)
   yield takeEvery(sagaActions.USER_ADD_LICENSE_SAGA, userAddLicenseSaga)
   yield takeEvery(sagaActions.USER_DELETE_NOTIFICATION_BY_ID, deleteNotificationByIdSaga)
+  yield takeEvery(sagaActions.USER_GET_NOTIFICATIONS, getUserNotificationsSaga)
 }
