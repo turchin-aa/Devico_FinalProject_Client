@@ -224,7 +224,6 @@ const userSlice = createSlice({
       }
     },
     deleteNotificationById(state, action) {
-      console.log('action.payload.id', action.payload.id)
       state.notifications.splice(
         state.notifications.findIndex(notification => notification.id === action.payload.id),
         1,

@@ -4,7 +4,7 @@ import info from '../../../assets/picture.webp'
 import CloseIcon from '@mui/icons-material/Close'
 import { IconButton } from '@mui/material'
 import { useAppDispatch } from '../../../hooks/redux.hook'
-import userSlice from '../../../store/user-slice'
+import { sagaActions } from '../../../store/saga-actions'
 
 interface props {
   id: number
@@ -18,8 +18,7 @@ const Notification: FC<props> = ({ id, text, color }) => {
   const dispatch = useAppDispatch()
 
   const handleClose = useCallback(() => {
-    console.log('id', id)
-    dispatch(userSlice.actions.deleteNotificationById(id))
+    dispatch({ type: sagaActions.USER_DELETE_NOTIFICATION_BY_ID, payload: { id } })
   }, [dispatch, id])
 
   return (

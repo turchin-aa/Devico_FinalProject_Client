@@ -18,6 +18,7 @@ const {
   addRegEvent,
   setRegEvent,
   removeRegEvent,
+  deleteNotificationById,
 } = userSliceActions
 
 const {
@@ -216,6 +217,14 @@ export function* userAddLicenseSaga(action: Effect) {
     console.error(e)
   }
 }
+export function* deleteNotificationByIdSaga(action: Effect) {
+  try {
+    const { id } = action.payload
+    yield put(deleteNotificationById({ id }))
+  } catch (e) {
+    console.error(e)
+  }
+}
 
 export default function* rootSaga() {
   yield takeEvery(sagaActions.USER_SIGNUP_SAGA, userSignUpSaga)
@@ -235,4 +244,5 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.CANCEL_USER_REGISTRATION_SAGA, cancelRegistrationForEvent)
   yield takeEvery(sagaActions.USER_GOOGLE_AUTH_SAGA, userGoogleAuthSaga)
   yield takeEvery(sagaActions.USER_ADD_LICENSE_SAGA, userAddLicenseSaga)
+  yield takeEvery(sagaActions.USER_DELETE_NOTIFICATION_BY_ID, deleteNotificationByIdSaga)
 }
