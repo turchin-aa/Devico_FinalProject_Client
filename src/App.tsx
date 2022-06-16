@@ -27,7 +27,7 @@ const App: React.FC = () => {
     dispatch({ type: sagaActions.USER_GET_DATA_SAGA })
     dispatch({ type: sagaActions.USER_GET_CARS_SAGA })
     dispatch({ type: sagaActions.USER_EVENTS_DATA_SAGA })
-    dispatch({ type: sagaActions.USER_GET_NOTIFICATIONS_SAGA })
+    dispatch({ type: sagaActions.USER_GET_NOTIFICATIONS })
   }, [])
 
   useEffect(() => {

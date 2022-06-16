@@ -23,7 +23,9 @@ const NotificationMenu: React.FC = () => {
           </div>
         </div>
         <Divider variant="middle" />
-        <ContentNull />
+        <div className={classes.dropdownContainer}>
+          <ContentNull />
+        </div>
       </MenuList>
     </div>
   )

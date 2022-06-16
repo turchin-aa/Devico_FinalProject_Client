@@ -142,6 +142,15 @@ const userSlice = createSlice({
         notifications: [...state.notifications, action.payload.newNotification],
       }
     },
+    setNotifications(state, action) {
+      state.notifications = action.payload.notifications
+    },
+    deleteNotificationById(state, action) {
+      state.notifications.splice(
+        state.notifications.findIndex(notification => notification.id === action.payload.id),
+        1,
+      )
+    },
     clearNotifications(state) {
       return {
         ...state,

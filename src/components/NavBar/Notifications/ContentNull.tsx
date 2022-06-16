@@ -14,7 +14,7 @@ const ContentNull = () => {
   return notifications.length > 0 ? (
     <>
       {notifications.map((el: any) => {
-        return <Notification color={el.color} text={el.text} />
+        return <Notification id={el.id} color={el.color} text={el.text} />
       })}
     </>
   ) : (

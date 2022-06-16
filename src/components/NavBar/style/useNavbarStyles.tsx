@@ -51,6 +51,13 @@ export const useNavbarStyles = makeStyles((theme: Theme) => ({
   userBarButton: {
     cursor: 'pointer',
   },
+  dropdownContainer: {
+    position: 'relative',
+    height: 380,
+    width: '100%',
+    overflow: 'auto',
+    paddingBottom: 10,
+  },
   popper: {
     position: 'relative',
     width: '100%',
@@ -169,12 +176,27 @@ export const useNavbarStyles = makeStyles((theme: Theme) => ({
       },
     },
   },
-  wrapper: {
-    marginTop: 20,
-    marginLeft: 20,
+  closeButtonContainer: {
+    height: 20,
+    width: '100%',
+    textAlign: 'end',
+  },
+  closeButton: {
+    height: 20,
+    width: 20,
+  },
+  notificationText: {
     justifyContent: 'space-between',
+    alignItems: 'center',
     display: 'flex',
-    width: '80%',
+    maxHeight: '80%',
+  },
+  wrapper: {
+    position: 'relative',
+    marginTop: 10,
+    marginLeft: 30,
+    marginBottom: 10,
+    width: '90%',
     border: '1px solid #6A6968',
     boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.06)',
     borderRadius: '3px',
@@ -189,9 +211,5 @@ export const useNavbarStyles = makeStyles((theme: Theme) => ({
     width: 24,
     alignSelf: 'center',
     marginLeft: 30,
-  },
-  cross: {
-    marginTop: 10,
-    marginRight: 10,
   },
 }))
