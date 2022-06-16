@@ -17,6 +17,7 @@ interface SliceState {
 }
 
 export interface INotification {
+  id: number
   color: object
   text: string
 }
@@ -141,7 +142,7 @@ const userSlice = createSlice({
         notifications: [...state.notifications, action.payload.newNotification],
       }
     },
-    deleteNotifications(state) {
+    clearNotifications(state) {
       return {
         ...state,
         notifications: [],

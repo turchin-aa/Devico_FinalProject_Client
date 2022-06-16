@@ -18,6 +18,8 @@ const {
   addRegEvent,
   setRegEvent,
   removeRegEvent,
+  addNotification,
+  clearNotifications,
 } = userSliceActions
 
 const {
@@ -208,6 +210,50 @@ export function* userGoogleAuthSaga(action: Effect) {
   }
 }
 
+export function* userAddNotificationSaga(action: Effect) {
+  try {
+    const response = yield call(api.post, '/notifications/addNotification', {
+      color: {
+        background: action.payload.background,
+        height: action.payload.height,
+      },
+      text: action.payload.text,
+    })
+    console.log(response)
+    yield put(
+      addNotification({
+        newNotification: {
+          color: {
+            background: response.data.background,
+            height: response.data.height,
+          },
+          text: response.data.text,
+          id: response.data.id,
+        },
+      }),
+    )
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export function* userClearNotificationsSaga(action: Effect) {
+  try {
+    yield call(api.delete, '/notifications/clearNotifications')
+    yield put(clearNotifications())
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export function* userGetNotificationsSaga(action: Effect) {
+  try {
+    yield call(api.get, '/notifications/getNotifications')
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 export function* userAddLicenseSaga(action: Effect) {
   try {
     yield call(api.post, '/addLicense', { ...action.payload })
@@ -235,4 +281,7 @@ export default function* rootSaga() {
   yield takeEvery(sagaActions.CANCEL_USER_REGISTRATION_SAGA, cancelRegistrationForEvent)
   yield takeEvery(sagaActions.USER_GOOGLE_AUTH_SAGA, userGoogleAuthSaga)
   yield takeEvery(sagaActions.USER_ADD_LICENSE_SAGA, userAddLicenseSaga)
+  yield takeEvery(sagaActions.USER_ADD_NOTIFICATION_SAGA, userAddNotificationSaga)
+  yield takeEvery(sagaActions.USER_CLEAR_NOTIFICATIONS_SAGA, userClearNotificationsSaga)
+  yield takeEvery(sagaActions.USER_GET_NOTIFICATIONS_SAGA, userGetNotificationsSaga)
 }
